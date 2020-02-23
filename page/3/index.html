@@ -282,421 +282,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/08/10/Brute%20Froce/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ChongMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="重明">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/10/Brute%20Froce/" itemprop="url">DVWA-Brute Force</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T23:32:11+08:00">
-                2018-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/DVWA%E7%BB%83%E4%B9%A0/" itemprop="url" rel="index">
-                    <span itemprop="name">DVWA练习</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          <h1 id="DVWA练习"><a href="#DVWA练习" class="headerlink" title="DVWA练习"></a><em>DVWA练习</em></h1><h3 id="Brute-Force"><a href="#Brute-Force" class="headerlink" title="Brute Force"></a>Brute Force</h3><p><strong>一. Low级别</strong></p>
-<p>服务器代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'Login'</span>]))&#123;</span><br><span class="line"><span class="comment">//Getusername</span></span><br><span class="line">$user=$_GET[<span class="string">'username'</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//Getpassword</span></span><br><span class="line">$pass=$_GET[<span class="string">'password'</span>];</span><br><span class="line">$pass=md5($pass);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Checkthedatabase</span></span><br><span class="line">$query=<span class="string">"SELECT*FROM`users`WHEREuser='$user'ANDpassword='$pass';"</span>;</span><br><span class="line">$result=mysql_query($query)ordie(<span class="string">'&lt;pre&gt;'</span>.mysql_error().<span class="string">'&lt;/pre&gt;'</span>);</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>($result&amp;&amp;mysql_num_rows($result)==<span class="number">1</span>)&#123;</span><br><span class="line"><span class="comment">//Getusersdetails</span></span><br><span class="line">$avatar=mysql_result($result,<span class="number">0</span>,<span class="string">"avatar"</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">//Loginsuccessful</span></span><br><span class="line"><span class="keyword">echo</span><span class="string">"&lt;p&gt;Welcometothepasswordprotectedarea&#123;$user&#125;&lt;/p&gt;"</span>;</span><br><span class="line"><span class="keyword">echo</span><span class="string">"&lt;imgsrc="</span>&#123;$avatar&#125;<span class="string">"/&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">else</span>&#123;</span><br><span class="line"><span class="comment">//Loginfailed</span></span><br><span class="line"><span class="keyword">echo</span><span class="string">"&lt;pre&gt;&lt;br/&gt;Usernameand/orpasswordincorrect.&lt;/pre&gt;"</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">mysql_close();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-          <!--noindex-->
-          <div class="post-button text-center">
-            <a class="btn" href="/2018/08/10/Brute%20Froce/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-          <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/08/10/images/XSS/XSS/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ChongMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="重明">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/10/images/XSS/XSS/" itemprop="url">DVWA-XSS</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T22:51:24+08:00">
-                2018-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="DVWA练习"><a href="#DVWA练习" class="headerlink" title="DVWA练习"></a><strong><em>DVWA练习</em></strong></h1><h3 id="XSS"><a href="#XSS" class="headerlink" title="XSS"></a>XSS</h3><p>跨站脚本攻击，某种意义上也是一种注入攻击，指攻击者在页面中注入恶意脚本代码，当受害者访问该页面时，恶意代码会在其浏览器执行，xss分为三种：存储型xss，反射型xss，DOM型xss</p>
-<p><strong><em>反射型XSS</em></strong></p>
-<p><strong>一、Low级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="comment">// Is there any input? </span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( array_key_exists( <span class="string">"name"</span>, $_GET ) &amp;&amp; $_GET[ <span class="string">'name'</span> ] != <span class="keyword">NULL</span> ) &#123; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Feedback for end user </span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">'&lt;pre&gt;Hello '</span> . $_GET[ <span class="string">'name'</span> ] . <span class="string">'&lt;/pre&gt;'</span>; </span><br><span class="line"></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>用户参数直接显示在页面上存在反射型XSS漏洞</p>
-<p>漏洞利用：</p>
-<p>构造JS语句<code>&lt;script&gt;alert(1);&lt;/script&gt;</code>成功弹框</p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C1.png" alt="1"></p>
-<p><strong>二、Medium级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="comment">// Is there any input? </span></span><br><span class="line"><span class="keyword">if</span>( array_key_exists( <span class="string">"name"</span>, $_GET ) &amp;&amp; $_GET[ <span class="string">'name'</span> ] != <span class="keyword">NULL</span> ) &#123; </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $name = str_replace( <span class="string">'&lt;script&gt;'</span>, <span class="string">''</span>, $_GET[ <span class="string">'name'</span> ] ); </span><br><span class="line">    <span class="comment">// Feedback for end user </span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Hello $&#123;name&#125;&lt;/pre&gt;"</span>; </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>str_replace()函数过滤了<code>&lt;script&gt;</code>标签</p>
-<p>漏洞利用：</p>
-<p>①双写绕过：<code>&lt;sc&lt;script&gt;ript&gt;alert(/xss/)&lt;/script&gt;</code></p>
-<p>②使用大小写混写绕过：<code>&lt;ScRipt&gt;alert(/xss/)&lt;/script&gt;</code></p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C2.png" alt="2"></p>
-<p><strong>三、High级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="comment">// Is there any input? </span></span><br><span class="line"><span class="keyword">if</span>( array_key_exists( <span class="string">"name"</span>, $_GET ) &amp;&amp; $_GET[ <span class="string">'name'</span> ] != <span class="keyword">NULL</span> ) &#123; </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $name = preg_replace( <span class="string">'/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i'</span>, <span class="string">''</span>, $_GET[ <span class="string">'name'</span> ] ); </span><br><span class="line">    <span class="comment">// Feedback for end user </span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Hello $&#123;name&#125;&lt;/pre&gt;"</span>; </span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>代码分析：</p>
-<p><code>$name = preg_replace( &#39;/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i&#39;, &#39;&#39;, $_GET[ &#39;name&#39; ] )</code></p>
-<p>  利用正则表达式过滤了<code>&lt;script&gt;</code>标签，且i会不区分大小写，所以无法使用双写绕过或大小写混写绕过。</p>
-<p>漏洞利用：</p>
-<p>可以使用img，body等标签的时间或者iframe等标签的src注入恶意的js代码</p>
-<p>构造<code>&lt;img src=1 onerror=alert(/xss/)&gt;</code></p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C3.png" alt="3"></p>
-<p><strong>四、Impossible级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="comment">// Is there any input? </span></span><br><span class="line"><span class="keyword">if</span>( array_key_exists( <span class="string">"name"</span>, $_GET ) &amp;&amp; $_GET[ <span class="string">'name'</span> ] != <span class="keyword">NULL</span> ) &#123; </span><br><span class="line">    <span class="comment">// Check Anti-CSRF token </span></span><br><span class="line">    checkToken( $_REQUEST[ <span class="string">'user_token'</span> ], $_SESSION[ <span class="string">'session_token'</span> ], <span class="string">'index.php'</span> ); </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $name = htmlspecialchars( $_GET[ <span class="string">'name'</span> ] ); </span><br><span class="line">    <span class="comment">// Feedback for end user </span></span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Hello $&#123;name&#125;&lt;/pre&gt;"</span>; </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// Generate Anti-CSRF token </span></span><br><span class="line">generateSessionToken(); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>htmlspecialchars()函数将预定义的字符&amp;，“，‘，&lt;等转换为实体字符，防止浏览器将其作为HTML元素</p>
-<p><strong><em>存储型XSS</em></strong></p>
-<p><strong>一、Low级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_POST[ <span class="string">'btnSign'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $message = trim( $_POST[ <span class="string">'mtxMessage'</span> ] ); </span><br><span class="line">    $name    = trim( $_POST[ <span class="string">'txtName'</span> ] ); </span><br><span class="line">    <span class="comment">// Sanitize message input </span></span><br><span class="line">    $message = stripslashes( $message ); </span><br><span class="line">    $message = mysql_real_escape_string( $message ); </span><br><span class="line">    <span class="comment">// Sanitize name input </span></span><br><span class="line">    $name = mysql_real_escape_string( $name ); </span><br><span class="line">    <span class="comment">// Update database </span></span><br><span class="line">    $query  = <span class="string">"INSERT INTO guestbook ( comment, name ) VALUES ( '$message', '$name' );"</span>; </span><br><span class="line">    $result = mysql_query( $query ) <span class="keyword">or</span> <span class="keyword">die</span>( <span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> ); </span><br><span class="line">    <span class="comment">//mysql_close(); </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>函数介绍：</p>
-<p><strong>trim(string,charlist)</strong></p>
-<p>函数移除字符串两侧的空白字符或其他预定义字符（\t、\n、\x0B、\r以及空格），可选参数charlist支持添加额外需要删除的字符。</p>
-<p><strong>mysql_real_escape_string(string,connection)</strong></p>
-<p>函数会对字符串中的特殊符号（\x00，\n，\r，\，‘，“，\x1a）进行转义。</p>
-<p><strong>stripslashes(string)</strong></p>
-<p>函数删除字符串中的反斜杠。</p>
-<p>代码分析：</p>
-<p>对输入并没有做过滤与检查，且存储在数据库中，所以存在存储型XSS漏洞。</p>
-<p>漏洞利用：</p>
-<p>message一栏输入<code>&lt;script&gt;alert(/xss/)&lt;/script&gt;</code>，成功弹框 </p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C4.png" alt="4"></p>
-<p><strong>二、Medium级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_POST[ <span class="string">'btnSign'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $message = trim( $_POST[ <span class="string">'mtxMessage'</span> ] ); </span><br><span class="line">    $name    = trim( $_POST[ <span class="string">'txtName'</span> ] ); </span><br><span class="line">    <span class="comment">// Sanitize message input </span></span><br><span class="line">    $message = strip_tags( addslashes( $message ) ); </span><br><span class="line">    $message = mysql_real_escape_string( $message ); </span><br><span class="line">    $message = htmlspecialchars( $message ); </span><br><span class="line">    <span class="comment">// Sanitize name input </span></span><br><span class="line">    $name = str_replace( <span class="string">'&lt;script&gt;'</span>, <span class="string">''</span>, $name ); </span><br><span class="line">    $name = mysql_real_escape_string( $name ); </span><br><span class="line">    <span class="comment">// Update database </span></span><br><span class="line">    $query  = <span class="string">"INSERT INTO guestbook ( comment, name ) VALUES ( '$message', '$name' );"</span>; </span><br><span class="line">    $result = mysql_query( $query ) <span class="keyword">or</span> <span class="keyword">die</span>( <span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> ); </span><br><span class="line">    <span class="comment">//mysql_close(); </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>函数介绍：</p>
-<p><strong>strip_tags()*</strong></p>
-<p>函数剥去字符串中的HTML、XML以及PHP的标签，但允许使用<b>标签。</b></p>
-<p><strong>addslashes()</strong></p>
-<p>函数返回在预定义字符（单引号、双引号、反斜杠、NULL）之前添加反斜杠的字符串。</p>
-<p>代码分析：</p>
-<p>由于对message参数使用了htmlspecialchars函数进行编码，因此无法再通过message参数注入XSS代码，但是对于name参数，只是过滤了<code>&lt;script&gt;</code>字符串，仍然存在存储型的XSS。 </p>
-<p>漏洞利用：</p>
-<p>抓包修改name参数：</p>
-<p>①双写绕过</p>
-<p>②大小写混写绕过</p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C5.png" alt="5"></p>
-<p>成功弹框</p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C6.png" alt="6"></p>
-<p><strong>三、High级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_POST[ <span class="string">'btnSign'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $message = trim( $_POST[ <span class="string">'mtxMessage'</span> ] ); </span><br><span class="line">    $name    = trim( $_POST[ <span class="string">'txtName'</span> ] ); </span><br><span class="line">    <span class="comment">// Sanitize message input </span></span><br><span class="line">    $message = strip_tags( addslashes( $message ) ); </span><br><span class="line">    $message = mysql_real_escape_string( $message ); </span><br><span class="line">    $message = htmlspecialchars( $message ); </span><br><span class="line">    <span class="comment">// Sanitize name input </span></span><br><span class="line">    $name = preg_replace( <span class="string">'/&lt;(.*)s(.*)c(.*)r(.*)i(.*)p(.*)t/i'</span>, <span class="string">''</span>, $name ); </span><br><span class="line">    $name = mysql_real_escape_string( $name ); </span><br><span class="line">    <span class="comment">// Update database </span></span><br><span class="line">    $query  = <span class="string">"INSERT INTO guestbook ( comment, name ) VALUES ( '$message', '$name' );"</span>; </span><br><span class="line">    $result = mysql_query( $query ) <span class="keyword">or</span> <span class="keyword">die</span>( <span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> ); </span><br><span class="line">    <span class="comment">//mysql_close(); </span></span><br><span class="line">&#125; </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>使用正则表达式过滤了<code>&lt;script&gt;</code>标签，但是忽略了对img，iframe等其它标签的过滤与检查</p>
-<p>漏洞利用：</p>
-<p>抓包修改<strong>name</strong>参数</p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C7.png" alt="7"></p>
-<p>修改name为<code>&lt;img src=1 onerror=alert(1)&gt;</code>，成功弹框</p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C8.png" alt="8"></p>
-<p><strong>四、Impossible级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_POST[ <span class="string">'btnSign'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Check Anti-CSRF token </span></span><br><span class="line">    checkToken( $_REQUEST[ <span class="string">'user_token'</span> ], $_SESSION[ <span class="string">'session_token'</span> ], <span class="string">'index.php'</span> ); </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $message = trim( $_POST[ <span class="string">'mtxMessage'</span> ] ); </span><br><span class="line">    $name    = trim( $_POST[ <span class="string">'txtName'</span> ] ); </span><br><span class="line">    <span class="comment">// Sanitize message input </span></span><br><span class="line">    $message = stripslashes( $message ); </span><br><span class="line">    $message = mysql_real_escape_string( $message ); </span><br><span class="line">    $message = htmlspecialchars( $message ); </span><br><span class="line">    <span class="comment">// Sanitize name input </span></span><br><span class="line">    $name = stripslashes( $name ); </span><br><span class="line">    $name = mysql_real_escape_string( $name ); </span><br><span class="line">    $name = htmlspecialchars( $name ); </span><br><span class="line">    <span class="comment">// Update database </span></span><br><span class="line">    $data = $db-&gt;prepare( <span class="string">'INSERT INTO guestbook ( comment, name ) VALUES ( :message, :name );'</span> ); </span><br><span class="line">    $data-&gt;bindParam( <span class="string">':message'</span>, $message, PDO::PARAM_STR ); </span><br><span class="line">    $data-&gt;bindParam( <span class="string">':name'</span>, $name, PDO::PARAM_STR ); </span><br><span class="line">    $data-&gt;execute(); </span><br><span class="line">&#125; </span><br><span class="line"><span class="comment">// Generate Anti-CSRF token </span></span><br><span class="line">generateSessionToken(); </span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>代码分析：</p>
-<p>通过使用htmlspecialchars函数，抵御了XSS </p>
-<p><strong><em>DOM型XSS</em></strong></p>
-<p>DOM型XSS其实是一种特殊类型的反射型XSS，它是基于DOM文档对象模型的一种漏洞。</p>
-<p>在网站页面中有许多页面的元素，当页面到达浏览器时浏览器会为页面创建一个顶级的Document object文档对象，接着生成各个子文档对象，每个页面元素对应一个文档对象，每个文档对象包含属性、方法和事件。可以通过JS脚本对文档对象进行编辑从而修改页面的元素。也就是说，客户端的脚本程序可以通过DOM来动态修改页面内容，从客户端获取DOM中的数据并在本地执行。基于这个特性，就可以利用JS脚本来实现XSS漏洞的利用。</p>
-<p><strong>可以触发DOM型XSS的属性</strong></p>
-<blockquote>
-<ol>
-<li>document.referer属性</li>
-<li>window.name属性</li>
-<li>location属性</li>
-<li>innerHTML属性</li>
-<li>documen.write属性</li>
-</ol>
-</blockquote>
-<p><strong>一、Low级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># No protections, anything goes</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>代码分析：</p>
-<p>服务器端无防护措施</p>
-<p>漏洞利用：</p>
-<p>在火狐浏览器中直接在url后边插入<code>&lt;script&gt;alert(/xss/);&lt;/script&gt;</code></p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C9.png" alt="9"></p>
-<p><strong>二、Medium级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Is there any input?</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( array_key_exists( <span class="string">"default"</span>, $_GET ) &amp;&amp; !is_null ($_GET[ <span class="string">'default'</span> ]) ) &#123;</span><br><span class="line"></span><br><span class="line">    $default = $_GET[<span class="string">'default'</span>];</span><br><span class="line"></span><br><span class="line">    <span class="comment"># Do not allow script tags</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (stripos ($default, <span class="string">"&lt;script"</span>) !== <span class="keyword">false</span>) &#123;</span><br><span class="line"></span><br><span class="line">        header (<span class="string">"location: ?default=English"</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">exit</span>;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>函数介绍：</p>
-<p><strong>stripos(string,find,start)</strong> </p>
-<p>函数查找字符串在另一字符串中第一次出现的位置（不区分大小写）。 </p>
-<p>代码分析：</p>
-<p>服务器端验证default是否为空，再检测其中是否含有<code>&lt;script&gt;</code>标签，如果有则退出</p>
-<p>漏洞利用：</p>
-<p>可以利用事件来触发XSS，需要使用<code>&lt;/options&gt;&lt;/select&gt;</code>来闭合标签</p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C10.png" alt="10"></p>
-<p><img src="/2018/08/10/images/XSS/XSS/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CXSS%5C10.png" alt="10"></p>
-<p><strong>三、High级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Is there any input?</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> ( array_key_exists( <span class="string">"default"</span>, $_GET ) &amp;&amp; !is_null ($_GET[ <span class="string">'default'</span> ]) ) &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment"># White list the allowable languages</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">switch</span> ($_GET[<span class="string">'default'</span>]) &#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> <span class="string">"French"</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> <span class="string">"English"</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> <span class="string">"German"</span>:</span><br><span class="line"></span><br><span class="line">        <span class="keyword">case</span> <span class="string">"Spanish"</span>:</span><br><span class="line"></span><br><span class="line">            <span class="comment"># ok</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">default</span>:</span><br><span class="line"></span><br><span class="line">            header (<span class="string">"location: ?default=English"</span>);</span><br><span class="line"></span><br><span class="line">            <span class="keyword">exit</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>这里使用了白名单，在白名单列表中的允许通过</p>
-<p>漏洞利用：</p>
-<p>利用#过滤，URL的部分发往服务器时#号后面的并不会发送到服务器，但是javascript代码还会正常读取 </p>
-<p><strong>四、Impossible级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Don't need to do anything, protction handled on the client side</span></span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>在客户端进行处理防护</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/08/10/XSS/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1197,352 +782,6 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/08/10/images/CSRF/CSRF/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ChongMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="重明">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/10/images/CSRF/CSRF/" itemprop="url">DVWA-CSRF</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T19:51:24+08:00">
-                2018-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="DVWA练习"><a href="#DVWA练习" class="headerlink" title="DVWA练习"></a><strong><em>DVWA练习</em></strong></h1><h3 id="CSRF"><a href="#CSRF" class="headerlink" title="CSRF"></a>CSRF</h3><p>跨站请求伪造指利用受害者尚未失效的身份认证信息（cookie，会话）等，诱骗其点击恶意链接或访问包含攻击代码的页面，在受害人不知情的情况下以受害者的身份向服务器发送请求，从而完成非法操作</p>
-<p>CSRF与XSS最大的区别在于，CSRF并没有盗取cookie而是直接利用。</p>
-<p><strong>一.Low级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_GET[ <span class="string">'Change'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $pass_new  = $_GET[ <span class="string">'password_new'</span> ]; </span><br><span class="line">    $pass_conf = $_GET[ <span class="string">'password_conf'</span> ]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do the passwords match? </span></span><br><span class="line">    <span class="keyword">if</span>( $pass_new == $pass_conf ) &#123; </span><br><span class="line">        <span class="comment">// They do! </span></span><br><span class="line">        $pass_new = mysql_real_escape_string( $pass_new ); </span><br><span class="line">        $pass_new = md5( $pass_new ); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Update the database </span></span><br><span class="line">        $insert = <span class="string">"UPDATE `users` SET password = '$pass_new' WHERE user = '"</span> . dvwaCurrentUser() . <span class="string">"';"</span>; </span><br><span class="line">        $result = mysql_query( $insert ) <span class="keyword">or</span> <span class="keyword">die</span>( <span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> ); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Feedback for the user </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Password Changed.&lt;/pre&gt;"</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123; </span><br><span class="line">        <span class="comment">// Issue with passwords matching </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Passwords did not match.&lt;/pre&gt;"</span>; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    mysql_close(); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>服务器收到修改密码的请求后，会检查参数password_new与password_conf是否相同，如果相同，就会修改密码，并没有任何的防CSRF机制 。</p>
-<p>引导方法：</p>
-<blockquote>
-<p>发邮件.转短链接隐藏地址，但是会进入修改成功的提示页，用户会知道</p>
-<p>构造攻击页面，插入图片<code>&lt;img src=&#39;改密url&#39;/&gt;</code>标签或（404页面），用户访问时，浏览器加载时修改密码</p>
-</blockquote>
-<p>漏洞利用：</p>
-<p>1.构造页面：</p>
-<p><code>127.0.0.1/DVWAmaster/vulnerabilities/csrf/password_new=password&amp;password_conf=password&amp;Change=Change#</code></p>
-<p>受害者点击该链接后密码会被修改，但前提是需使用同一浏览器</p>
-<p>若url不是ip域名时，可以修改为短链接隐藏域名</p>
-<p>2.构造页面</p>
-<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">"http://127.0.0.1/DVWA-master/vulnerabilities/csrf/?password_new=password&amp;password_conf=password&amp;Change=Change#"</span> <span class="attr">border</span>=<span class="string">"0"</span> <span class="attr">style</span>=<span class="string">"display:none;"</span>/&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>404<span class="tag">&lt;<span class="name">h1</span>&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;<span class="name">h2</span>&gt;</span>file not found.<span class="tag">&lt;<span class="name">h2</span>&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>当受害者访问test.html时，会误认为是自己点击的是一个失效的url，但实际上已经遭受了CSRF攻击，密码已经被修改 </p>
-<p>![1](C:\Users\52899\Desktop\DVWA\sql Blind\1.png)</p>
-<p><strong>二.Medium级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_GET[ <span class="string">'Change'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Checks to see where the request came from </span></span><br><span class="line">    <span class="keyword">if</span>( eregi( $_SERVER[ <span class="string">'SERVER_NAME'</span> ], $_SERVER[ <span class="string">'HTTP_REFERER'</span> ] ) ) &#123; </span><br><span class="line">        <span class="comment">// Get input </span></span><br><span class="line">        $pass_new  = $_GET[ <span class="string">'password_new'</span> ]; </span><br><span class="line">        $pass_conf = $_GET[ <span class="string">'password_conf'</span> ]; </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Do the passwords match? </span></span><br><span class="line">        <span class="keyword">if</span>( $pass_new == $pass_conf ) &#123; </span><br><span class="line">            <span class="comment">// They do! </span></span><br><span class="line">            $pass_new = mysql_real_escape_string( $pass_new ); </span><br><span class="line">            $pass_new = md5( $pass_new ); </span><br><span class="line"></span><br><span class="line">            <span class="comment">// Update the database </span></span><br><span class="line">            $insert = <span class="string">"UPDATE `users` SET password = '$pass_new' WHERE user = '"</span> . dvwaCurrentUser() . <span class="string">"';"</span>; </span><br><span class="line">            $result = mysql_query( $insert ) <span class="keyword">or</span> <span class="keyword">die</span>( <span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> ); </span><br><span class="line"></span><br><span class="line">            <span class="comment">// Feedback for the user </span></span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Password Changed.&lt;/pre&gt;"</span>; </span><br><span class="line">        &#125; </span><br><span class="line">        <span class="keyword">else</span> &#123; </span><br><span class="line">            <span class="comment">// Issue with passwords matching </span></span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Passwords did not match.&lt;/pre&gt;"</span>; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123; </span><br><span class="line">        <span class="comment">// Didn't come from a trusted source </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;That request didn't look correct.&lt;/pre&gt;"</span>; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    mysql_close(); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>函数介绍：</p>
-<p><strong>int eregi(string pattern,string string)：</strong></p>
-<p>检查string中是否含有pattern（不区分大小写）如果有返回True，否则返回False。</p>
-<p>代码分析：</p>
-<p>Medium级别的代码检查了保留变量 HTTP_REFERER（http包头的Referer参数的值，表示来源地址）中是否包含SERVER_NAME（http包头的Host参数，及要访问的主机名 </p>
-<p>漏洞利用：</p>
-<p>过滤规则是http包头的Referer参数的值中必须包含主机名（127.0.0.1） </p>
-<p>可以将攻击页面命名为127.0.0.1.html(页面放置在攻击者的服务器里)</p>
-<p><strong>三.High级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_GET[ <span class="string">'Change'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Check Anti-CSRF token </span></span><br><span class="line">    checkToken( $_REQUEST[ <span class="string">'user_token'</span> ], $_SESSION[ <span class="string">'session_token'</span> ], <span class="string">'index.php'</span> ); </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $pass_new  = $_GET[ <span class="string">'password_new'</span> ]; </span><br><span class="line">    $pass_conf = $_GET[ <span class="string">'password_conf'</span> ]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do the passwords match? </span></span><br><span class="line">    <span class="keyword">if</span>( $pass_new == $pass_conf ) &#123; </span><br><span class="line">        <span class="comment">// They do! </span></span><br><span class="line">        $pass_new = mysql_real_escape_string( $pass_new ); </span><br><span class="line">        $pass_new = md5( $pass_new ); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Update the database </span></span><br><span class="line">        $insert = <span class="string">"UPDATE `users` SET password = '$pass_new' WHERE user = '"</span> . dvwaCurrentUser() . <span class="string">"';"</span>; </span><br><span class="line">        $result = mysql_query( $insert ) <span class="keyword">or</span> <span class="keyword">die</span>( <span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> ); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Feedback for the user </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Password Changed.&lt;/pre&gt;"</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123; </span><br><span class="line">        <span class="comment">// Issue with passwords matching </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Passwords did not match.&lt;/pre&gt;"</span>; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    mysql_close(); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">// Generate Anti-CSRF token </span></span><br><span class="line">generateSessionToken(); </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>High级别的代码加入了Anti-CSRF token机制，用户每次访问改密页面时，服务器会返回一个随机的token，向服务器发起请求时，需要提交token参数，而服务器在收到请求时，会优先检查token，只有token正确，才会处理客户端的请求。 </p>
-<p> 漏洞利用：</p>
-<p>1.可通过获取token来绕过反CSRF机制，利用被攻击者的cookie去修改密码的页面获取关键的token，可以去构造一个攻击页面，将其放置在攻击者的服务器，引诱受害者访问，完成CSRF攻击</p>
-<p>2.利用XSS漏洞和CSRF漏洞共同完成的：</p>
-<p>​    通过XSS漏洞获取浏览器cookie </p>
-<p>​    通过brupsuite进行拦截，获取数据包修改参数</p>
-<p><img src="/2018/08/10/images/CSRF/CSRF/C:%5CUsers%5C52899%5CDesktop%5CDVWA%5CCSRF%5C2.png" alt="2"></p>
-<p><strong>四.Impossible级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_GET[ <span class="string">'Change'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Check Anti-CSRF token </span></span><br><span class="line">    checkToken( $_REQUEST[ <span class="string">'user_token'</span> ], $_SESSION[ <span class="string">'session_token'</span> ], <span class="string">'index.php'</span> ); </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $pass_curr = $_GET[ <span class="string">'password_current'</span> ]; </span><br><span class="line">    $pass_new  = $_GET[ <span class="string">'password_new'</span> ]; </span><br><span class="line">    $pass_conf = $_GET[ <span class="string">'password_conf'</span> ]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Sanitise current password input </span></span><br><span class="line">    $pass_curr = stripslashes( $pass_curr ); </span><br><span class="line">    $pass_curr = mysql_real_escape_string( $pass_curr ); </span><br><span class="line">    $pass_curr = md5( $pass_curr ); </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check that the current password is correct </span></span><br><span class="line">    $data = $db-&gt;prepare( <span class="string">'SELECT password FROM users WHERE user = (:user) AND password = (:password) LIMIT 1;'</span> ); </span><br><span class="line">    $data-&gt;bindParam( <span class="string">':user'</span>, dvwaCurrentUser(), PDO::PARAM_STR ); </span><br><span class="line">    $data-&gt;bindParam( <span class="string">':password'</span>, $pass_curr, PDO::PARAM_STR ); </span><br><span class="line">    $data-&gt;execute(); </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Do both new passwords match and does the current password match the user? </span></span><br><span class="line">    <span class="keyword">if</span>( ( $pass_new == $pass_conf ) &amp;&amp; ( $data-&gt;rowCount() == <span class="number">1</span> ) ) &#123; </span><br><span class="line">        <span class="comment">// It does! </span></span><br><span class="line">        $pass_new = stripslashes( $pass_new ); </span><br><span class="line">        $pass_new = mysql_real_escape_string( $pass_new ); </span><br><span class="line">        $pass_new = md5( $pass_new ); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Update database with new password </span></span><br><span class="line">        $data = $db-&gt;prepare( <span class="string">'UPDATE users SET password = (:password) WHERE user = (:user);'</span> ); </span><br><span class="line">        $data-&gt;bindParam( <span class="string">':password'</span>, $pass_new, PDO::PARAM_STR ); </span><br><span class="line">        $data-&gt;bindParam( <span class="string">':user'</span>, dvwaCurrentUser(), PDO::PARAM_STR ); </span><br><span class="line">        $data-&gt;execute(); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Feedback for the user </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Password Changed.&lt;/pre&gt;"</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="keyword">else</span> &#123; </span><br><span class="line">        <span class="comment">// Issue with passwords matching </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;Passwords did not match or current password incorrect.&lt;/pre&gt;"</span>; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">// Generate Anti-CSRF token </span></span><br><span class="line">generateSessionToken(); </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p>代码分析；</p>
-<p>Impossible级别的代码使用Token验证，需要重新输入旧密码可以有效的抵御CSRF</p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/08/10/images/File%20Inclusion/File%20Inclusion/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ChongMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="重明">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/10/images/File%20Inclusion/File%20Inclusion/" itemprop="url">DVWA-File Inclusion</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-10T19:51:24+08:00">
-                2018-08-10
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="DVWA练习"><a href="#DVWA练习" class="headerlink" title="DVWA练习"></a><strong><em>DVWA练习</em></strong></h1><h4 id="File-Inclusion"><a href="#File-Inclusion" class="headerlink" title="File Inclusion"></a>File Inclusion</h4><p><strong>文件包含漏洞</strong>，指但服务器开启allow_url_include选项是，就可以通过php的某些特性函数如：include(),require(),include_once()和require_once()利用url区动态的包含文件，此时如果没有对文件来源进行严格审查就会导致任意文件读取或者任意命令执行。</p>
-<p><strong>远程文件包含漏洞</strong>是因为开启了PHP配置中的allow_url_fopen选项（服务器允许包含一个远程的文件)</p>
-<p><strong>一.Low级别</strong></p>
-<p>服务器代码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&lt;php</span><br><span class="line"><span class="comment">//Thepagewewishtodisplay</span></span><br><span class="line">$file=$_GET[<span class="string">'page'</span>];</span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>服务器端对page参数没有做任何检查和过滤，文件名直接从GET[page]中获取，可以直接改为任意文件</p>
-<p>服务器包含文件时，不管文件后缀是否是php，都会尝试当做php文件执行，如果文件内容确为php，则会正常执行并返回结果，如果不是，则会打印文件内容 。</p>
-<p>漏洞利用；</p>
-<ol>
-<li><p>输入<code>http://127.0.0.1/DVWA-master/vulnerabilities/fi/?page=/etc/shadow</code></p>
-<p>页面报错，说明服务器系统不是Linux，但同时暴露了服务器文件的绝对路径 </p>
-</li>
-</ol>
-<p>![1](C:\Users\52899\Desktop\DVWA\File Inclusion\1.png)</p>
-<ol start="2">
-<li><p>然后可以构造url</p>
-<p><code>http://127.0.0.1/DVWA-master/vulnerabilities/fi/?page=W:\wamp\www\DVWA-master\php.ini</code></p>
-<p>或者</p>
-<p><code>http://127.0.0.1/DVWA-master/vulnerabilities/fi/?page=..\..\..\wamp\www\DVWA-master\php.ini</code></p>
-<p>成功读取了服务器的php.ini文件</p>
-<p>![2](C:\Users\52899\Desktop\DVWA\File Inclusion\2.png)</p>
-<p>..\是为了保证到达服务器的根目录（即目录穿越）</p>
-</li>
-</ol>
-<p>   <strong>二.Medium级别</strong></p>
-<p>   服务器端代码：</p>
-   <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">&lt;php</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thepagewewishtodisplay</span></span><br><span class="line">$file=$_GET[<span class="string">'page'</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//Inputvalidation</span></span><br><span class="line">$file=str_replace(<span class="keyword">array</span>(<span class="string">"http://"</span>,<span class="string">"https://"</span>),<span class="string">""</span>,$file);</span><br><span class="line">$file=str_replace(<span class="keyword">array</span>(<span class="string">"../"</span>,<span class="string">"..\""</span>),<span class="string">""</span>,$file);</span><br><span class="line"></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
-<p>   代码分析：</p>
-<p>   增加了函数<strong>str_replace</strong>(),对page进行一定的处理，将”http:// ”、”https://”、 ” ../”、”..\”替换为空字符</p>
-<p>   漏洞利用 </p>
-<p>   ①可以使用<strong>双写</strong>进行绕过：</p>
-<p>   <code>page=hthttp://tp://127.0.0.1/phpinfo.txt</code>时，str_replace函数会将http://删除，</p>
-<p>   于是<code>page=&lt;http://127.0.0.1/phpinfo.txt&gt;</code></p>
-<p>​        ②因为替换的只是“../”、“..\”，所以对采用绝对路径的方式包含文件是不会受到任何限制 </p>
-<p>![3](C:\Users\52899\Desktop\DVWA\File Inclusion\3.png)</p>
-<p><strong>三.High级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">&lt;php</span><br><span class="line"></span><br><span class="line"><span class="comment">//Thepagewewishtodisplay</span></span><br><span class="line">$file=$_GET[<span class="string">'page'</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//Inputvalidation</span></span><br><span class="line"><span class="keyword">if</span>(!fnmatch(<span class="string">"file*"</span>,$file)&amp;&amp;$file!=<span class="string">"include.php"</span>)&#123;</span><br><span class="line">   <span class="comment">//Thisisn'tthepagewewant!</span></span><br><span class="line"><span class="keyword">echo</span><span class="string">"ERROR:Filenotfound!"</span>;</span><br><span class="line"><span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
-<p>代码分析：</p>
-<p>High级别的代码使用了fnmatch函数检查page参数，要求page参数的开头必须是file，服务器才会去包含相应的文件。 </p>
-<p>漏洞利用：可以利用file协议绕过防护策略 </p>
-<p><code>http://127.0.0.1/DVWA-master/vulnerabilities/fi/page=file:///W:/wamp/www/DVWA-master/php.ini</code></p>
-<p>![4](C:\Users\52899\Desktop\DVWA\File Inclusion\4.png)</p>
-<p><strong>四.Impossible级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&lt;php</span><br><span class="line"><span class="comment">//Thepagewewishtodisplay</span></span><br><span class="line">$file=$_GET[<span class="string">'page'</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">//Onlyallowinclude.phporfile&#123;1..3&#125;.php</span></span><br><span class="line"><span class="keyword">if</span>($file!=<span class="string">"include.php"</span>&amp;&amp;$file!=<span class="string">"file1.php"</span>&amp;&amp;$file!=<span class="string">"file2.php"</span>&amp;&amp;$file!=<span class="string">"file3.php"</span>)&#123;</span><br><span class="line"><span class="comment">//Thisisn'tthepagewewant!</span></span><br><span class="line"><span class="keyword">echo</span><span class="string">"ERROR:Filenotfound!"</span>;</span><br><span class="line"><span class="keyword">exit</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&gt;</span><br></pre></td></tr></table></figure>
-
-
-
-<p>代码分析：</p>
-<p>Impossible级别的代码使用了白名单机制进行防护，page参数必须为“include.php”、“file1.php”、“file2.php”、“file3.php”之一，彻底杜绝了文件包含漏洞 </p>
-
-          
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/08/10/CSRF/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1644,173 +883,6 @@
             </a>
           </div>
           <!--/noindex-->
-        
-      
-    </div>
-    
-    
-    
-
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
-      
-
-  
-
-  
-  
-  
-
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/08/08/images/sqli/sql/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="ChongMing">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.jpg">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="重明">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2018/08/08/images/sqli/sql/" itemprop="url">DVWA-SQL Injection</a></h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-08-08T19:51:24+08:00">
-                2018-08-08
-              </time>
-            
-
-            
-
-            
-          </span>
-
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h1 id="DVWA练习"><a href="#DVWA练习" class="headerlink" title="DVWA练习"></a><em>DVWA练习</em></h1><h3 id="SQL-Injection"><a href="#SQL-Injection" class="headerlink" title="SQL Injection"></a>SQL Injection</h3><p><strong>一.LOW级别</strong></p>
-<p>服务器端代码:<br> <figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_REQUEST[ <span class="string">'Submit'</span> ] ) ) &#123;</span><br><span class="line">	<span class="comment">// Get input</span></span><br><span class="line">	$id = $_REQUEST[ <span class="string">'id'</span> ];</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Check database</span></span><br><span class="line">	$query  = <span class="string">"SELECT first_name, last_name FROM users WHERE user_id = '$id';"</span>;</span><br><span class="line">	$result = mysql_query($getid) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> );</span><br><span class="line"></span><br><span class="line">	<span class="comment">// Get results</span></span><br><span class="line">	<span class="keyword">while</span>( $row = mysqli_fetch_assoc( $result ) ) &#123;</span><br><span class="line">		<span class="comment">// Get values</span></span><br><span class="line">		$first = $row[<span class="string">"first_name"</span>];</span><br><span class="line">		$last  = $row[<span class="string">"last_name"</span>];</span><br><span class="line"></span><br><span class="line">		<span class="comment">// Feedback for end user</span></span><br><span class="line">		$html .= <span class="string">"&lt;pre&gt;ID: &#123;$id&#125;&lt;br /&gt;First name: &#123;$first&#125;&lt;br /&gt;Surname: &#123;$last&#125;&lt;/pre&gt;"</span>;</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	mysqli_close($GLOBALS[<span class="string">"___mysqli_ston"</span>]);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure><br> 代码分析：</p>
-<h5 id="id-GET-‘id’"><a href="#id-GET-‘id’" class="headerlink" title="$id = $_GET[‘id’];"></a><strong>$id = $_GET[‘id’];</strong></h5><p> 这里对传入的参数id未作任何过滤和防注入处理</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$getid = <span class="string">"SELECT first_name, last_name FROM users WHERE user_id = '$id'"</span>;</span><br><span class="line">$result = mysql_query($getid) <span class="keyword">or</span> <span class="keyword">die</span>(<span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> );</span><br></pre></td></tr></table></figure>
-
-<p>getid和result都未对id做任何处理所以存在很明显的注入漏洞<br><img src="file:///C:/Users/52899/Desktop/DVWA/sqli/1.png" alt="img"><br>使用相应的sql注入语句即可得到数据库的内容</p>
-<p><strong>二.Medium级别</strong></p>
-<p>服务器端代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_POST[ <span class="string">'Submit'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $id = $_POST[ <span class="string">'id'</span> ]; </span><br><span class="line">    $id = mysql_real_escape_string( $id ); </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check database </span></span><br><span class="line">    $query  = <span class="string">"SELECT first_name, last_name FROM users WHERE user_id = $id;"</span>; </span><br><span class="line">    $result = mysql_query( $query ) <span class="keyword">or</span> <span class="keyword">die</span>( <span class="string">'&lt;pre&gt;'</span> . mysql_error() . <span class="string">'&lt;/pre&gt;'</span> ); </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get results </span></span><br><span class="line">    $num = mysql_numrows( $result ); </span><br><span class="line">    $i   = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">while</span>( $i &lt; $num ) &#123; </span><br><span class="line">        <span class="comment">// Display values </span></span><br><span class="line">        $first = mysql_result( $result, $i, <span class="string">"first_name"</span> ); </span><br><span class="line">        $last  = mysql_result( $result, $i, <span class="string">"last_name"</span> ); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Feedback for end user </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;ID: &#123;$id&#125;&lt;br /&gt;First name: &#123;$first&#125;&lt;br /&gt;Surname: &#123;$last&#125;&lt;/pre&gt;"</span>; </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Increase loop count </span></span><br><span class="line">        $i++; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    <span class="comment">//mysql_close(); </span></span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<blockquote>
-<p><strong>$id=$_GET[‘id’]；</strong></p>
-</blockquote>
-<blockquote>
-<p><strong>$id=mysql_real_escape_string($id); 这里对id进行了转义的操作</strong></p>
-</blockquote>
-<blockquote>
-<p><strong>$getid=”SELECTfirst_name,last_nameFROMusersWHEREuser_id=$id”;</strong></p>
-</blockquote>
-<h4 id="mysql-real-escape-string函数对id参数进行了转义操作"><a href="#mysql-real-escape-string函数对id参数进行了转义操作" class="headerlink" title="mysql_real_escape_string函数对id参数进行了转义操作"></a>mysql_real_escape_string函数对id参数进行了转义操作</h4><p>具体的转义包括</p>
-<ul>
-<li>‘ =&gt; &#39;</li>
-<li>“ =&gt; &quot;</li>
-<li>\ =&gt; \</li>
-<li>\n =&gt; \n</li>
-</ul>
-<h5 id="可以抓包对id参数的内容修改进行sql注入"><a href="#可以抓包对id参数的内容修改进行sql注入" class="headerlink" title="可以抓包对id参数的内容修改进行sql注入"></a>可以抓包对id参数的内容修改进行sql注入</h5><p><img src="file:///C:/Users/52899/Desktop/DVWA/sqli/2.png" alt="img"></p>
-<p>构造sql语句进行注入</p>
-<p>抓包修改参数id为</p>
-<p><code>1 or 1=1 union select group_concat(user_id,first_name,last_name),group_concat(password) from users #</code></p>
-<p>得到数据</p>
-<p><img src="file:///C:/Users/52899/Desktop/DVWA/sqli/1.png" alt="img"></p>
-<p><strong>三.High级别</strong></p>
-<p>服务器端代码</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_SESSION [ <span class="string">'id'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $id = $_SESSION[ <span class="string">'id'</span> ]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Check database </span></span><br><span class="line">    $query  = <span class="string">"SELECT first_name, last_name FROM users WHERE user_id = $id LIMIT 1;"</span>; </span><br><span class="line">    $result = mysql_query( $query ) <span class="keyword">or</span> <span class="keyword">die</span>( <span class="string">'&lt;pre&gt;Something went wrong.&lt;/pre&gt;'</span> ); </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get results </span></span><br><span class="line">    $num = mysql_numrows( $result ); </span><br><span class="line">    $i   = <span class="number">0</span>; </span><br><span class="line">    <span class="keyword">while</span>( $i &lt; $num ) &#123; </span><br><span class="line">        <span class="comment">// Get values </span></span><br><span class="line">        $first = mysql_result( $result, $i, <span class="string">"first_name"</span> ); </span><br><span class="line">        $last  = mysql_result( $result, $i, <span class="string">"last_name"</span> ); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Feedback for end user </span></span><br><span class="line">        <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;ID: &#123;$id&#125;&lt;br /&gt;First name: &#123;$first&#125;&lt;br /&gt;Surname: &#123;$last&#125;&lt;/pre&gt;"</span>; </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Increase loop count </span></span><br><span class="line">        $i++; </span><br><span class="line">    &#125; </span><br><span class="line"></span><br><span class="line">    mysql_close(); </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-<p> 与Medium级别的代码相比，High级别的只是在SQL查询语句中添加了<strong>LIMIT 1，</strong>希望以此控制只输出<strong>一个结果</strong>。</p>
-<p><strong>可以通过#将其注释掉</strong></p>
-<p><code>1 or 1=1 union select group_concat(user_id,first_name,last_name),group_concat(password) from users #</code></p>
-<p><img src="file:///C:/Users/52899/Desktop/DVWA/sqli/1.png" alt="img"></p>
-<p><strong>四.Impossible级别</strong></p>
-<p>服务器代码：</p>
-<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span> </span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>( <span class="keyword">isset</span>( $_GET[ <span class="string">'Submit'</span> ] ) ) &#123; </span><br><span class="line">    <span class="comment">// Check Anti-CSRF token </span></span><br><span class="line">    checkToken( $_REQUEST[ <span class="string">'user_token'</span> ], $_SESSION[ <span class="string">'session_token'</span> ], <span class="string">'index.php'</span> ); </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Get input </span></span><br><span class="line">    $id = $_GET[ <span class="string">'id'</span> ]; </span><br><span class="line"></span><br><span class="line">    <span class="comment">// Was a number entered? </span></span><br><span class="line">    <span class="keyword">if</span>(is_numeric( $id )) &#123; </span><br><span class="line">        <span class="comment">// Check the database </span></span><br><span class="line">        $data = $db-&gt;prepare( <span class="string">'SELECT first_name, last_name FROM users WHERE user_id = (:id) LIMIT 1;'</span> ); </span><br><span class="line">        $data-&gt;bindParam( <span class="string">':id'</span>, $id, PDO::PARAM_INT ); </span><br><span class="line">        $data-&gt;execute(); </span><br><span class="line">        $row = $data-&gt;fetch(); </span><br><span class="line"></span><br><span class="line">        <span class="comment">// Make sure only 1 result is returned </span></span><br><span class="line">        <span class="keyword">if</span>( $data-&gt;rowCount() == <span class="number">1</span> ) &#123; </span><br><span class="line">            <span class="comment">// Get values </span></span><br><span class="line">            $first = $row[ <span class="string">'first_name'</span> ]; </span><br><span class="line">            $last  = $row[ <span class="string">'last_name'</span> ]; </span><br><span class="line"></span><br><span class="line">            <span class="comment">// Feedback for end user </span></span><br><span class="line">            <span class="keyword">echo</span> <span class="string">"&lt;pre&gt;ID: &#123;$id&#125;&lt;br /&gt;First name: &#123;$first&#125;&lt;br /&gt;Surname: &#123;$last&#125;&lt;/pre&gt;"</span>; </span><br><span class="line">        &#125; </span><br><span class="line">    &#125; </span><br><span class="line">&#125; </span><br><span class="line"></span><br><span class="line"><span class="comment">// Generate Anti-CSRF token </span></span><br><span class="line">generateSessionToken(); </span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
-
-
-
-<p>Impossible级别的代码采用的POD技术，划清了代码与数据的界限，有效的防御了SQL注入</p>
-<p>int型参数增加is_numeric判断，不接受其他字符串，避免了sql注入</p>
-
-          
         
       
     </div>
@@ -1990,11 +1062,269 @@
 
 
     
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/05/22/%E5%88%9D%E6%B6%89Web%E5%AE%89%E5%85%A8/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/22/%E5%88%9D%E6%B6%89Web%E5%AE%89%E5%85%A8/" itemprop="url">Web Security</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-22T22:09:00+08:00">
+                2018-05-22
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <hr>
+<h1 id="常见漏洞介绍"><a href="#常见漏洞介绍" class="headerlink" title="常见漏洞介绍"></a>常见漏洞介绍</h1><p>由于接触的时间比较短，所以就从从最基础的Web安全开始说起（只是应用漏洞中的一小块）</p>
+<h4 id="输入验证测试"><a href="#输入验证测试" class="headerlink" title="输入验证测试"></a><strong>输入验证测试</strong></h4><ol>
+<li>SQLI</li>
+<li>XSS</li>
+<li>文件包含</li>
+<li>文件读取</li>
+</ol>
+<p>以及中间件安全中的解析漏洞</p>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/22/%E5%88%9D%E6%B6%89Web%E5%AE%89%E5%85%A8/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://mktubu.github.io/2018/05/20/Pentester-of-XSS/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2018/05/20/Pentester-of-XSS/" itemprop="url">Pentester of XSS</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-05-20T19:51:24+08:00">
+                2018-05-20
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          <h1 id="Pentester-of-XSS"><a href="#Pentester-of-XSS" class="headerlink" title="Pentester of XSS"></a>Pentester of XSS</h1><h5 id="进入到web-for-pentester-中，对XSS进行测试"><a href="#进入到web-for-pentester-中，对XSS进行测试" class="headerlink" title="进入到web for pentester 中，对XSS进行测试"></a><em>进入到web for pentester 中，对XSS进行测试</em></h5><p><img src="/images/xss1.png" alt="1"></p>
+<h3 id="example1-第一题比较简单，常规的就可以"><a href="#example1-第一题比较简单，常规的就可以" class="headerlink" title="example1.第一题比较简单，常规的就可以"></a>example1.第一题比较简单，常规的就可以</h3><p><img src="/images/xss2.png" alt="2"></p>
+<h3 id="example2-就要进行简单的绕过了"><a href="#example2-就要进行简单的绕过了" class="headerlink" title="example2. 就要进行简单的绕过了"></a>example2. 就要进行简单的绕过了</h3>
+          <!--noindex-->
+          <div class="post-button text-center">
+            <a class="btn" href="/2018/05/20/Pentester-of-XSS/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+          <!--/noindex-->
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
   </section>
 
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">&lt;i class&#x3D;&quot;fa fa-angle-right&quot;&gt;&lt;&#x2F;i&gt;</a>
+    <a class="extend prev" rel="prev" href="/page/2/">&lt;i class&#x3D;&quot;fa fa-angle-left&quot;&gt;&lt;&#x2F;i&gt;</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
   </nav>
 
 
@@ -2044,7 +1374,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>

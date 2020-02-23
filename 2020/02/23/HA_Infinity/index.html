@@ -85,9 +85,9 @@
 <meta property="og:url" content="http://mktubu.github.io/2020/02/23/HA_Infinity/index.html">
 <meta property="og:site_name" content="重明">
 <meta property="og:description" content="HA：Infinity Stones 靶机测试  Description： 灭霸认为，如果他杀死了宇宙中所有生命的一半，他将恢复平衡。为此，他需要所有六块无限宝石来驱动无限手套，这反过来又使他能够弯曲时间，空间，能量以及物理和现实定律。但是这次复仇者联盟比灭霸领先一步。复仇者联盟在这个CTF中隐藏了所有无限石。帮助复仇者联盟获得所有无限石并恢复宇宙的平衡。">
-<meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5Cinfinity.jpg">
-<meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C1.png">
-<meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C2.png">
+<meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/infinity.jpg">
+<meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/HA_Infinity%5C1.png">
+<meta property="og:image" content="http://mktubu.github.io/images/HA/2.png">
 <meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C3.png">
 <meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C4.png">
 <meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C5.png">
@@ -116,11 +116,11 @@
 <meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C29.png">
 <meta property="og:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C30.png">
 <meta property="article:published_time" content="2020-02-23T11:54:50.000Z">
-<meta property="article:modified_time" content="2020-02-23T15:10:56.549Z">
+<meta property="article:modified_time" content="2020-02-23T16:11:15.937Z">
 <meta property="article:author" content="ChongMing">
 <meta property="article:tag" content="靶机测试">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/%5Cimages%5CHA%5Cinfinity.jpg">
+<meta name="twitter:image" content="http://mktubu.github.io/2020/02/23/HA_Infinity/infinity.jpg">
 
 
 
@@ -409,7 +409,7 @@
         <p><strong>HA：Infinity Stones 靶机测试</strong></p>
 <ul>
 <li><p><strong>Description：</strong></p>
-<p>灭霸认为，如果他杀死了宇宙中所有生命的一半，他将恢复平衡。为此，他需要所有六块无限宝石来驱动无限手套，这反过来又使他能够弯曲时间，空间，能量以及物理和现实定律。但是这次复仇者联盟比灭霸领先一步。复仇者联盟在这个CTF中隐藏了所有无限石。帮助复仇者联盟获得所有无限石并恢复宇宙的平衡。<br><img src="%5Cimages%5CHA%5Cinfinity.jpg" alt="infinity"></p>
+<p>灭霸认为，如果他杀死了宇宙中所有生命的一半，他将恢复平衡。为此，他需要所有六块无限宝石来驱动无限手套，这反过来又使他能够弯曲时间，空间，能量以及物理和现实定律。但是这次复仇者联盟比灭霸领先一步。复仇者联盟在这个CTF中隐藏了所有无限石。帮助复仇者联盟获得所有无限石并恢复宇宙的平衡。<br><img src="/2020/02/23/HA_Infinity/infinity.jpg" alt="infinity"></p>
 <a id="more"></a>
 <p>该机器包含6种带有6种不同标志的无限石来测试您的技能。</p>
 <ul>
@@ -422,18 +422,18 @@
 </ul>
 <p>可以用不同的方式找到每块石头。</p>
 </li>
-<li><p><strong>使用netdiscover发现目标IP<img src="%5Cimages%5CHA%5C1.png" alt="1"></strong></p>
+<li><p><strong>使用netdiscover发现目标IP<img src="/2020/02/23/HA_Infinity/HA_Infinity%5C1.png" alt="1"></strong></p>
 </li>
-<li><p><strong>nmap扫描端口：</strong><img src="%5Cimages%5CHA%5C2.png" alt="2"></p>
+<li><p><strong>nmap扫描端口：</strong><img src="/images/HA/2.png" alt="2"></p>
 <ul>
-<li><p>扫描结果为三个端口，首先查看<strong>80</strong>端口<img src="%5Cimages%5CHA%5C3.png" alt="3">)似乎并没有什么发现，使用<strong>dirb</strong>扫描目录<img src="%5Cimages%5CHA%5C4.png" alt="4">)但是只有<strong>/img</strong>和<strong>/wifi</strong>为重要目录。在<strong>/img</strong>藏着一张宇宙魔方的图片<img src="%5Cimages%5CHA%5C5.png" alt="5">我们知道空间宝石在宇宙魔方的内部，所以判断该图片有隐藏的信息，使用<strong>exiftool</strong>查看图像隐藏的数据</p>
-<p><img src="%5Cimages%5CHA%5C6.png" alt="6">找到隐藏在图片中的空间宝石</p>
+<li><p>扫描结果为三个端口，首先查看<strong>80</strong>端口<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C3.png" alt="3">)似乎并没有什么发现，使用<strong>dirb</strong>扫描目录<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C4.png" alt="4">)但是只有<strong>/img</strong>和<strong>/wifi</strong>为重要目录。在<strong>/img</strong>藏着一张宇宙魔方的图片<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C5.png" alt="5">我们知道空间宝石在宇宙魔方的内部，所以判断该图片有隐藏的信息，使用<strong>exiftool</strong>查看图像隐藏的数据</p>
+<p><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C6.png" alt="6">找到隐藏在图片中的空间宝石</p>
 </li>
-<li><p>然后我们在<strong>443</strong>端口上发现了一个<strong>https</strong>的<strong>web</strong>页面，因为<strong>SSL证书</strong>具有不安全的地方在证书处找到了第二块宝石，此处比较简单。<img src="%5Cimages%5CHA%5C10.png" alt="10"></p>
+<li><p>然后我们在<strong>443</strong>端口上发现了一个<strong>https</strong>的<strong>web</strong>页面，因为<strong>SSL证书</strong>具有不安全的地方在证书处找到了第二块宝石，此处比较简单。<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C10.png" alt="10"></p>
 </li>
-<li><p>接下来访问<strong>8080端口</strong>的内容<img src="%5Cimages%5CHA%5C11.png" alt="11">发现是一个Jenkins框架的Web页面，由于我们没有其他信息，无法得到用户名和密码所以暂且放到一边</p>
+<li><p>接下来访问<strong>8080端口</strong>的内容<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C11.png" alt="11">发现是一个Jenkins框架的Web页面，由于我们没有其他信息，无法得到用户名和密码所以暂且放到一边</p>
 </li>
-<li><p>最后在<strong>/wifi</strong>目录下发现了重要内容<img src="%5Cimages%5CHA%5C7.png" alt="7">)发现了一个<strong>cap</strong>文件和一个<strong>pwd.txt</strong>提示<img src="%5Cimages%5CHA%5C8.png" alt="8"></p>
+<li><p>最后在<strong>/wifi</strong>目录下发现了重要内容<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C7.png" alt="7">)发现了一个<strong>cap</strong>文件和一个<strong>pwd.txt</strong>提示<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C8.png" alt="8"></p>
 </li>
 </ul>
 <blockquote>
@@ -442,23 +442,23 @@
 <p>复仇者联盟第一次在电影院上映的日期</p>
 </blockquote>
 <p>  这里我们可以使用<strong>crunch</strong>来创建密码字典 <a href="https://www.cnblogs.com/wpjamer/p/9913380.html" target="_blank" rel="noopener">（crunch使用说明）</a></p>
-<p>  <img src="%5Cimages%5CHA%5C9.png" alt="9"></p>
+<p>  <img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C9.png" alt="9"></p>
 <p>  然后使用我们创建的字典和<strong>wifi</strong>数据包来找到密钥，这里使用<strong>aircrack-ng</strong>工具</p>
-<p>  <img src="%5Cimages%5CHA%5C12.png" alt="12"></p>
-<p>  找到<strong>wifi</strong>为<code>gamA00fe2012</code>，尝试使用该密钥作为目录并且找到了一个<strong>realsstone.txt</strong>，即找到了现实宝石。<img src="%5Cimages%5CHA%5C14.png" alt="14"></p>
+<p>  <img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C12.png" alt="12"></p>
+<p>  找到<strong>wifi</strong>为<code>gamA00fe2012</code>，尝试使用该密钥作为目录并且找到了一个<strong>realsstone.txt</strong>，即找到了现实宝石。<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C14.png" alt="14"></p>
 <ul>
-<li>然后我们再次回到最初的<strong>Web</strong>页面，在左上角有一个重定向链接<img src="%5Cimages%5CHA%5C13.png" alt="13">)这是一个有关于复仇者的测验（你能对几个呢？）完成测验后发现答案是一个二进制值<code>01101001</code><img src="%5Cimages%5CHA%5C15.png" alt="15"></li>
+<li>然后我们再次回到最初的<strong>Web</strong>页面，在左上角有一个重定向链接<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C13.png" alt="13">)这是一个有关于复仇者的测验（你能对几个呢？）完成测验后发现答案是一个二进制值<code>01101001</code><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C15.png" alt="15"></li>
 </ul>
-<p>继续上边用过的套路，将该二进制值作为目录访问，得到了一个提示<strong>hints.txt</strong><img src="%5Cimages%5CHA%5C16.png" alt="16"></p>
-<p>找到了一堆经过<strong>Brainfuck</strong>加密的密文，经过解密后可以得到一对用户名和密码<img src="%5Cimages%5CHA%5C17.png" alt="17"></p>
+<p>继续上边用过的套路，将该二进制值作为目录访问，得到了一个提示<strong>hints.txt</strong><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C16.png" alt="16"></p>
+<p>找到了一堆经过<strong>Brainfuck</strong>加密的密文，经过解密后可以得到一对用户名和密码<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C17.png" alt="17"></p>
 <ul>
-<li>接下来就可以在<strong>8080</strong>端口的页面使用该用户名登录了<img src="%5Cimages%5CHA%5C18.png" alt="18"></li>
+<li>接下来就可以在<strong>8080</strong>端口的页面使用该用户名登录了<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C18.png" alt="18"></li>
 </ul>
 </li>
 </ul>
 <ul>
 <li><p><strong>利用Jenkins框架漏洞</strong></p>
-<p><img src="%5Cimages%5CHA%5C19.png" alt="19">在设置完成后会得到一个会话，在获取<strong>shell</strong>会无法正确打开，所以需要使用<strong>python</strong>来尝试反弹<strong>shell</strong></p>
+<p><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C19.png" alt="19">在设置完成后会得到一个会话，在获取<strong>shell</strong>会无法正确打开，所以需要使用<strong>python</strong>来尝试反弹<strong>shell</strong></p>
   <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -c &#39;import pty;pty.spawn(&quot;&#x2F;bin&#x2F;bash&quot;)</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -467,31 +467,31 @@
 
 </li>
 </ul>
-<p><img src="%5Cimages%5CHA%5C20.png" alt="20"></p>
+<p><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C20.png" alt="20"></p>
 <p>枚举出来的文件中发现了<strong>/opt/script/</strong>目录，在该目录发现了另一块宝石</p>
-<p><img src="%5Cimages%5CHA%5C21.png" alt="21"></p>
+<p><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C21.png" alt="21"></p>
 <ul>
-<li><p><strong>进一步探索/opt</strong><img src="%5Cimages%5CHA%5C22.png" alt="22"><br>推测<strong>morag.kdbx</strong>比较重要，在复仇者系列中有一颗名为<strong>Morag</strong>的星球，即为星爵初次登场夺取“宇宙灵球（力量宝石）”的地方，而<strong>kdbx</strong>后缀提醒我们这个可能是个密钥数据库。</p>
-<p>使用<strong>john</strong>来破解该<br><strong>hash</strong><img src="%5Cimages%5CHA%5C24.png" alt="24">)使用<strong>keepass</strong>打开<strong>morag.kdbx</strong>可以找到力量宝石<img src="%5Cimages%5CHA%5C25.png" alt="25"></p>
+<li><p><strong>进一步探索/opt</strong><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C22.png" alt="22"><br>推测<strong>morag.kdbx</strong>比较重要，在复仇者系列中有一颗名为<strong>Morag</strong>的星球，即为星爵初次登场夺取“宇宙灵球（力量宝石）”的地方，而<strong>kdbx</strong>后缀提醒我们这个可能是个密钥数据库。</p>
+<p>使用<strong>john</strong>来破解该<br><strong>hash</strong><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C24.png" alt="24">)使用<strong>keepass</strong>打开<strong>morag.kdbx</strong>可以找到力量宝石<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C25.png" alt="25"></p>
 </li>
 </ul>
 </li>
 </ul>
 <ul>
-<li><p>在<strong>Creds</strong>中发现了一个<strong>base64</strong>字符串<img src="%5Cimages%5CHA%5C26.png" alt="26"></p>
-<p>解码后得到一组用户名和密码<img src="%5Cimages%5CHA%5C27.png" alt="27"></p>
+<li><p>在<strong>Creds</strong>中发现了一个<strong>base64</strong>字符串<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C26.png" alt="26"></p>
+<p>解码后得到一组用户名和密码<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C27.png" alt="27"></p>
 <p>推测可能为<strong>22</strong>端口的登陆凭据</p>
 </li>
-<li><p>使用<strong>ssh</strong>连接<img src="%5Cimages%5CHA%5C28.png" alt="28"></p>
+<li><p>使用<strong>ssh</strong>连接<img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C28.png" alt="28"></p>
 </li>
 </ul>
 <ul>
 <li><p><strong>提权</strong></p>
-<p>使用命令<code>sudo -l</code>查看哪个用户没有密码，结果为<strong>/usr/bin/stp</strong><img src="%5Cimages%5CHA%5C29.png" alt="29">因此我们使用以下命令将用户切换到<strong>ftp</strong>且进一步得到<strong>root</strong>权限</p>
+<p>使用命令<code>sudo -l</code>查看哪个用户没有密码，结果为<strong>/usr/bin/stp</strong><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C29.png" alt="29">因此我们使用以下命令将用户切换到<strong>ftp</strong>且进一步得到<strong>root</strong>权限</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">sudo ftp</span><br><span class="line">!/bin/bash</span><br></pre></td></tr></table></figure>
 
 <p>权限提升后得到灵魂宝石，集齐宝石。只要轻轻一个响指，就可以在宇宙中实现完美的平衡！！！</p>
-<p><img src="%5Cimages%5CHA%5C30.png" alt="30"></p>
+<p><img src="/2020/02/23/HA_Infinity/%5Cimages%5CHA%5C30.png" alt="30"></p>
 </li>
 </ul>
 
@@ -524,8 +524,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2020/02/23/images/HA/HA_Infinity/" rel="next" title="Infinity Stones">
-                <i class="fa fa-chevron-left"></i> Infinity Stones
+              <a href="/2019/07/25/XXE_LAB/" rel="next" title="XXE简介">
+                <i class="fa fa-chevron-left"></i> XXE简介
               </a>
             
           </div>
@@ -534,8 +534,8 @@
 
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2020/02/24/images/CSRF/111/" rel="prev" title="images/CSRF/111">
-                images/CSRF/111 <i class="fa fa-chevron-right"></i>
+              <a href="/2020/02/23/HA_Infinity/HA_Infinity/" rel="prev" title="Infinity Stones">
+                Infinity Stones <i class="fa fa-chevron-right"></i>
               </a>
             
           </div>
@@ -608,7 +608,7 @@
               
                 <a href="/archives/%20%7C%7C%20archive">
               
-                  <span class="site-state-item-count">33</span>
+                  <span class="site-state-item-count">27</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
