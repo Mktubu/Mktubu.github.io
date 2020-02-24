@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mktubu.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="哈希长度扩展攻击简介： MAC用来验证信息的真实性，一般的MAC算法为：服务器把secret和message连接到一起，然后用消息摘要算法如MD5或SHA1等提取摘要。 在哈希摘要算法中，如MD5,SHA1,SHA2，都是基于Merkle-Damgard结构。这类算法存在一个问题，在知道hash(secret+message)的值及secret的长度的情况下，可以推算出hash(secret+m">
+<meta property="og:type" content="article">
+<meta property="og:title" content="hash_attacks">
+<meta property="og:url" content="https://mktubu.github.io/2019/07/10/hash_attacks/index.html">
+<meta property="og:site_name" content="重明">
+<meta property="og:description" content="哈希长度扩展攻击简介： MAC用来验证信息的真实性，一般的MAC算法为：服务器把secret和message连接到一起，然后用消息摘要算法如MD5或SHA1等提取摘要。 在哈希摘要算法中，如MD5,SHA1,SHA2，都是基于Merkle-Damgard结构。这类算法存在一个问题，在知道hash(secret+message)的值及secret的长度的情况下，可以推算出hash(secret+m">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mktubu.github.io/images/hash_attack/1.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/hash_attack/2.jpg">
+<meta property="article:published_time" content="2019-07-10T11:51:24.000Z">
+<meta property="article:modified_time" content="2020-02-24T04:30:27.182Z">
+<meta property="article:author" content="ChongMing">
+<meta property="article:tag" content="hash">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mktubu.github.io/images/hash_attack/1.jpg">
+
+<link rel="canonical" href="https://mktubu.github.io/2019/07/10/hash_attacks/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>hash_attacks | 重明</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="重明" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">重明</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/07/10/hash_attacks/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          hash_attacks
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-07-10 19:51:24" itemprop="dateCreated datePublished" datetime="2019-07-10T19:51:24+08:00">2019-07-10</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-24 12:30:27" itemprop="dateModified" datetime="2020-02-24T12:30:27+08:00">2020-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%BC%8F%E6%B4%9E/" itemprop="url" rel="index"><span itemprop="name">漏洞</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.3k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <ul>
+<li><p><strong>哈希长度扩展攻击简介：</strong></p>
+<p><strong>MAC</strong>用来验证信息的真实性，一般的<strong>MAC</strong>算法为：服务器把<strong>secret</strong>和<strong>message</strong>连接到一起，然后用消息摘要算法如<strong>MD5</strong>或<strong>SHA1</strong>等提取摘要。</p>
+<p>在哈希摘要算法中，如<strong>MD5,SHA1,SHA2</strong>，都是基于<code>Merkle-Damgard</code>结构。这类算法存在一个问题，在知道hash(secret+message)的值及secret的长度的情况下，可以推算出<code>hash(secret+massage||padding||random)</code>(random为任意数据，||为连接符可以为空，<strong>padding</strong>是<strong>secret</strong>后的填充字节。<strong>hash</strong>的<strong>padding</strong>字节包含整个消息的长度，因此要计算出<strong>padding</strong>的值，<strong>secret</strong>的长度是必不可少的。</p>
+<a id="more"></a>
+<p>在填空之后，服务器算出的原始的hash值，正好与添加扩展字符串并覆盖初始链变量所计算出来的一样。攻击者的哈希计算过程，相当于从服务器计算过程的一半继续进行下去，因此提交hash值可以通过验证。</p>
+<p>哈希长度扩展攻击主要针对于某些包含额外信息的加密散列函数。</p>
+</li>
+<li><p><strong>MD5加密过程：</strong></p>
+<p>MD5加密过程中<strong>64</strong>个字节<strong>(512bits)</strong>为一组，属于分组加密，而且在运算的过程中将<strong>512</strong>比特分为<code>32bit*16</code>块，分块运算。关键在于利用MD5的填充，对加密的字符进行填充（第一位为1，其余位为0），使二进制补位长度为512的倍数减去<strong>64</strong>，最后的<strong>64</strong>位再补充为原来的字符串长度，这样刚好补满<strong>512</strong>的倍数，如果当前明文正好是<strong>512</strong>的倍数则再加上一个<strong>512bit</strong>的一组。在<strong>MD5</strong>加密中，每一块加密得到的密文作为下一次加密的初始向量。</p>
+</li>
+<li><p>例题：</p>
+<p>源码：</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">$secret=<span class="string">"XXXXXXXXXXXXXXX"</span>; <span class="comment">// This secret is 15 characters long for security!</span></span><br><span class="line">$username=<span class="string">"admin"</span>;</span><br><span class="line">$password = $_POST[<span class="string">"password"</span>];</span><br><span class="line"><span class="keyword">if</span>($COOKIE[<span class="string">"getmein"</span>] === md5($secret . urldecode($username . $password)))&#123;</span><br><span class="line">    <span class="keyword">echo</span> <span class="string">"Congratulations! You are a registered user.\n"</span>;</span><br><span class="line">    <span class="keyword">die</span> (<span class="string">"The flag is "</span>. $flag);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="keyword">die</span>(<span class="string">"Your cookies don't match up! STOP HACKING THIS SITE."</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在题目中可以得到<code>md5($secret . urldecode($username . $password)))</code>的值</p>
+<p>secrce为密文，长度为15位，后边加上一个<code>admin</code>则长度为20位，而数据也为admin，可以在<strong>cookie</strong>中看到，此时的哈希值</p>
+<p><img src="/images/hash_attack/1.jpg" alt="1"></p>
+<p>这时使用hashdump附加的数据至少在1位以上，会得到一个新的签名和填充的数据</p>
+<p>将新的签名设置到cookie的getmein中，然后用post提交password即可</p>
+<p><img src="/images/hash_attack/2.jpg" alt="2"></p>
+<p>从\x80开始位我们主动的填充，知道末尾的admin前的\x00为止，算上secret刚好15字节</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/hash/" rel="tag"># hash</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/06/11/DDCTF/" rel="prev" title="ddctf">
+      <i class="fa fa-chevron-left"></i> ddctf
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/21/Machine_Matrix_v3/" rel="next" title="Matrix靶机测试">
+      Matrix靶机测试 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChongMing"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ChongMing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mktubu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mktubu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:528999959@qq.com" title="E-Mail → mailto:528999959@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChongMing | 感谢阅读</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">102k</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

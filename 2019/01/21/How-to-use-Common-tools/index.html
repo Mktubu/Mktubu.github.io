@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mktubu.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="Hydra暴力破解1.破解telnet服务登陆账号和密码： hydra 127.0.0.1 -l telnet -P dice.txt telnet 命令解释：  ​    被攻击主机IP：127.0.0.1：  ​    -l:指定登陆账号，大写-L可以指定文件进行账号破解  ​    -P：指定要破解的密码字典，小写-p指定具体的密码">
+<meta property="og:type" content="article">
+<meta property="og:title" content="How to use Common tools">
+<meta property="og:url" content="https://mktubu.github.io/2019/01/21/How-to-use-Common-tools/index.html">
+<meta property="og:site_name" content="重明">
+<meta property="og:description" content="Hydra暴力破解1.破解telnet服务登陆账号和密码： hydra 127.0.0.1 -l telnet -P dice.txt telnet 命令解释：  ​    被攻击主机IP：127.0.0.1：  ​    -l:指定登陆账号，大写-L可以指定文件进行账号破解  ​    -P：指定要破解的密码字典，小写-p指定具体的密码">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mktubu.github.io/2019/01/21/How-to-use-Common-tools/common_tool/1.png">
+<meta property="article:published_time" content="2019-01-21T13:38:39.000Z">
+<meta property="article:modified_time" content="2020-02-24T02:49:07.795Z">
+<meta property="article:author" content="ChongMing">
+<meta property="article:tag" content="tools">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mktubu.github.io/2019/01/21/How-to-use-Common-tools/common_tool/1.png">
+
+<link rel="canonical" href="https://mktubu.github.io/2019/01/21/How-to-use-Common-tools/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>How to use Common tools | 重明</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="重明" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">重明</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/01/21/How-to-use-Common-tools/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          How to use Common tools
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-01-21 21:38:39" itemprop="dateCreated datePublished" datetime="2019-01-21T21:38:39+08:00">2019-01-21</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-24 10:49:07" itemprop="dateModified" datetime="2020-02-24T10:49:07+08:00">2020-02-24</time>
+              </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>6.3k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="Hydra暴力破解"><a href="#Hydra暴力破解" class="headerlink" title="Hydra暴力破解"></a><strong>Hydra暴力破解</strong></h4><p>1.破解telnet服务登陆账号和密码：</p>
+<p><code>hydra 127.0.0.1 -l telnet -P dice.txt telnet</code></p>
+<p><strong>命令解释：</strong></p>
+<ul>
+<li><p>​    被攻击主机IP：127.0.0.1：</p>
+</li>
+<li><p>​    -l:指定登陆账号，大写-L可以指定文件进行账号破解</p>
+</li>
+<li><p>​    -P：指定要破解的密码字典，小写-p指定具体的密码</p>
+</li>
+</ul>
+<a id="more"></a>
+
+<p>2.破解ssh服务登陆账号和密码：</p>
+<p><code>hydra  127.0.0.1 -l root -P dict.txt ssh</code></p>
+<p>3.破解smb服务登陆账号和密码：</p>
+<p><code>hydra 127.0.0.1 -l root -P dict.txt smb</code></p>
+<p>4.破解pop3服务登陆账号和密码：</p>
+<p><code>hydra -l root -P dict.txt my.pop3.mail pop3</code></p>
+<p>5.破解http-proxy服务登陆账号和密码:</p>
+<p><code>hydra -l root -P dict.txt http-proxy://127.0.0.1</code></p>
+<p>6.破解RDP服务登陆账号和密码:</p>
+<p><code>hydra -l root -P dict.txt 127.0.0.1 rdp</code></p>
+<p>7.破解imap服务登陆账号和密码:</p>
+<p><code>hydra -l root -P dict.txt 127.0.0.1 imap</code></p>
+<h4 id="WPscan"><a href="#WPscan" class="headerlink" title="WPscan"></a><strong>WPscan</strong></h4><ul>
+<li><strong>介绍：</strong></li>
+</ul>
+<p>WPScan是一个扫描WordPress漏洞的黑盒子扫描器，它可以为所有Web开发人员扫描WordPress 漏洞并在他们开发前找到并解决问题。该扫描器可以实现获取站点用户名，获取安装的所有插件、主题，以及存在漏洞的插件、主题，并提供漏洞信息。同时还可以实现对未加防护的wordpress站点暴力破解用户名密码。</p>
+<p><strong>1.常用参数选项</strong></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">--update  更新到最新版本</span><br><span class="line"> </span><br><span class="line">--url   | -u <span class="tag">&lt;<span class="name">target</span> <span class="attr">url</span>&gt;</span>  要扫描的`WordPress`站点.</span><br><span class="line"> </span><br><span class="line">--force | -f   不检查网站运行的是不是`WordPress`</span><br><span class="line"> </span><br><span class="line">--enumerate | -e [option(s)]  枚举</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>2.option</strong></p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br></pre></td><td class="code"><pre><span class="line">u 枚举用户名，默认从1-10</span><br><span class="line"></span><br><span class="line">u[10-20] 枚举用户名，配置从10-20</span><br><span class="line"></span><br><span class="line">p 枚举插件</span><br><span class="line"></span><br><span class="line">vp 只枚举有漏洞的插件</span><br><span class="line"></span><br><span class="line">ap 枚举所有插件，时间较长</span><br><span class="line"></span><br><span class="line">tt 列举缩略图相关的文件</span><br><span class="line"></span><br><span class="line">t 枚举主题信息</span><br><span class="line"></span><br><span class="line">vt 只枚举存在漏洞的主题</span><br><span class="line"></span><br><span class="line">at 枚举所有主题，时间较长</span><br><span class="line"></span><br><span class="line">可以指定多个扫描选项，例："-e tt,p"</span><br><span class="line"></span><br><span class="line">如果没有指定选项，默认选项为："vt,tt,u,vp"</span><br><span class="line"></span><br><span class="line">--exclude-content-based "&lt;regexp or string&gt;"</span><br><span class="line"></span><br><span class="line">当使用枚举选项时，可以使用该参数做一些过滤，基于正则或者字符串，可以不写正则分隔符，但要用单引号或双引号包裹</span><br><span class="line"></span><br><span class="line">--config-file | -c &lt;config file使用指定的配置文件</span><br><span class="line"></span><br><span class="line">--user-agent | -a &lt;User-Agent指定User-Agent</span><br><span class="line"></span><br><span class="line">--cookie &lt;String指定cookie</span><br><span class="line"></span><br><span class="line">--random-agent | -r 使用随机User-Agent</span><br><span class="line"></span><br><span class="line">--follow-redirection 如果目标包含一个重定向，则直接跟随跳转</span><br><span class="line"></span><br><span class="line">--batch 无需用户交互，都使用默认行为</span><br><span class="line"></span><br><span class="line">--no-color 不要采用彩色输出</span><br><span class="line"></span><br><span class="line">--wp-content-dir &lt;wp content dirWPScan会去发现wp-content目录，用户可手动指定</span><br><span class="line"></span><br><span class="line">--wp-plugins-dir &lt;wp plugins dir指定wp插件目录，默认是wp-content/plugins</span><br><span class="line"></span><br><span class="line">--proxy &lt;[protocol://]host:port设置一个代理，可以使用HTTP、SOCKS4、SOCKS4A、SOCKS5，如果未设置默认是HTTP协议</span><br><span class="line"></span><br><span class="line">--proxy-auth &lt;username:password设置代理登陆信息</span><br><span class="line"></span><br><span class="line">--basic-auth &lt;username:password设置基础认证信息</span><br><span class="line"></span><br><span class="line">--wordlist | -w &lt;wordlist指定密码字典</span><br><span class="line"></span><br><span class="line">--username | -U &lt;username指定爆破的用户名</span><br><span class="line"></span><br><span class="line">--usernames &lt;path-to-file指定爆破用户名字典</span><br><span class="line"></span><br><span class="line">--threads | -t &lt;number of threads指定多线程</span><br><span class="line"></span><br><span class="line">--cache-ttl &lt;cache-ttl设置 cache TTL</span><br><span class="line"></span><br><span class="line">--request-timeout &lt;request-timeout请求超时时间</span><br><span class="line"></span><br><span class="line">--connect-timeout &lt;connect-timeout连接超时时间</span><br><span class="line"></span><br><span class="line">--max-threads &lt;max-threads最大线程数</span><br><span class="line"></span><br><span class="line">--throttle &lt;milliseconds当线程数设置为1时，设置两个请求之间的间隔</span><br><span class="line"></span><br><span class="line">--help | -h 输出帮助信息</span><br><span class="line"></span><br><span class="line">--verbose | -v 输出Verbose</span><br><span class="line"></span><br><span class="line">--version 输出当前版本</span><br></pre></td></tr></table></figure>
+
+
+
+<p><strong>3.使用方法：</strong></p>
+<ul>
+<li><p>扫描Wordpress漏洞</p>
+<p><code>wpscan --url https://www.xxx.xxx</code></p>
+</li>
+<li><p>扫描Wordpress用户，对其进行枚举</p>
+<p><code>wpscan --url https://www.xxxxx.xxx/ --enumerate u</code></p>
+<p>可以得到用户的信息</p>
+<p><img src="/2019/01/21/How-to-use-Common-tools/common_tool/1.png" alt="1"></p>
+</li>
+<li><p>暴力破解得到密码：</p>
+<p><code>wpscan --url https://www.xxx.xxx/ -e u  --passwords dict.txt --usernames 用户名</code></p>
+</li>
+<li><p>扫描插件漏洞</p>
+<p><code>wpscan -u https://www.xxx.xxx/ -enumerate p</code>              扫描安装的插件</p>
+<p><code>wpscan --url https://www.xxx.xxx/ --enumerate vp</code>    扫描目标插件漏洞</p>
+</li>
+<li><p>主题漏洞扫描</p>
+<p><code>wpscan --url https://www.xxx.xxx/ --enumerate t</code> 对主题进行扫描</p>
+<p><code>wpscan --url https://www.xxx.xxx/ --enumerate vt</code> 扫描主题中存在的漏洞</p>
+</li>
+</ul>
+<h4 id="Sqlmap使用说明"><a href="#Sqlmap使用说明" class="headerlink" title="Sqlmap使用说明"></a>Sqlmap使用说明</h4><ol>
+<li><strong>Options（选项）：</strong><br>–version             显示程序的版本号并退出<br>-h, –help            显示此帮助消息并退出<br>-v VERBOSE            详细级别：0-6（默认为1） </li>
+<li><strong>Target（目标）：</strong><br>以下至少需要设置其中一个选项，设置目标URL。<br>-d DIRECT           直接连接到数据库。<br>-u URL, –url=URL   目标URL。<br>-l LIST             从Burp或WebScarab代理的日志中解析目标。<br>-r REQUESTFILE      从一个文件中载入HTTP请求。<br>-g GOOGLEDORK       处理Google dork的结果作为目标URL。<br>-c CONFIGFILE       从INI配置文件中加载选项。 </li>
+<li><strong>Request（请求）：</strong><br>​    这些选项可以用来指定如何连接到目标URL。<br>–data=DATA         通过POST发送的数据字符串<br>–cookie=COOKIE     HTTP Cookie头<br>–cookie-urlencode  URL 编码生成的cookie注入<br>–drop-set-cookie   忽略响应的Set - Cookie头信息<br>–user-agent=AGENT  指定  HTTP User - Agent头<br>–random-agent      使用随机选定的HTTP User - Agent头<br>–referer=REFERER   指定  HTTP Referer头<br>–headers=HEADERS   换行分开，加入其他的HTTP头<br>–auth-type=ATYPE   HTTP身份验证类型（基本，摘要或NTLM）(Basic, Digest or NTLM)<br>–auth-cred=ACRED   HTTP身份验证凭据（用户名:密码）<br>–auth-cert=ACERT   HTTP认证证书（key_file，cert_file）<br>–proxy=PROXY       使用HTTP代理连接到目标URL  –proxy http  ://127.0.0.1:8888<br>–proxy-cred=PCRED  HTTP代理身份验证凭据（用户名：密码）<br>–ignore-proxy      忽略系统默认的HTTP代理<br>–delay=DELAY       在每个HTTP请求之间的延迟时间，单位为秒  –delay 0.5<br>–timeout=TIMEOUT   等待连接超时的时间（默认为30秒）<br>–retries=RETRIES   连接超时后重新连接的时间（默认3）<br>–scope=SCOPE       从所提供的代理日志中过滤器目标的正则表达式<br>–safe-url=SAFURL   在测试过程中经常访问的url地址<br>–safe-freq=SAFREQ  两次访问之间测试请求，给出安全的URL<br><strong>Optimization（优化）：</strong><br>   这些选项可用于优化SqlMap的性能。<br>​    -o                  开启所有优化开关<br>–predict-output    预测常见的查询输出<br>–keep-alive        使用持久的HTTP（S）连接<br>–null-connection   从没有实际的HTTP响应体中检索页面长度<br>–threads=THREADS   最大的HTTP（S）请求并发量（默认为1） </li>
+<li><strong>Injection（注入）：</strong><br>​    这些选项可以用来指定测试哪些参数，  提供自定义的注入payloads和可选篡改脚本。<br>​    -p TESTPARAMETER    可测试的参数（S）<br>–dbms=DBMS         强制后端的DBMS为此值 如：–dbms “Mysql”<br>–os=OS             强制后端的DBMS操作系统为这个值<br>–prefix=PREFIX     注入payload字符串前缀<br>–suffix=SUFFIX     注入payload字符串后缀<br>–tamper=TAMPER     使用给定的脚本（S）篡改注入数据 </li>
+<li><strong>Detection（检测）：</strong><br>这些选项可以用来指定在SQL盲注时如何解析和比较HTTP响应页面的内容。<br>–level=LEVEL       执行测试的等级（1-5，默认为1）<br>–risk=RISK         执行测试的风险（0-3，默认为1）<br>–string=STRING     查询时有效时在页面匹配字符串<br>–regexp=REGEXP     查询时有效时在页面匹配正则表达式<br>–text-only         仅基于在文本内容比较网页 </li>
+<li><strong>Techniques（技巧）：</strong><br> 这些选项可用于调整具体的SQL注入测试。<br>–technique=TECH    SQL注入技术测试（默认BEUST）<br>–time-sec=TIMESEC  DBMS响应的延迟时间（默认为5秒）<br>–union-cols=UCOLS  定列范围用于测试UNION查询注入<br>–union-char=UCHAR  用于暴力猜解列数的字符 </li>
+<li><strong>Fingerprint（指纹）：</strong><br>-f, –fingerprint     执行检查广泛的DBMS版本指纹 </li>
+<li><strong>Enumeration（枚举）：</strong><br>这些选项可以用来列举后端数据库管理系统的信息、表中的结构和数据。此外，您还可以运行您自己<br>的SQL语句。<br>-b, –banner        检索数据库管理系统的标识<br>–current-user      检索数据库管理系统当前用户<br>–current-db        检索数据库管理系统当前数据库<br>–is-dba            检测DBMS当前用户是否DBA<br>–users             枚举数据库管理系统用户<br>–passwords         枚举数据库管理系统用户密码哈希<br>–privileges        枚举数据库管理系统用户的权限<br>–roles             枚举数据库管理系统用户的角色<br>–dbs               枚举数据库管理系统数据库<br>–tables            枚举的DBMS数据库中的表<br>–columns           枚举DBMS数据库表列<br>–dump              转储数据库管理系统的数据库中的表项<br>–dump-all          转储所有的DBMS数据库表中的条目<br>–search            搜索列（S），表（S）和/或数据库名称（S）<br>​    -D DB               要进行枚举的数据库名<br>​    -T TBL              要进行枚举的数据库表<br>​    -C COL              要进行枚举的数据库列<br>​    -U USER             用来进行枚举的数据库用户<br>–exclude-sysdbs    枚举表时排除系统数据库<br>–start=LIMITSTART  第一个查询输出进入检索<br>–stop=LIMITSTOP    最后查询的输出进入检索<br>–first=FIRSTCHAR   第一个查询输出字的字符检索<br>–last=LASTCHAR     最后查询的输出字字符检索<br>–sql-query=QUERY   要执行的SQL语句<br>–sql-shell         提示交互式SQL的shell </li>
+<li><strong>Brute force（蛮力）：</strong><br>​    这些选项可以被用来运行蛮力检查。<br>–common-tables     检查存在共同表<br>–common-columns    检查存在共同列<br>  User-defined function injection（用户自定义函数注入）：<br>​    这些选项可以用来创建用户自定义函数。<br>–udf-inject        注入用户自定义函数<br>–shared-lib=SHLIB  共享库的本地路径<br>File system access（访问文件系统）：<br>​    这些选项可以被用来访问后端数据库管理系统的底层文件系统。<br>–file-read=RFILE   从后端的数据库管理系统文件系统读取文件<br>–file-write=WFILE  编辑后端的数据库管理系统文件系统上的本地文件<br>–file-dest=DFILE   后端的数据库管理系统写入文件的绝对路径<br>Operating system access（操作系统访问）：<br>​    这些选项可以用于访问后端数据库管理系统的底层操作系统。<br>–os-cmd=OSCMD      执行操作系统命令<br>–os-shell          交互式的操作系统的shell<br>–os-pwn            获取一个OOB shell，meterpreter或VNC<br>–os-smbrelay       一键获取一个OOB shell，meterpreter或VNC<br>–os-bof            存储过程缓冲区溢出利用<br>–priv-esc          数据库进程用户权限提升<br>–msf-path=MSFPATH  Metasploit Framework本地的安装路径<br>–tmp-path=TMPPATH  远程临时文件目录的绝对路径 </li>
+<li><strong>Windows注册表访问：</strong><br>   这些选项可以被用来访问后端数据库管理系统Windows注册表。<br>–reg-read          读一个Windows注册表项值<br>–reg-add           写一个Windows注册表项值数据<br>–reg-del           删除Windows注册表键值<br>–reg-key=REGKEY    Windows注册表键<br>–reg-value=REGVAL  Windows注册表项值<br>–reg-data=REGDATA  Windows注册表键值数据<br>–reg-type=REGTYPE  Windows注册表项值类型 </li>
+<li><strong>General（一般）：</strong><br>这些选项可以用来设置一些一般的工作参数。<br>​    -t TRAFFICFILE      记录所有HTTP流量到一个文本文件中<br>​    -s SESSIONFILE      保存和恢复检索会话文件的所有数据<br>–flush-session     刷新当前目标的会话文件<br>–fresh-queries     忽略在会话文件中存储的查询结果<br>–eta               显示每个输出的预计到达时间<br>–update            更新SqlMap<br>–save              file保存选项到INI配置文件<br>–batch             从不询问用户输入，使用所有默认配置。 </li>
+<li><strong>Miscellaneous（杂项）：</strong><br>–beep              发现SQL注入时提醒<br>–check-payload     IDS对注入payloads的检测测试<br>–cleanup           SqlMap具体的UDF和表清理DBMS<br>–forms             对目标URL的解析和测试形式<br>–gpage=GOOGLEPAGE  从指定的页码使用谷歌dork结果<br>–page-rank         Google dork结果显示网页排名（PR）<br>–parse-errors      从响应页面解析数据库管理系统的错误消息<br>–replicate         复制转储的数据到一个sqlite3数据库<br>–tor               使用默认的Tor（Vidalia/ Privoxy/ Polipo）代理地址<br>–wizard            给初级用户的简单向导界面</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/tools/" rel="tag"># tools</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/01/17/%E9%83%A8%E5%88%86CTF%E6%80%9D%E8%B7%AF/" rel="prev" title="部分CTF解题思路">
+      <i class="fa fa-chevron-left"></i> 部分CTF解题思路
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/03/09/Buffer-overflow/" rel="next" title="Buffer overflow">
+      Buffer overflow <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#Hydra暴力破解"><span class="nav-number">1.</span> <span class="nav-text">Hydra暴力破解</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#WPscan"><span class="nav-number">2.</span> <span class="nav-text">WPscan</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#Sqlmap使用说明"><span class="nav-number">3.</span> <span class="nav-text">Sqlmap使用说明</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChongMing"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ChongMing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mktubu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mktubu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:528999959@qq.com" title="E-Mail → mailto:528999959@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChongMing | 感谢阅读</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">102k</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

