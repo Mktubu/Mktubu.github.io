@@ -181,6 +181,85 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2020/03/10/SSI_Injection/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/03/10/SSI_Injection/" class="post-title-link" itemprop="url">Server-Side Includes Injection</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2020-03-10 19:16:42 / 修改时间：20:25:51" itemprop="dateCreated datePublished" datetime="2020-03-10T19:16:42+08:00">2020-03-10</time>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.1k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <p><strong>SSI</strong>注入问题</p>
+<h3 id="0x01-介绍"><a href="#0x01-介绍" class="headerlink" title="0x01 介绍"></a>0x01 介绍</h3><p><strong>SSI</strong>注入即服务端包含注入。SSI是类似于<strong>CGI</strong>，用于动态页面的指令。<strong>SSI</strong>注入允许远程在<strong>Web</strong>应用中注入脚本来执行代码。SSI是嵌入HTML的指令，在页面被提供时由服务器进行运算，对现有的HTML页面增加动态生成的内容，而无需通过CGI程序提供其整个页面，或者使用其他动态技术。简单来说，SSI就是在HTML文件中，可以通过注释行调用的命令或指针，即允许通过在HTML页面注入脚本或远程执行任意代码。</p>
+<h3 id="0x02-SSI注入条件"><a href="#0x02-SSI注入条件" class="headerlink" title="0x02 SSI注入条件"></a>0x02 SSI注入条件</h3><p>当符合下列条件时，攻击者可以在 Web 服务器上运行任意命令：</p>
+<ul>
+<li>Web 服务器已支持SSI（服务器端包含）</li>
+<li>Web 应用程序未对对相关SSI关键字做过滤</li>
+<li>Web 应用程序在返回响应的HTML页面时，嵌入用户输入</li></ul>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2020/03/10/SSI_Injection/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2020/03/05/%E5%B8%B8%E8%A7%81Web%E6%BA%90%E7%A0%81%E6%B3%84%E9%9C%B2/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -1009,95 +1088,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/05/22/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ChongMing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="重明">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/05/22/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/" class="post-title-link" itemprop="url">格式化字符串漏洞</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2019-05-22 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-22T00:00:00+08:00">2019-05-22</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-24 11:07:52" itemprop="dateModified" datetime="2020-02-24T11:07:52+08:00">2020-02-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E/" itemprop="url" rel="index"><span itemprop="name">漏洞</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>1k</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <h4 id="Format-String介绍："><a href="#Format-String介绍：" class="headerlink" title="Format String介绍："></a>Format String介绍：</h4><p>在<strong>C</strong>语言中，常用的输出函数有<strong>printf,fprintf,vprintf,vfptintf,sprint</strong>等.对于这些输出函数，<strong>Format String</strong>是其第一个参数，一般称为格式化字符串。</p>
-<p>格式化字符串函数可以接受可变数量的参数，并将<strong>第一个参数作为格式化的字符串，根据其来解析之后的参数</strong>。通俗来说，格式化字符串函数就是将计算机内存中表示的数据转化为可读的字符串格式，几乎所有的 C/C++ 程序都会利用格式化字符串函数来<strong>输出信息，调试程序，或者处理字符串</strong>。<br></p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2019/05/22/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1170,7 +1160,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">32</span>
+          <span class="site-state-item-count">33</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1225,7 +1215,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">104k</span>
+    <span title="站点总字数">106k</span>
 </div>
 
         
