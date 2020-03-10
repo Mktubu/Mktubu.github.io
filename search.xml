@@ -296,6 +296,55 @@
       </tags>
   </entry>
   <entry>
+    <title>Basic_Authentication</title>
+    <url>/2020/02/02/Basic_Authentication/</url>
+    <content><![CDATA[<h3 id="0x01-介绍"><a href="#0x01-介绍" class="headerlink" title="0x01 介绍"></a>0x01 介绍</h3><ul>
+<li>在<strong>HTTP</strong>中，基本认证是允许<strong>http</strong>用户代理在请求时，提供<strong>用户名</strong>和<strong>密码</strong>的一种方式。<br><img src="/images/Authentication/1.png" alt="1"></li>
+</ul>
+<p>在进行基本认证的过程里，请求的<strong>HTTP</strong>头字段会包含<strong>Authorization</strong>字段，形式如下<code>Authorization: Basic &lt;凭证&gt;</code>，该凭证是用户和密码的组和的<a href="https://zh.wikipedia.org/wiki/Base64" target="_blank" rel="noopener">base64编码</a>。</p>
+<a id="more"></a>
+
+<ul>
+<li><p>使用场景</p>
+<p>内部网络，或者对安全要求不是很高的网络。现如今HTTP基本认证都是会结合<strong>HTTPS</strong>一起使用的，<strong>https</strong>保证网络的安全性，然后基本认证来做客户端身份识别。</p>
+</li>
+</ul>
+<h3 id="0x02-优点"><a href="#0x02-优点" class="headerlink" title="0x02 优点"></a>0x02 优点</h3><p><strong>HTTP</strong>基本认证是易中十分简单的技术，使用<strong>HTTP</strong>头部字段强制用户访问网络资源，而不是通过必要的<strong>cookie</strong>，会话,登陆页面等（非获取访问控制）的方法。</p>
+<p>基本上所有流行的网页浏览器都支持基本认证。基本认证很少在可公开访问的互联网网站上使用，有时候会在小型私有系统中使用（如路由器]网页管理接口）。之后诞生的 <a href="https://zh.wikipedia.org/wiki/HTTP摘要认证" target="_blank" rel="noopener">HTTP摘要认证</a> 用于替代基本认证，允许密钥以相对安全的方式在不安全的通道上传输。</p>
+<h3 id="0x03-缺点"><a href="#0x03-缺点" class="headerlink" title="0x03 缺点"></a>0x03 缺点</h3><p>基本认证 并没有为传送凭证（<strong>transmitted credentials</strong>）提供任何机密性的保护。仅仅使用 <a href="https://zh.wikipedia.org/wiki/Base64" target="_blank" rel="noopener">Base64</a> 编码并传输，而没有使用任何 <a href="https://zh.wikipedia.org/wiki/加密" target="_blank" rel="noopener">加密</a> 或 <a href="https://zh.wikipedia.org/wiki/哈希" target="_blank" rel="noopener">散列算法</a>。因此，基本认证常常和 <strong>HTTPS</strong> 一起使用，以提供机密性。同时 HTTP 并没有提供退出机制。但是，在一些浏览器上，存在清除凭证（<strong>credentials</strong> ）缓存的方法。</p>
+<ul>
+<li><p>用户HTTP是在网络上裸奔的，所以这个基本认证的用户名和密码也是可以被人看到的<strong>Base64</strong>很容易解码。</p>
+</li>
+<li><p>恶意用户可以在获取了认证内容后使用其不断的享服务器发起请求，这就是所谓的<strong>重放攻击</strong>。</p>
+</li>
+<li><p><strong>中间人攻击</strong>可以修改报文然后请求服务器。</p>
+</li>
+</ul>
+<h3 id="0x04-过程"><a href="#0x04-过程" class="headerlink" title="0x04 过程"></a>0x04 过程</h3><ul>
+<li><p><strong>文字过程<img src="/images/Authentication/2.png" alt="2"></strong></p>
+</li>
+<li><p><strong>电文过程</strong></p>
+<ul>
+<li><p>客户端请求（没有认证信息）</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">GET &#x2F;private&#x2F;index.html HTTP&#x2F;1.0</span><br><span class="line">Host: localhost</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务端应答</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">Server: HTTPd/1.0</span><br><span class="line">Date: Sat, 27 Nov 2004 10:18:15 GMT</span><br><span class="line">WWW-Authenticate: Basic realm="Secure Area"</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: 311</span><br><span class="line"></span><br><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">HTML</span> <span class="meta-keyword">PUBLIC</span> <span class="meta-string">"-//W3C//DTD HTML 4.01 Transitional//EN"</span></span></span><br><span class="line"><span class="meta"> <span class="meta-string">"http://www.w3.org/TR/1999/REC-html401-19991224/loose.dtd"</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">HTML</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">HEAD</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">TITLE</span>&gt;</span>Error<span class="tag">&lt;/<span class="name">TITLE</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">META</span> <span class="attr">HTTP-EQUIV</span>=<span class="string">"Content-Type"</span> <span class="attr">CONTENT</span>=<span class="string">"text/html; charset=ISO-8859-1"</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;/<span class="name">HEAD</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">BODY</span>&gt;</span><span class="tag">&lt;<span class="name">H1</span>&gt;</span>401 Unauthorized.<span class="tag">&lt;/<span class="name">H1</span>&gt;</span><span class="tag">&lt;/<span class="name">BODY</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">HTML</span>&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>客户端请求(有认证消息)</p>
+<p>用户名“”Aladdin”，密码, password “open sesame”</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">GET /private/index.html HTTP/1.0</span><br><span class="line">Host: localhost</span><br><span class="line">Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>服务端应答</p>
+<figure class="highlight html"><table><tr><td class="code"><pre><span class="line">HTTP/1.0 200 OK</span><br><span class="line">Server: HTTPd/1.0</span><br><span class="line">Date: Sat, 27 Nov 2004 10:19:07 GMT</span><br><span class="line">Content-Type: text/html</span><br><span class="line">Content-Length: 10476</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+</li>
+</ul>
+]]></content>
+  </entry>
+  <entry>
     <title>zip协议包含文件</title>
     <url>/2019/09/17/zip%E5%8D%8F%E8%AE%AE%E5%8C%85%E5%90%AB%E6%96%87%E4%BB%B6/</url>
     <content><![CDATA[<p><strong>文件包含（通过zip/phar协议包含文件）</strong></p>

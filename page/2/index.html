@@ -181,6 +181,104 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.jpg">
+      <meta itemprop="name" content="ChongMing">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="重明">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+            <a href="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/" class="post-title-link" itemprop="url">基于python3的端口扫描</a>
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2019-05-22 00:00:00" itemprop="dateCreated datePublished" datetime="2019-05-22T00:00:00+08:00">2019-05-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-02-24 11:06:43" itemprop="dateModified" datetime="2020-02-24T11:06:43+08:00">2020-02-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/python/" itemprop="url" rel="index"><span itemprop="name">python</span></a>
+                </span>
+            </span>
+
+          <br>
+            <span class="post-meta-item" title="本文字数">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-file-word-o"></i>
+              </span>
+                <span class="post-meta-item-text">本文字数：</span>
+              <span>2.3k</span>
+            </span>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <ul>
+<li>端口扫描原理：    </li>
+</ul>
+<p>尝试与目标主机建立连接，如果目标主机有回复则说明端口开放。（大多数扫描技术基于TCP实现）</p>
+<ul>
+<li>扫描分类：</li>
+</ul>
+<ol>
+<li><p><strong>TCP connect扫描</strong></p>
+<p>利用客户端与服务端建立 TCP 连接必须要进行三次握手，如果我们能够成功完成一次 TCP 三次握手，那么就说明目标端口是开放的。</p>
+<p>若端口为开放状态，服务端就会收到一个SYN后返回SYN+ACK，此时只需要返回一个ACK+RST完成三次握手并重置连接即可。</p></li></ol>
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2019/05/22/%E7%AB%AF%E5%8F%A3%E6%89%AB%E6%8F%8F/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
+        
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2019/05/22/%E6%A0%BC%E5%BC%8F%E5%8C%96%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%BC%8F%E6%B4%9E/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -976,98 +1074,6 @@
   
   
 
-        
-  
-  
-  <article itemscope itemtype="http://schema.org/Article" class="post-block home" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://mktubu.github.io/2018/12/20/CVE-2017-12615/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.jpg">
-      <meta itemprop="name" content="ChongMing">
-      <meta itemprop="description" content="">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="重明">
-    </span>
-      <header class="post-header">
-        <h1 class="post-title" itemprop="name headline">
-          
-            <a href="/2018/12/20/CVE-2017-12615/" class="post-title-link" itemprop="url">CVE-2017-12615(Tomcat 远程代码执行漏洞)</a>
-        </h1>
-
-        <div class="post-meta">
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              <span class="post-meta-item-text">发表于</span>
-
-              <time title="创建时间：2018-12-20 19:51:24" itemprop="dateCreated datePublished" datetime="2018-12-20T19:51:24+08:00">2018-12-20</time>
-            </span>
-              <span class="post-meta-item">
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2020-02-24 10:50:36" itemprop="dateModified" datetime="2020-02-24T10:50:36+08:00">2020-02-24</time>
-              </span>
-            <span class="post-meta-item">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              <span class="post-meta-item-text">分类于</span>
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/%E6%BC%8F%E6%B4%9E/" itemprop="url" rel="index"><span itemprop="name">漏洞</span></a>
-                </span>
-            </span>
-
-          <br>
-            <span class="post-meta-item" title="本文字数">
-              <span class="post-meta-item-icon">
-                <i class="fa fa-file-word-o"></i>
-              </span>
-                <span class="post-meta-item-text">本文字数：</span>
-              <span>2.7k</span>
-            </span>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-          <p><strong>Tomcat远程代码执行漏洞（CVE-2018-12615)</strong></p>
-<p>​    <strong>Tomcat：</strong>Tomcat服务器是一个免费的开放源代码的Web应用服务器。    </p>
-<p>​        <strong>漏洞介绍：</strong>Tomcat 运行在 Windows 主机上，且启用了 HTTP PUT请求方法，恶意访问者通过构造的请求向服务器上传包含任意代码的 JSP 文件，造成任意代码执行，危害十分严重。</p>
-<p>​        <strong>影响范围：</strong>Apache Tomcat 7.0.0-7.0.81（Apache Tomcat 8.X  Apache Tomcat 9.X 不受影响）</p>
-<p>​    <strong>漏洞分析：</strong>在Tomcat安装目录下的配置文件web.xml中的<strong><u>org.apache.catalina.servlets.DefaultServlet</u></strong> 方法下如果该方法有如下代码，即表示Tomcat已开启PUT方法</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2018/12/20/CVE-2017-12615/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-      <footer class="post-footer">
-        <div class="post-eof"></div>
-      </footer>
-  </article>
-  
-  
-  
-
   </div>
 
   
@@ -1140,7 +1146,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">33</span>
+          <span class="site-state-item-count">34</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -1195,7 +1201,7 @@
     <span class="post-meta-item-icon">
       <i class="fa fa-area-chart"></i>
     </span>
-    <span title="站点总字数">106k</span>
+    <span title="站点总字数">108k</span>
 </div>
 
         
